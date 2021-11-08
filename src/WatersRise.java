@@ -1,10 +1,10 @@
 import java.awt.image.BufferedImage;
 
-public class TreasureCard extends Card{
+public class WatersRise extends Card{
 
     private BufferedImage image;
 
-    public TreasureCard(String name, String type) {
+    public WatersRise(String name, String type) {
         super(name, type);
     }
 }
