@@ -29,9 +29,10 @@ public class MainMenuFrame extends JFrame {
         heading.setVerticalAlignment(JLabel.CENTER);
         win.add(heading);
 
-        Integer[] playerNums = {2, 3, 4};
+        Object[] playerNums = {"Select Number of Players", 2, 3, 4};
         JComboBox list = new JComboBox(playerNums);
-        list.setSelectedIndex(4);
+        list.setSelectedIndex(0);
+        win.add(list);
 
 
         setSize(WIDTH, HEIGHT);
