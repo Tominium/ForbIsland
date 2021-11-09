@@ -21,4 +21,6 @@ public class Card {
     public String getType(){
         return cardType;
     }
+
+    public void setImage(BufferedImage i) { image = i; }
 }
