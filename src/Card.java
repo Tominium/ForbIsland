@@ -18,7 +18,5 @@ public class Card {
         return image;
     }
 
-    public String getType(){
-        return cardType;
-    }
+    public String getType(){ return cardType; }
 }

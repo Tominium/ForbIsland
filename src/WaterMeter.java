@@ -23,6 +23,4 @@ public class WaterMeter {
     public double getWaterLevel(){
         return waterLevel;
     }
-
-
 }
