@@ -1,9 +1,9 @@
 import javax.swing.*;
-
+import java.awt.*;
 public class GameBoardGraphic {
     private static Integer WIDTH;
     private static Integer HEIGHT;
-    private font Font;
+    private Font Font;
     private JButton nextTurn;
     private JButton move;
     private JPanel gameBoard;
