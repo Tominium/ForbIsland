@@ -7,7 +7,6 @@ public class TreasureDeck {
 
     private Deque<Card> deck;
     private Deque<Card> used;
-    ArrayList<Card> temp;
 
     public TreasureDeck() {
         //5 of each treasure
@@ -40,6 +39,7 @@ public class TreasureDeck {
 
     public void shuffle()
     {
+        ArrayList<Card> temp = new ArrayList<Card>();
         while(deck.size()>0)
             temp.add(deck.pop());
 
