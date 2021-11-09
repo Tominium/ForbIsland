@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Pawn {
+public class Pawn implements Comparable<Pawn>{
     private String role;
     private ArrayList<Card> hand;
     private int turnNum;
@@ -35,8 +35,9 @@ public class Pawn {
         }
     }
 
-    public int compareTo(){
-
+    public int compareTo(Pawn p){
+        if(this.getTurnNum() > p.getTurnNum()){return 1;}
+        return -1;
     }
 
     public void incrementTurnNum(){
