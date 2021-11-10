@@ -6,10 +6,12 @@ public class Pawn implements Comparable<Pawn>{
     private String role;
     private ArrayList<Card> hand;
     private int turnNum;
+    private int actionCount;
 
     public Pawn(String r){
         role = r;
         turnNum = 0;
+        actionCount = 0;
     }
 
     public String getRole(){
@@ -42,12 +44,13 @@ public class Pawn implements Comparable<Pawn>{
         return -1;
     }
 
-    public void incrementTurnNum(){
-        turnNum++;
-    }
-
     public void setTurnZero(){
         turnNum = 0;
+    }
+
+    public boolean iterateActionCount(){
+        if(actionCount<3){actionCount++; return true;}
+        return false;
     }
 
 
