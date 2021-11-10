@@ -5,7 +5,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class MainMenuFrame extends JFrame {
-    private static final int WIDTH = 1000;
+    private static final int WIDTH = 800;
     private static final int HEIGHT = 1000;
     private Font font;
 
@@ -33,8 +33,22 @@ public class MainMenuFrame extends JFrame {
         Object[] playerNums = {"Select Number of Players", 2, 3, 4};
         JComboBox list = new JComboBox(playerNums);
         list.setSelectedIndex(0);
-        list.setBounds(500, 500,200,35);
+        list.setBounds(300, 400,200,35);
         win.add(list);
+
+        Object[] waterLevel = {"Select Water Level", "Novice", "Normal", "Elite", "Legendary"};
+        JComboBox level = new JComboBox(waterLevel);
+        level.setSelectedIndex(0);
+        level.setBounds(300, 500,200,35);
+        win.add(level);
+
+        JButton startButton = new JButton("Start Game");
+        startButton.setBounds(300, 600, 200, 35);
+        win.add(startButton);
+
+        JButton helpButton = new JButton("Help");
+        helpButton.setBounds(300, 700, 200, 35);
+        win.add(helpButton);
 
 
         setSize(WIDTH, HEIGHT);
