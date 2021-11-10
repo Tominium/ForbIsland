@@ -38,13 +38,20 @@ public class TreasureDeck {
         shuffle();
     }
 
-    public void shuffle()
-    {
+    public void shuffle() {
         while(deck.size()>0)
             temp.add(deck.pop());
 
         Collections.shuffle(temp);
 
         deck = new ArrayDeque<Card>(temp);
+    }
+
+    public Deque getDeck() {
+        return deck;
+    }
+
+    public Deque getUsed() {
+        return used;
     }
 }
