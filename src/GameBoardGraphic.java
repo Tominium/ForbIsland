@@ -11,7 +11,11 @@ public class GameBoardGraphic extends JFrame{
     private JPanel specialAbility;
 
     public GameBoardGraphic(){
-
+        nextTurn = new JButton("Next Turn");
+        move = new JButton("Move");
+        gameBoard = new JPanel();
+        heliPanel = new JPanel();
+        specialAbility=new JPanel();
 
     }
 
