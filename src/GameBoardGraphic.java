@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 public class GameBoardGraphic extends JFrame{
-    private static Integer WIDTH;
-    private static Integer HEIGHT;
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 1000;
     private Font Font;
     private JButton nextTurn;
     private JButton move;
@@ -11,16 +11,8 @@ public class GameBoardGraphic extends JFrame{
     private JPanel specialAbility;
 
     public GameBoardGraphic(){
-        //WIDTH: Integer
-        //HEIGHT: Integer
-        //font: Font
-        //nextTurn: JButton
-        //trade: JButton
-        //move: JButton
-        //gameBoard: JPanel (GridBagLayout)
-        //sandbagPanel: JPanel (GridBagLayout)
-        //heliPanel: JPanel (GridBagLayout)
-        //specialAbility: JPanel (GridBagLayout)
+
+
     }
 
     public void movePawn(){}
