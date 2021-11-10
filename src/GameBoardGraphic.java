@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-public class GameBoardGraphic {
+public class GameBoardGraphic extends JFrame{
     private static Integer WIDTH;
     private static Integer HEIGHT;
     private Font Font;
@@ -10,7 +10,18 @@ public class GameBoardGraphic {
     private JPanel heliPanel;
     private JPanel specialAbility;
 
-    public GameBoardGraphic(){}
+    public GameBoardGraphic(){
+        //WIDTH: Integer
+        //HEIGHT: Integer
+        //font: Font
+        //nextTurn: JButton
+        //trade: JButton
+        //move: JButton
+        //gameBoard: JPanel (GridBagLayout)
+        //sandbagPanel: JPanel (GridBagLayout)
+        //heliPanel: JPanel (GridBagLayout)
+        //specialAbility: JPanel (GridBagLayout)
+    }
 
     public void movePawn(){}
 
