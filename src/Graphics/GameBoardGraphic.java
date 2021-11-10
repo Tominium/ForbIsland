@@ -25,7 +25,7 @@ public class GameBoardGraphic extends JFrame{
         nextTurn.setLocation(150,150);
         move.setBounds(40,80,WIDTH, HEIGHT);
         move.setBackground(limeGreen);
-        move.setLocation(300,150)
+        move.setLocation(300,150);
     }
 
     public void movePawn(){}
