@@ -6,7 +6,7 @@ public class WaterMeter {
     private BufferedImage meter;
     private double waterLevel;
 
-    public WaterMeter(Double level){
+    public WaterMeter(double level){
         waterLevel = level;
     }
 
@@ -18,7 +18,7 @@ public class WaterMeter {
     }
 
     public double watersRise(){
-        waterLevel += 1.0;
+        waterLevel += 0.25;
         return waterLevel;
     }
 

@@ -11,6 +11,7 @@ public class GameBoardGraphic extends JFrame{
     private JPanel gameBoard;
     private JPanel heliPanel;
     private JPanel specialAbility;
+    private Color limeGreen;
 
     public GameBoardGraphic(){
         nextTurn = new JButton("Next Turn");
@@ -18,7 +19,13 @@ public class GameBoardGraphic extends JFrame{
         gameBoard = new JPanel();
         heliPanel = new JPanel();
         specialAbility=new JPanel();
-
+        Color limeGreen = new Color(118,218,132);
+        nextTurn.setBounds(40,80,WIDTH, HEIGHT);
+        nextTurn.setBackground(limeGreen);
+        nextTurn.setLocation(150,150);
+        move.setBounds(40,80,WIDTH, HEIGHT);
+        move.setBackground(limeGreen);
+        move.setLocation(300,150)
     }
 
     public void movePawn(){}
