@@ -32,6 +32,7 @@ public class MainMenuFrame extends JFrame {
         Object[] playerNums = {"Select Number of Players", 2, 3, 4};
         JComboBox list = new JComboBox(playerNums);
         list.setSelectedIndex(0);
+        list.setBounds(500, 500,200,35);
         win.add(list);
 
 
