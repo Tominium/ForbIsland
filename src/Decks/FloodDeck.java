@@ -1,3 +1,7 @@
+package Decks;
+
+import Cards.FloodCard;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +24,7 @@ public class FloodDeck {
         used = new ArrayDeque<FloodCard>();
 
         for(int i = 0; i < 24; i++)
-            deck.push(new FloodCard(CARDVALUES[i], "FloodCard"));
+            deck.push(new FloodCard(CARDVALUES[i], "Cards.FloodCard"));
 
         shuffle();
     }

@@ -1,3 +1,5 @@
+package Graphics;
+
 import javax.swing.*;
 import java.awt.*;
 public class GameBoardGraphic extends JFrame{

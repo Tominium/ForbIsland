@@ -1,3 +1,9 @@
+package Decks;
+
+import Cards.Card;
+import Cards.SpecialCard;
+import Cards.TreasureCard;
+import Water.WatersRise;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,20 +25,20 @@ public class TreasureDeck {
 
         for(int i = 0; i < 5; i++)
         {
-            deck.push(new TreasureCard("Earth", "TreasureCard"));
-            deck.push(new TreasureCard("Wind", "TreasureCard"));
-            deck.push(new TreasureCard("Fire", "TreasureCard"));
-            deck.push(new TreasureCard("Ocean", "TreasureCard"));
+            deck.push(new TreasureCard("Earth", "Cards.TreasureCard"));
+            deck.push(new TreasureCard("Wind", "Cards.TreasureCard"));
+            deck.push(new TreasureCard("Fire", "Cards.TreasureCard"));
+            deck.push(new TreasureCard("Ocean", "Cards.TreasureCard"));
         }
 
         for(int i = 0; i < 3; i++)
-            deck.push(new WatersRise(null, "WatersRise"));
+            deck.push(new WatersRise(null, "Water.WatersRise"));
 
         for(int i = 0; i < 3; i++)
-            deck.push(new SpecialCard("HelicopterRide", "SpecialCard"));
+            deck.push(new SpecialCard("HelicopterRide", "Cards.SpecialCard"));
 
         for(int i = 0; i < 2; i++)
-            deck.push(new SpecialCard("Sandbags", "SpecialCard"));
+            deck.push(new SpecialCard("Sandbags", "Cards.SpecialCard"));
 
         shuffle();
     }

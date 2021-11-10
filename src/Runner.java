@@ -1,4 +1,5 @@
 
+import Graphics.MainMenuFrame;
 import com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme;
 
 public class Runner {

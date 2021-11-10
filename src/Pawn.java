@@ -1,3 +1,5 @@
+import Cards.Card;
+
 import java.util.ArrayList;
 
 public class Pawn implements Comparable<Pawn>{

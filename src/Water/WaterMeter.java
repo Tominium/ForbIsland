@@ -1,3 +1,5 @@
+package Water;
+
 import java.awt.image.BufferedImage;
 
 public class WaterMeter {

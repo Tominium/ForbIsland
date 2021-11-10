@@ -1,4 +1,6 @@
-import java.awt.image.BufferedImage;
+package Water;
+
+import Cards.Card;
 
 public class WatersRise extends Card {
 

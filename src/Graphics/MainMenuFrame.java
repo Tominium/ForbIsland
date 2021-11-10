@@ -1,6 +1,7 @@
+package Graphics;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class MainMenuFrame extends JFrame {
@@ -11,7 +12,7 @@ public class MainMenuFrame extends JFrame {
     public MainMenuFrame(){
         super("Forbidden Island");
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("ForbiddenIsle.otf")).deriveFont(50f);
+            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Assets/ForbiddenIsle.otf")).deriveFont(50f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
         } catch (IOException | FontFormatException e) {
