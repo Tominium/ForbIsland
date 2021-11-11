@@ -11,7 +11,7 @@ public class FloodDeck {
 
     private Deque<FloodCard> deck;
     private Deque<FloodCard> used;
-    ArrayList<FloodCard> temp;
+
     private final static String[] CARDVALUES =
             {"Whispering Garden","Watchtower","Twilight Hollow","Tidal Palace"
                     ,"Temple of the Sun","Temple of the Moon","Silver Gate","Phantom Rock","Observatory","Misty Marsh"
@@ -30,6 +30,7 @@ public class FloodDeck {
     }
 
     public void shuffle() {
+        ArrayList<FloodCard> temp = new ArrayList<FloodCard>();
         while(deck.size()>0)
             temp.add(deck.pop());
 

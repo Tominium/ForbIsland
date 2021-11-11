@@ -3,8 +3,8 @@ package Graphics;
 import javax.swing.*;
 import java.awt.*;
 public class GameBoardGraphic extends JFrame{
-    private int WIDTH = 1000;
-    private int HEIGHT = 1000;
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 1000;
     private Font Font;
     private JButton nextTurn;
     private JButton move;
@@ -26,31 +26,21 @@ public class GameBoardGraphic extends JFrame{
         move.setBounds(40,80,WIDTH, HEIGHT);
         move.setBackground(limeGreen);
         move.setLocation(300,150);
-        gameBoard.add(nextTurn);
-        gameBoard.add(move);
-
     }
 
-    public void movePawn(){
-        //getHand();
-    }
+    public void movePawn(){}
 
-    public void tradeable(){
-
-    }
+    public void tradeable(){}
 
     public void removeCard(){}
 
-    public void sandBag(){
-    }
+    public void sandBag(){}
 
     public void helicopter(){}
 
     public void specialAbility(){}
 
-    public void winGraphics(){
-
-    }
+    public void winGraphics(){}
 
     public void loseGraphics(){}
 }

@@ -1,3 +1,5 @@
+package Logic;
+
 import Cards.Card;
 
 import java.util.ArrayList;
@@ -8,9 +10,9 @@ public class Pawn implements Comparable<Pawn>{
     private int turnNum;
     private int actionCount;
 
-    public Pawn(String r){
+    public Pawn(String r, int tn){
         role = r;
-        turnNum = 0;
+        turnNum = tn;
         actionCount = 0;
     }
 
@@ -18,7 +20,7 @@ public class Pawn implements Comparable<Pawn>{
         return role;
     }
 
-    public ArrayList<Card> getDeck(){
+    public ArrayList<Card> getHand(){
         return hand;
     }
 
