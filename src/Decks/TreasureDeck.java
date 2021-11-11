@@ -43,7 +43,12 @@ public class TreasureDeck {
         shuffle();
     }
 
-    public void shuffle()
+    public Card getCard(){
+        if(deck.size() > 0){return deck.pop();}
+        else{resetDeck(); return deck.pop();}
+    }
+
+    private void shuffle()
     {
         ArrayList<Card> temp = new ArrayList<Card>();
         while(deck.size()>0)
@@ -52,5 +57,19 @@ public class TreasureDeck {
         Collections.shuffle(temp);
 
         deck = new ArrayDeque<Card>(temp);
+    }
+
+    private void resetDeck(){
+        ArrayList<Card> temp = new ArrayList<Card>();
+        while(used.size()>0)
+            temp.add(used.pop());
+
+        Collections.shuffle(temp);
+
+        deck = new ArrayDeque<Card>(temp);
+    }
+
+    public void discardCard(Card c){
+        used.push(c);
     }
 }
