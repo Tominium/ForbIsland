@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class MainMenuFrame extends JFrame {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 1000;
+    private static final int WIDTH = 1010;
+    private static final int HEIGHT = 535;
     private Font font;
 
     public MainMenuFrame(){
