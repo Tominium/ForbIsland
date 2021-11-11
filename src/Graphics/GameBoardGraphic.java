@@ -2,6 +2,8 @@ package Graphics;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+
 public class GameBoardGraphic extends JFrame{
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 1000;
@@ -26,9 +28,12 @@ public class GameBoardGraphic extends JFrame{
         move.setBounds(40,80,WIDTH, HEIGHT);
         move.setBackground(limeGreen);
         move.setLocation(300,150);
+        move.addActionListener((ActionListener) this);
     }
 
-    public void movePawn(){}
+    public void movePawn(Object j){
+        Pawn.getHand();
+    }
 
     public void tradeable(){}
 
