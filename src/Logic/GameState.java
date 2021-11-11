@@ -18,7 +18,7 @@ public class GameState {
     private static FloodDeck floodDeck;
     private static int turn;
     private static int actionCount;
-    private final static String[] TILENAMES =
+    public final static String[] TILENAMES =
             {"Whispering Garden","Watchtower","Twilight Hollow","Tidal Palace"
                     ,"Temple of the Sun","Temple of the Moon","Silver Gate","Phantom Rock","Observatory","Misty Marsh"
                     ,"Lost Lagoon","Iron Gate","Howling Garden","Gold Gate","Fools' Landing", "Dunes of Deception",
@@ -56,7 +56,7 @@ public class GameState {
 
     public double riseWaterLevel() {
         waterMeter.watersRise();
-        return waterMeter.getWaterLevel()
+        return waterMeter.getWaterLevel();
     }
 
 
