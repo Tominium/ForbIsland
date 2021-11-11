@@ -56,7 +56,19 @@ public class GameState {
 
     public double riseWaterLevel() {
         waterMeter.watersRise();
-        return waterMeter.getWaterLevel()
+        return waterMeter.getWaterLevel();
+    }
+
+    public void collectTreasure(String s) {
+        int count = 0;
+        for(int i = 0; i < collectedTreasures.length; i++)
+            if(collectedTreasures[i] != null)
+                count++;
+        collectedTreasures[count] = s;
+    }
+
+    public void drawTreasureCards(Pawn p) {
+        p.addCard(treasureDeck.getCard());
     }
 
 
