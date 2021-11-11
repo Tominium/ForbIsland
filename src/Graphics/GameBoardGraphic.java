@@ -16,10 +16,10 @@ public class GameBoardGraphic extends JFrame{
     public GameBoardGraphic(){
         nextTurn = new JButton("Next Turn");
         move = new JButton("Move");
-        gameBoard = new JPanel();
-        heliPanel = new JPanel();
-        specialAbility=new JPanel();
-        Color limeGreen = new Color(118,218,132);
+        gameBoard = new JPanel(new GridBagLayout());
+        heliPanel = new JPanel(new GridBagLayout());
+        specialAbility= new JPanel(new GridBagLayout());
+        limeGreen = new Color(118,218,132);
         nextTurn.setBounds(40,80,WIDTH, HEIGHT);
         nextTurn.setBackground(limeGreen);
         nextTurn.setLocation(150,150);
