@@ -31,9 +31,7 @@ public class GameBoardGraphic extends JFrame{
         move.addActionListener((ActionListener) this);
     }
 
-    public void movePawn(Object j){
-        Pawn.getHand();
-    }
+    public void movePawn(Object j){}
 
     public void tradeable(){}
 
