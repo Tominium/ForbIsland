@@ -15,6 +15,12 @@ public class HelpMenu extends JFrame {
         win.setLayout(null);
 
         JLabel heading = new JLabel("Help Menu");
+        heading.setSize(750, 60);
+        heading.setFont(new Font("Calibri", Font.BOLD, 50));
+        heading.setForeground(new Color(139, 127, 127));
+        heading.setHorizontalAlignment(JLabel.CENTER);
+        heading.setVerticalAlignment(JLabel.CENTER);
+        win.add(heading);
 
 
         setSize(WIDTH, HEIGHT);
