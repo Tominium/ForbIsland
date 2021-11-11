@@ -20,7 +20,7 @@ public class Pawn implements Comparable<Pawn>{
         return role;
     }
 
-    public ArrayList<Card> getDeck(){
+    public ArrayList<Card> getHand(){
         return hand;
     }
 
