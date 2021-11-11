@@ -10,7 +10,8 @@ public class Tile {
     private boolean sunk;
     private String treasure;
 
-    public Tile() {
+    public Tile(String n) {
+        name = n;
         flooded = false;
         sunk = false;
         treasure = "";
