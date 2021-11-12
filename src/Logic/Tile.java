@@ -1,6 +1,9 @@
 package Logic;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Tile {
 
@@ -15,11 +18,25 @@ public class Tile {
         flooded = false;
         sunk = false;
         treasure = "";
+        String url = "src/Assets/zones/" + name + ".png";
+        try{
+            image = ImageIO.read(new File(url));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean floodTile() {
         if(flooded == false) {
             flooded = true;
+            String url = "src/Assets/zones/" + name + "_flood.png";
+            try{
+                image = ImageIO.read(new File(url));
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
             return true;
         }
         return false;
@@ -36,6 +53,13 @@ public class Tile {
     public boolean shoreUp() {
         if(sunk == false&&flooded == true) {
             flooded = false;
+            String url = "src/Assets/zones/" + name + ".png";
+            try{
+                image = ImageIO.read(new File(url));
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
             return true;
         }
         return false;
@@ -49,9 +73,6 @@ public class Tile {
         return image;
     }
 
-    public void setImage(BufferedImage b) {
-        image = b;
-    }
 
     public boolean hasTreasure() {
         if(treasure != "")
