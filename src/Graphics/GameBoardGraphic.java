@@ -1,5 +1,8 @@
 package Graphics;
 
+import Logic.GameState;
+import Logic.Tile;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -45,22 +48,14 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 //        GridBagLayout layout = new GridBagLayout();
 //        this.setLayout(layout);
 
-        File dir = new File("src/Assets/zones");
-
         int x =2; int y=0; int i =0;
-        for(File f: dir.listFiles()){
-            if(!f.getName().contains("flood")){
-                try{
-                    gbc.gridx = x;
-                    gbc.gridy = y;
-                    Image image = ImageIO.read(f).getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH); // transform it
-                    this.add(new JLabel(new ImageIcon(image)), gbc);
-                    if(x==5){y++; x=0;}
-                    else{x++;}
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        for(Tile t: GameState.tileLoc.keySet()){
+            gbc.gridx = x;
+            gbc.gridy = y;
+            Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
+            this.add(new JLabel(new ImageIcon(image)), gbc);
+            if(x==5){y++; x=0;}
+            else{x++;}
         }
 
 
