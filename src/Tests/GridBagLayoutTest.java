@@ -10,18 +10,19 @@ import java.io.IOException;
 
 public class GridBagLayoutTest extends JFrame implements MouseListener {
     private final GridBagLayout GridBagLayoutgrid;
+    private GridBagConstraints gbc;
 
     public static void main(String[] args) {
         GridBagLayoutTest a = new GridBagLayoutTest();
     }
     public GridBagLayoutTest() {
         GridBagLayoutgrid = new GridBagLayout();
-        GridBagConstraints gbc = new GridBagConstraints();
-        setLayout(GridBagLayoutgrid);
+        gbc = new GridBagConstraints();
+        this.setLayout(GridBagLayoutgrid);
         setTitle("GridBag Layout Example");
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        GridBagLayout layout = new GridBagLayout();
-        this.setLayout(layout);
+//        GridBagLayout layout = new GridBagLayout();
+//        this.setLayout(layout);
 
         File dir = new File("C:\\Users\\Cyric\\Downloads\\zones");
 
@@ -31,12 +32,13 @@ public class GridBagLayoutTest extends JFrame implements MouseListener {
                 try{
                     gbc.gridx = x;
                     gbc.gridy = y;
-                    this.add(new JLabel(new ImageIcon(ImageIO.read(f))), gbc);
+                    Image image = ImageIO.read(f).getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH); // transform it
+                    this.add(new JLabel(new ImageIcon(image)), gbc);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if(y==2){x++; y=0;}
-                else{y++;}
+                if(x==5){y++; x=0;}
+                else{x++;}
             }
         }
         addMouseListener(this);
@@ -53,7 +55,10 @@ public class GridBagLayoutTest extends JFrame implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        System.out.println("loc is (" + x + ", " + y + ")");
+        Component a = findComponentAt(e.getPoint());
+        int griX = GridBagLayoutgrid.getConstraints(a).gridx;
+        int griY = GridBagLayoutgrid.getConstraints(a).gridy;
+        System.out.println("(" + griX + ", " + griY + ")");
     }
 
     @Override
