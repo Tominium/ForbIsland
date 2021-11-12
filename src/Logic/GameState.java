@@ -2,6 +2,7 @@ package Logic;
 
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
+import Graphics.GameBoardGraphic;
 import Water.WaterMeter;
 
 
@@ -35,6 +36,9 @@ public class GameState {
         actionCount = 0;
 
         setRoles(numPlayers);
+        shuffleTiles();
+
+        new GameBoardGraphic();
     }
 
     private static void setRoles(int np){
