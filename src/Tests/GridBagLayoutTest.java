@@ -26,7 +26,7 @@ public class GridBagLayoutTest extends JFrame implements MouseListener {
 
         File dir = new File("C:\\Users\\Cyric\\Downloads\\zones");
 
-        int x =0; int y= 0; int i =0;
+        int x =2; int y=0; int i =0;
         for(File f: dir.listFiles()){
             if(!f.getName().contains("flood")){
                 try{
