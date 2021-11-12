@@ -1,10 +1,10 @@
 import Graphics.MainMenuFrame;
-import com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme;
+// import com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme;
 
 
 public class Runner {
     public static void main(String args[]) {
-        FlatGradiantoNatureGreenIJTheme.setup();
+//         FlatGradiantoNatureGreenIJTheme.setup();
         MainMenuFrame graphicWindow = new MainMenuFrame();
     }
 }
