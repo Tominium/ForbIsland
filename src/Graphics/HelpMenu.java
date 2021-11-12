@@ -6,6 +6,8 @@ public class HelpMenu extends JFrame {
     JLabel label = new JLabel();
     private JFrame helpMenu;
     private JTextPane pane;
+    private JMenuBar menuBar;
+    private JPanel pgOne, pgTwo, pgThree, pgFour, pgFive, pgSix, pgSeven, pgEight;
     private static int WIDTH = 800;
     private static int HEIGHT = 1000;
 
@@ -15,6 +17,9 @@ public class HelpMenu extends JFrame {
         Container win = getContentPane();
         win.setLayout(null);
         helpMenu = new JFrame();
+        menuBar = new JMenuBar();
+        JMenu menuFile = new JMenu("File");
+        JMenuItem menuItemExit = new JMenuItem("Exit");
         JLabel heading = new JLabel("Help Menu");
         heading.setSize(750, 60);
         heading.setFont(new Font("Calibri", Font.BOLD, 50));
@@ -23,7 +28,8 @@ public class HelpMenu extends JFrame {
         heading.setVerticalAlignment(JLabel.CENTER);
         win.add(heading);
         helpMenu.add(heading);
-
+        helpMenu.add(menuFile);
+        helpMenu.setJMenuBar(menuBar);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setResizable(false);
