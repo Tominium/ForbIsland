@@ -53,7 +53,7 @@ public class MainMenuFrame extends JFrame {
         startButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(list.getSelectedIndex() != 0 && level.getSelectedIndex() != 0){new GameState((int)list.getSelectedItem(), (String)level.getSelectedItem());}
+                if(list.getSelectedIndex() != 0 && level.getSelectedIndex() != 0){new GameState((int)list.getSelectedItem(), (String)level.getSelectedItem()); dispose();}
                 else if(list.getSelectedIndex()==0 && level.getSelectedIndex()==0){
                     JOptionPane.showMessageDialog(frame,
                         "Please Choose The Number Of Players And Select The Water Level",
