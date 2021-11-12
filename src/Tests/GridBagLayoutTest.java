@@ -26,19 +26,19 @@ public class GridBagLayoutTest extends JFrame implements MouseListener {
 
         File dir = new File("C:\\Users\\Cyric\\Downloads\\zones");
 
-        int x =0; int y= 0;
+        int x =0; int y= 0; int i =0;
         for(File f: dir.listFiles()){
             if(!f.getName().contains("flood")){
                 try{
                     gbc.gridx = x;
                     gbc.gridy = y;
-                    Image image = ImageIO.read(f).getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH); // transform it
+                    Image image = ImageIO.read(f).getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH); // transform it
                     this.add(new JLabel(new ImageIcon(image)), gbc);
+                    if(x==5){y++; x=0;}
+                    else{x++;}
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if(x==5){y++; x=0;}
-                else{x++;}
             }
         }
         addMouseListener(this);
