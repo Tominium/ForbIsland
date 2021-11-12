@@ -24,7 +24,7 @@ public class GridBagLayoutTest extends JFrame implements MouseListener {
 //        GridBagLayout layout = new GridBagLayout();
 //        this.setLayout(layout);
 
-        File dir = new File("C:\\Users\\Cyric\\Downloads\\zones");
+        File dir = new File("src/Assets/zones");
 
         int x =2; int y=0; int i =0;
         for(File f: dir.listFiles()){
