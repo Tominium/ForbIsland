@@ -25,21 +25,10 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private GridBagConstraints gbc;
 
     public GameBoardGraphic(){
-        nextTurn = new JButton("Next Turn");
-        move = new JButton("Move");
+        super("GameBoard");
         gameBoard = new JPanel();
-        heliPanel = new JPanel();
-        specialAbility= new JPanel();
-        limeGreen = new Color(118,218,132);
-        nextTurn.setBounds(40,80,WIDTH, HEIGHT);
-        nextTurn.setBackground(limeGreen);
-        nextTurn.setLocation(150,150);
-        move.setBounds(40,80,WIDTH, HEIGHT);
-        move.setBackground(limeGreen);
-        move.setLocation(300,150);
+
         addMouseListener(this);
-
-
 
         GridBagLayoutgrid = new GridBagLayout();
         gbc = new GridBagConstraints();
@@ -52,11 +41,14 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         for(Tile t: GameState.tileLoc.keySet()){
             gbc.gridx = x;
             gbc.gridy = y;
+            int[] tit = {x, y};
+            GameState.tileLoc.put(t, tit);
             Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
             this.add(new JLabel(new ImageIcon(image)), gbc);
             if(x==5){y++; x=0;}
             else{x++;}
         }
+        //this.add(gameBoard);
 
 
 
@@ -87,10 +79,16 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        Component a = findComponentAt(e.getPoint());
-        int griX = GridBagLayoutgrid.getConstraints(a).gridx;
-        int griY = GridBagLayoutgrid.getConstraints(a).gridy;
-        System.out.println("(" + griX + ", " + griY + ")");
+//        Component a = findComponentAt(e.getPoint());
+//        int griX = GridBagLayoutgrid.getConstraints(a).gridx;
+//        int griY = GridBagLayoutgrid.getConstraints(a).gridy;
+//        System.out.println("(" + griX + ", " + griY + ")");
+        int[] loc = {x, y};
+        for(Tile t: GameState.tileLoc.keySet()){
+            if(GameState.tileLoc.get(t) == loc){
+                t.floodTile();
+            }
+        }
     }
 
     @Override
