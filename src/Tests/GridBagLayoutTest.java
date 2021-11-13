@@ -59,18 +59,6 @@ public class GridBagLayoutTest extends JFrame implements MouseListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    private void updatePanel(){
-        int x =2; int y=0; int i =0;
-        for(Tile t: localTileLoc.values()){
-            gbc.gridx = x;
-            gbc.gridy = y;
-            Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
-            panel.add(new JLabel(new ImageIcon(image)), gbc);
-            if(x==5){y++; x=0;}
-            else{x++;}
-        }
-    }
-
     @Override
     public void mouseClicked(MouseEvent e) {
         Component a = findComponentAt(e.getPoint());
@@ -78,8 +66,11 @@ public class GridBagLayoutTest extends JFrame implements MouseListener {
         int griY = GridBagLayoutgrid.getConstraints(a).gridy;
         int[] loc = {griX, griY};
         System.out.println("(" + griX + ", " + griY + ")");
-        localTileLoc.get("(" + griX + ", " + griY + ")").shoreUp();
-        updatePanel();
+        localTileLoc.get("(" + griX + ", " + griY + ")").floodTile();
+        a.repaint();
+        a.revalidate();
+        panel.revalidate();
+        panel.repaint();
     }
 
     @Override
