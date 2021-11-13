@@ -3,13 +3,11 @@ package Graphics;
 import Logic.GameState;
 import Logic.Tile;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 1350;
@@ -23,6 +21,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private Color limeGreen;
     private final GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
+    private HashMap<int[], Tile> localTileLoc;
 
     public GameBoardGraphic(){
         nextTurn = new JButton("Next Turn");
@@ -39,7 +38,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         move.setLocation(300,150);
         addMouseListener(this);
 
-
+        localTileLoc = new HashMap<>();
 
         GridBagLayoutgrid = new GridBagLayout();
         gbc = new GridBagConstraints();
@@ -52,6 +51,9 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         for(Tile t: GameState.tileLoc.keySet()){
             gbc.gridx = x;
             gbc.gridy = y;
+            int[] loc = {x,y};
+            GameState.tileLoc.put(t, loc);
+            localTileLoc.put(loc, t);
             Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
             this.add(new JLabel(new ImageIcon(image)), gbc);
             if(x==5){y++; x=0;}
@@ -85,8 +87,6 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
         Component a = findComponentAt(e.getPoint());
         int griX = GridBagLayoutgrid.getConstraints(a).gridx;
         int griY = GridBagLayoutgrid.getConstraints(a).gridy;

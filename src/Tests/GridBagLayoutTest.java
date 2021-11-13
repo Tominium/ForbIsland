@@ -1,64 +1,85 @@
 package Tests;
 
-import javax.imageio.ImageIO;
+import Logic.GameState;
+import Logic.Tile;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
 
 public class GridBagLayoutTest extends JFrame implements MouseListener {
     private final GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
+    private JPanel panel;
+    private HashMap<String, Tile> localTileLoc;
 
     public static void main(String[] args) {
         GridBagLayoutTest a = new GridBagLayoutTest();
     }
     public GridBagLayoutTest() {
+        new GameState(4, "Hard");
+
+        panel = new JPanel(new GridBagLayout());
         GridBagLayoutgrid = new GridBagLayout();
         gbc = new GridBagConstraints();
-        this.setLayout(GridBagLayoutgrid);
+        panel.setLayout(GridBagLayoutgrid);
+        add(panel);
+
+        localTileLoc = new HashMap<>();
+
+        //this.setLayout(GridBagLayoutgrid);
         setTitle("GridBag Layout Example");
         gbc.fill = GridBagConstraints.HORIZONTAL;
 //        GridBagLayout layout = new GridBagLayout();
 //        this.setLayout(layout);
 
-        File dir = new File("src/Assets/zones");
 
         int x =2; int y=0; int i =0;
-        for(File f: dir.listFiles()){
-            if(!f.getName().contains("flood")){
-                try{
-                    gbc.gridx = x;
-                    gbc.gridy = y;
-                    Image image = ImageIO.read(f).getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH); // transform it
-                    this.add(new JLabel(new ImageIcon(image)), gbc);
-                    if(x==5){y++; x=0;}
-                    else{x++;}
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        for(Tile t: GameState.tileLoc.keySet()){
+            gbc.gridx = x;
+            gbc.gridy = y;
+            int[] loc = {x,y};
+            System.out.println("(" + x + ", " + y + ")");
+            GameState.tileLoc.put(t, loc);
+            localTileLoc.put("(" + x + ", " + y + ")", t);
+            Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
+            panel.add(new JLabel(new ImageIcon(image)), gbc);
+            if(x==5){y++; x=0;}
+            else{x++;}
         }
+        System.out.println(localTileLoc);
+        pack();
         addMouseListener(this);
 
         setSize(3840, 2160);
         setPreferredSize(getSize());
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
 
-
+    private void updatePanel(){
+        int x =2; int y=0; int i =0;
+        for(Tile t: localTileLoc.values()){
+            gbc.gridx = x;
+            gbc.gridy = y;
+            Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
+            panel.add(new JLabel(new ImageIcon(image)), gbc);
+            if(x==5){y++; x=0;}
+            else{x++;}
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
         Component a = findComponentAt(e.getPoint());
         int griX = GridBagLayoutgrid.getConstraints(a).gridx;
         int griY = GridBagLayoutgrid.getConstraints(a).gridy;
+        int[] loc = {griX, griY};
         System.out.println("(" + griX + ", " + griY + ")");
+        localTileLoc.get("(" + griX + ", " + griY + ")").shoreUp();
+        updatePanel();
     }
 
     @Override
