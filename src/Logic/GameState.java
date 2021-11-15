@@ -63,6 +63,26 @@ public class GameState {
         return waterMeter.getWaterLevel();
     }
 
+    public boolean movePawn(int x, int y) {
+        for (Map.Entry<Pawn, int[]> entry : pawnLoc.entrySet())
+            if(entry.getKey().getTurnNum()==turn) {
+                int[] temp = entry.getValue();
+                temp[0] = x;
+                temp[1] = y;
+                return true;
+            }
+        return false;
+    }
 
+    public boolean shore(int x, int y) {
+        for (Map.Entry<Tile, int[]> entry : tileLoc.entrySet()) {
+            int[] temp = entry.getValue();
+            if(temp[0]==x&&temp[1]==y) {
+                entry.getKey().shoreUp();
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

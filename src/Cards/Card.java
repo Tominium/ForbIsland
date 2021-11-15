@@ -23,4 +23,9 @@ public class Card {
     public String getType(){
         return cardType;
     }
+
+    public boolean equals(Object obj) {
+        Card c = (Card) obj;
+        return this.getCardName().equals(c.getCardName());
+    }
 }
