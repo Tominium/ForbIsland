@@ -24,21 +24,13 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private HashMap<int[], Tile> localTileLoc;
 
     public GameBoardGraphic(){
-        nextTurn = new JButton("Next Turn");
-        move = new JButton("Move");
-        gameBoard = new JPanel();
-        heliPanel = new JPanel();
-        specialAbility= new JPanel();
-        limeGreen = new Color(118,218,132);
-        nextTurn.setBounds(40,80,WIDTH, HEIGHT);
-        nextTurn.setBackground(limeGreen);
-        nextTurn.setLocation(150,150);
-        move.setBounds(40,80,WIDTH, HEIGHT);
-        move.setBackground(limeGreen);
-        move.setLocation(300,150);
+        Container win = getContentPane();
+        win.setLayout(null);
         addMouseListener(this);
 
         localTileLoc = new HashMap<>();
+
+
 
         GridBagLayoutgrid = new GridBagLayout();
         gbc = new GridBagConstraints();
