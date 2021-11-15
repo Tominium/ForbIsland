@@ -1,5 +1,6 @@
 package Logic;
 
+import Cards.Card;
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
 import Graphics.GameBoardGraphic;
@@ -35,8 +36,8 @@ public class GameState {
         turn = 0;
         actionCount = 0;
 
-        setRoles(numPlayers);
         shuffleTiles();
+        setRoles(numPlayers);
 
         new GameBoardGraphic();
     }
@@ -58,9 +59,22 @@ public class GameState {
         }
     }
 
+    public static boolean collectTreasure(){
+        ArrayList<Pawn> temp = new ArrayList<>();
+        temp.addAll(pawnLoc.keySet());
+        ArrayList<Card> deck = temp.get(turn).getHand();
+        return false;
+     }
+
     public double riseWaterLevel() {
         waterMeter.watersRise();
         return waterMeter.getWaterLevel();
+    }
+
+    public static Integer changeTurn(){
+        if(turn==4){turn=0;}
+        else{turn++;}
+        return turn;
     }
 
 
