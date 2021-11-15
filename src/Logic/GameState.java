@@ -63,6 +63,19 @@ public class GameState {
         return waterMeter.getWaterLevel();
     }
 
+    public boolean movePawn(int x, int y) {
+        Pawn temp;
+
+        ArrayList<Integer> loc = pawnLoc.get(temp);
+        loc.set(0,x); loc.set(1,y);
+        actionCount++;
+
+    }
+
+    public boolean shore(int x, int y) {
+
+    }
+
 
 
 }
