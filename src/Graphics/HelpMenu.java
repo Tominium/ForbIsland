@@ -13,7 +13,7 @@ public class HelpMenu extends JFrame {
     private static int HEIGHT = 1000;
 
     public HelpMenu() {
-        //super("Help Menu");
+        super("Help Menu");
 
         Container win = getContentPane();
         win.setLayout(null);
