@@ -10,12 +10,12 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
-    private static final int WIDTH = 1350;
-    private static final int HEIGHT = 750;
+    private static final int WIDTH = 1080;
+    private static final int HEIGHT = 720;
     private Font Font;
     private JButton nextTurn;
     private JButton move;
-    private JPanel gameBoard;
+    private JPanel gameTiles;
     private JPanel heliPanel;
     private JPanel specialAbility;
     private Color limeGreen;
@@ -31,13 +31,13 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         localTileLoc = new HashMap<>();
 
 
-
         GridBagLayoutgrid = new GridBagLayout();
         gbc = new GridBagConstraints();
         this.setLayout(GridBagLayoutgrid);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-//        GridBagLayout layout = new GridBagLayout();
-//        this.setLayout(layout);
+        gameTiles = new JPanel();
+        gameTiles.setLayout(GridBagLayoutgrid);
+        add(gameTiles);
 
         int x = 2; int y=0; int i =0;
         for(Tile t: GameState.tileLoc.keySet()){
@@ -48,7 +48,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             GameState.tileLoc.put(t, loc);
             localTileLoc.put(loc, t);
             Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
-            this.add(new JLabel(new ImageIcon(image)), gbc);
+            gameTiles.add(new JLabel(new ImageIcon(image)), gbc);
             if(i == 0|| i == 5){
                 if(x == 3){
                     y++;
@@ -110,7 +110,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         setVisible(true);
     }
 
-    public void movePawn(Object j){}
+    public void movePawn(){}
 
     public void tradeable(){}
 

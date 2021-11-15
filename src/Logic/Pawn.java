@@ -41,13 +41,15 @@ public class Pawn implements Comparable<Pawn>{
         }
     }
 
+    public void removeCard(Card c){
+        for(int i=0; i<hand.size(); i++){
+            if(c.equals(hand.get(i))){hand.remove(i);}
+        }
+    }
+
     public int compareTo(Pawn p){
         if(this.getTurnNum() > p.getTurnNum()){return 1;}
         return -1;
-    }
-
-    public void setTurnZero(){
-        turnNum = 0;
     }
 
     public boolean iterateActionCount(){

@@ -63,6 +63,11 @@ public class GameState {
         ArrayList<Pawn> temp = new ArrayList<>();
         temp.addAll(pawnLoc.keySet());
         ArrayList<Card> deck = temp.get(turn).getHand();
+        Map<Card, Integer> count = new TreeMap<>();
+        for(Card c: deck){
+            if(count.get(c) == null){count.put(c, 1);}
+            count.put(c, count.get(c.getCardName())+1);
+        }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return false;
      }
 
