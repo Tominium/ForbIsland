@@ -1,6 +1,5 @@
 package Logic;
 
-import Cards.Card;
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
 import Graphics.GameBoardGraphic;
@@ -36,8 +35,8 @@ public class GameState {
         turn = 0;
         actionCount = 0;
 
-        shuffleTiles();
         setRoles(numPlayers);
+        shuffleTiles();
 
         new GameBoardGraphic();
     }
@@ -59,31 +58,31 @@ public class GameState {
         }
     }
 
-    public static boolean collectTreasure(){
-        ArrayList<Pawn> temp = new ArrayList<>();
-        temp.addAll(pawnLoc.keySet());
-        ArrayList<Card> deck = temp.get(turn).getHand();
-        Map<Card, Integer> count = new TreeMap<>();
-        for(Card c: deck){
-            if(count.get(c) == null){count.put(c, 1);}
-            count.put(c, count.get(c.getCardName())+1);
-        }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        return false;
-     }
-
     public double riseWaterLevel() {
         waterMeter.watersRise();
         return waterMeter.getWaterLevel();
     }
 
-    public static Integer changeTurn(){
-        if(turn==4){turn=0;}
-        else{turn++;}
-        return turn;
+    public boolean movePawn(int x, int y) {
+        for (Map.Entry<Pawn, int[]> entry : pawnLoc.entrySet())
+            if(entry.getKey().getTurnNum()==turn) {
+                int[] temp = entry.getValue();
+                temp[0] = x;
+                temp[1] = y;
+                return true;
+            }
+        return false;
     }
 
-
-
-
+    public boolean shore(int x, int y) {
+        for (Map.Entry<Tile, int[]> entry : tileLoc.entrySet()) {
+            int[] temp = entry.getValue();
+            if(temp[0]==x&&temp[1]==y) {
+                entry.getKey().shoreUp();
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
