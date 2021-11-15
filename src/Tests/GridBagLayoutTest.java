@@ -36,7 +36,7 @@ public class GridBagLayoutTest extends JFrame implements MouseListener {
 //        this.setLayout(layout);
 
 
-        int x =2; int y=0; int i =0;
+        int x = 2; int y=0; int i =0;
         for(Tile t: GameState.tileLoc.keySet()){
             gbc.gridx = x;
             gbc.gridy = y;
@@ -46,8 +46,56 @@ public class GridBagLayoutTest extends JFrame implements MouseListener {
             localTileLoc.put("(" + x + ", " + y + ")", t);
             Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
             panel.add(new JLabel(new ImageIcon(image)), gbc);
-            if(x==5){y++; x=0;}
-            else{x++;}
+            if(i == 0|| i == 5){
+                    if(x == 3){
+                        y++;
+                        i++;
+                        x = 1;
+                    }
+                    else {
+                        x++;
+                    }
+            }
+            else if(i == 1 || i == 4){
+                if(i == 1){
+                    if(x == 4){
+                        y++;
+                        i++;
+                        x = 0;
+                    }
+                    else{
+                        x++;
+                    }
+                }
+                else if(x == 4){
+                    y++;
+                    i++;
+                    x = 2;
+                }
+                else{
+                    x++;
+                }
+            }
+            else if(i == 2 || i == 3){
+                if(i == 2){
+                    if(x == 5){
+                        y++;
+                        i++;
+                        x = 0;
+                    }
+                    else{
+                        x++;
+                    }
+                }
+                else if(x == 5){
+                    y++;
+                    i++;
+                    x = 1;
+                }
+                else{
+                    x++;
+                }
+            }
         }
         System.out.println(localTileLoc);
         pack();
