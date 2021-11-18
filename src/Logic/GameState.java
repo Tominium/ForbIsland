@@ -63,7 +63,7 @@ public class GameState {
     }
 
     public void setOriginalPlayerLocation(int x, int y, Pawn p) {
-        p.setOriginalLocation(x, y);
+        p.setLocation(x, y);
     }
     public boolean check(Tile t, Pawn p) {
         ArrayList<Integer> temp = p.getLocation();
