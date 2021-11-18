@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 1350;
@@ -21,15 +22,15 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private Color limeGreen;
     private final GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
-    private HashMap<int[], Tile> localTileLoc;
+    public static HashMap<int[], Tile> localTileLoc;
+    public static int[] foolsLanding;
 
-    public GameBoardGraphic(){
+    public GameBoardGraphic() {
         Container win = getContentPane();
         win.setLayout(null);
         addMouseListener(this);
 
         localTileLoc = new HashMap<>();
-
 
 
         GridBagLayoutgrid = new GridBagLayout();
@@ -39,68 +40,62 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 //        GridBagLayout layout = new GridBagLayout();
 //        this.setLayout(layout);
 
-        int x = 2; int y=0; int i =0;
-        for(Tile t: GameState.tileLoc.keySet()){
+        int x = 2;
+        int y = 0;
+        int i = 0;
+        for (Tile t : GameState.tileLoc.keySet()) {
             gbc.gridx = x;
             gbc.gridy = y;
-            int[] loc = {x,y};
+            int[] loc = {x, y};
             System.out.println("(" + x + ", " + y + ")");
             GameState.tileLoc.put(t, loc);
             localTileLoc.put(loc, t);
-            Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
+            Image image = t.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // transform it
             this.add(new JLabel(new ImageIcon(image)), gbc);
-            if(i == 0|| i == 5){
-                if(x == 3){
+            if (i == 0 || i == 5) {
+                if (x == 3) {
                     y++;
                     i++;
                     x = 1;
-                }
-                else {
+                } else {
                     x++;
                 }
-            }
-            else if(i == 1 || i == 4){
-                if(i == 1){
-                    if(x == 4){
+            } else if (i == 1 || i == 4) {
+                if (i == 1) {
+                    if (x == 4) {
                         y++;
                         i++;
                         x = 0;
-                    }
-                    else{
+                    } else {
                         x++;
                     }
-                }
-                else if(x == 4){
+                } else if (x == 4) {
                     y++;
                     i++;
                     x = 2;
-                }
-                else{
+                } else {
                     x++;
                 }
-            }
-            else if(i == 2 || i == 3){
-                if(i == 2){
-                    if(x == 5){
+            } else if (i == 2 || i == 3) {
+                if (i == 2) {
+                    if (x == 5) {
                         y++;
                         i++;
                         x = 0;
-                    }
-                    else{
+                    } else {
                         x++;
                     }
-                }
-                else if(x == 5){
+                } else if (x == 5) {
                     y++;
                     i++;
                     x = 1;
-                }
-                else{
+                } else {
                     x++;
                 }
             }
         }
 
+        returnFoolsLanding();
 
 
         setSize(WIDTH, HEIGHT);
@@ -110,21 +105,40 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         setVisible(true);
     }
 
-    public void movePawn(Object j){}
+    public void movePawn(Object j) {
+    }
 
-    public void tradeable(){}
+    public void tradeable() {
+    }
 
-    public void removeCard(){}
+    public void removeCard() {
+    }
 
-    public void sandBag(){}
+    public void sandBag() {
+    }
 
-    public void helicopter(){}
+    public void helicopter() {
+    }
 
-    public void specialAbility(){}
+    public void specialAbility() {
+    }
 
-    public void winGraphics(){}
+    public void winGraphics() {
+    }
 
-    public void loseGraphics(){}
+    public void loseGraphics() {
+    }
+
+    public void returnFoolsLanding(){
+        for (Map.Entry<int[], Tile> entry : localTileLoc.entrySet()) {
+            String s = entry.getValue().getName();
+            if (s.equals("Fool's Landing")) {
+                foolsLanding = entry.getKey();
+            }
+        }
+    }
+
+
 
     @Override
     public void mouseClicked(MouseEvent e) {

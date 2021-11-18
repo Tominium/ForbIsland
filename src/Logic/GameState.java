@@ -6,12 +6,13 @@ import Graphics.GameBoardGraphic;
 import Water.WaterMeter;
 
 
+
 import java.awt.image.BufferedImage;
 import java.util.*;
 
 public class GameState {
     public static String[] collectedTreasures;
-    private BufferedImage boardTemplate;
+    private static BufferedImage boardTemplate;
     public static HashMap<Tile, int[]> tileLoc;
     public static TreeMap<Pawn, int[]> pawnLoc;
     public static WaterMeter waterMeter;
@@ -84,6 +85,23 @@ public class GameState {
                 entry.getKey().shoreUp();
                 return true;
             }
+        }
+        return false;
+    }
+
+    public static boolean checkWin(){
+        for(int i = 0; i > 4; i++){
+            if(collectedTreasures[i] == null){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkLose(){
+        int[] loc = GameBoardGraphic.foolsLanding;
+        if(GameBoardGraphic.localTileLoc.get(loc).returnSunk()){
+            return true;
         }
         return false;
     }

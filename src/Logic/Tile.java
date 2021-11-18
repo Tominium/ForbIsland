@@ -80,5 +80,9 @@ public class Tile {
         return false;
     }
 
+    public boolean returnSunk(){
+        return sunk;
+    }
+
 
 }
