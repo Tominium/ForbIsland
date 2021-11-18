@@ -9,11 +9,22 @@ public class Pawn implements Comparable<Pawn>{
     private ArrayList<Card> hand;
     private int turnNum;
     private int actionCount;
+    private ArrayList<Integer> loc;
 
     public Pawn(String r, int tn){
         role = r;
         turnNum = tn;
         actionCount = 0;
+        loc = new ArrayList<Integer>();
+    }
+
+    public void setLocation(int x, int y) {
+        loc.set(0,x);
+        loc.set(1,y);
+    }
+
+    public ArrayList<Integer> getLocation() {
+        return loc;
     }
 
     public String getRole(){
@@ -41,13 +52,15 @@ public class Pawn implements Comparable<Pawn>{
         }
     }
 
+    public void removeCard(Card c){
+        for(int i=0; i<hand.size(); i++){
+            if(c.equals(hand.get(i))){hand.remove(i);}
+        }
+    }
+
     public int compareTo(Pawn p){
         if(this.getTurnNum() > p.getTurnNum()){return 1;}
         return -1;
-    }
-
-    public void setTurnZero(){
-        turnNum = 0;
     }
 
     public boolean iterateActionCount(){
