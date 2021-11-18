@@ -63,6 +63,9 @@ public class GameState {
         return waterMeter.getWaterLevel();
     }
 
+    public void check(int x, int y) {
+
+    }
     public boolean movePawn(int x, int y) {
         for (Map.Entry<Pawn, int[]> entry : pawnLoc.entrySet())
             if(entry.getKey().getTurnNum()==turn) {
