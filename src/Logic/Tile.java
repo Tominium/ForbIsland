@@ -30,9 +30,9 @@ public class Tile {
         }
     }
 
-    public void setOriginalLocation(int x, int y) {
-        loc.add(x);
-        loc.add(y);
+    public void setLocation(int x, int y) {
+        loc.set(0, x);
+        loc.set(1, y);
     }
 
     public ArrayList<Integer> getLocation() {
