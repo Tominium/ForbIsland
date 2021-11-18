@@ -9,11 +9,22 @@ public class Pawn implements Comparable<Pawn>{
     private ArrayList<Card> hand;
     private int turnNum;
     private int actionCount;
+    private ArrayList<Integer> loc;
 
     public Pawn(String r, int tn){
         role = r;
         turnNum = tn;
         actionCount = 0;
+        loc = new ArrayList<Integer>();
+    }
+
+    public void setOriginalLocation(int x, int y) {
+        loc.add(x);
+        loc.add(y);
+    }
+
+    public ArrayList<Integer> getLocation() {
+        return loc;
     }
 
     public String getRole(){
