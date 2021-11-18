@@ -12,11 +12,11 @@ import java.util.*;
 public class GameState {
     public static String[] collectedTreasures;
     private BufferedImage boardTemplate;
+    public static HashMap<Tile, int[]> tileLoc;
+    public static TreeMap<Pawn, int[]> pawnLoc;
     public static WaterMeter waterMeter;
     private static TreasureDeck treasureDeck;
     private static FloodDeck floodDeck;
-    public static ArrayList<Pawn> pawnLoc;
-    public static ArrayList<Tile> tileLoc;
     private static int turn;
     private static int actionCount;
     public final static String[] TILENAMES =
@@ -28,6 +28,8 @@ public class GameState {
 
     public GameState(int numPlayers, String diff){
         collectedTreasures = new String[4];
+        tileLoc = new HashMap<Tile, int[]>();
+        pawnLoc = new TreeMap<Pawn, int[]>();
         treasureDeck = new TreasureDeck();
         floodDeck = new FloodDeck();
         turn = 0;
@@ -46,15 +48,14 @@ public class GameState {
         for(int i=0; i<np; i++) {
             int pos = (int)(Math.random()*roles.size())+0;
             Pawn p = new Pawn(roles.remove(pos), i+1);
-            pawnLoc.add(p);
+            pawnLoc.put(p, new int[2]);
         }
     }
 
     public static void shuffleTiles() {
         for(int i = 0; i < 24; i++) {
-            tileLoc.add(new Tile(TILENAMES[i])); //TO BE CHANGED
+            tileLoc.put(new Tile(TILENAMES[i]), new int[2]); //TO BE CHANGED
         }
-        Collections.shuffle(tileLoc);
     }
 
     public double riseWaterLevel() {
@@ -62,43 +63,29 @@ public class GameState {
         return waterMeter.getWaterLevel();
     }
 
-    public void setOriginalPlayerLocation(int x, int y, Pawn p) {
-        p.setLocation(x, y);
-    }
-    public boolean check(Tile t, Pawn p) {
-        ArrayList<Integer> temp = p.getLocation();
+    public void check(int x, int y) {
 
-        if(t.isSunk()==true)
-            return false;
-        else if(t.getLocation().get(0)==temp.get(0)+1||t.getLocation().get(0)==temp.get(0)-1)
-            return true;
-        else if(t.getLocation().get(1)==temp.get(1)+1||t.getLocation().get(1)==temp.get(1)-1)
-            return true;
-        else
-            return false;
     }
-//    public boolean movePawn(int x, int y) {
-//        for (Map.Entry<Pawn, int[]> entry : pawnLoc.entrySet())
-//            if(entry.getKey().getTurnNum()==turn) {
-//                int[] temp = entry.getValue();
-//                temp[0] = x;
-//                temp[1] = y;
-//                return true;
-//            }
-//        return false;
-//    }
-//
-//    public boolean shore(int x, int y) {
-//        for (Map.Entry<Tile, int[]> entry : tileLoc.entrySet()) {
-//            int[] temp = entry.getValue();
-//            if(temp[0]==x&&temp[1]==y) {
-//                entry.getKey().shoreUp();
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public boolean movePawn(int x, int y) {
+        for (Map.Entry<Pawn, int[]> entry : pawnLoc.entrySet())
+            if(entry.getKey().getTurnNum()==turn) {
+                int[] temp = entry.getValue();
+                temp[0] = x;
+                temp[1] = y;
+                return true;
+            }
+        return false;
+    }
 
-    
+    public boolean shore(int x, int y) {
+        for (Map.Entry<Tile, int[]> entry : tileLoc.entrySet()) {
+            int[] temp = entry.getValue();
+            if(temp[0]==x&&temp[1]==y) {
+                entry.getKey().shoreUp();
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
