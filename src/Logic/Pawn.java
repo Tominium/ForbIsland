@@ -16,6 +16,10 @@ public class Pawn implements Comparable<Pawn>{
         turnNum = tn;
         actionCount = 0;
         loc = new ArrayList<Integer>();
+        hand = new ArrayList<>();
+        addCard(GameState.treasureDeck.getCard());
+        addCard(GameState.treasureDeck.getCard());
+        addCard(GameState.treasureDeck.getCard());
     }
 
     public void setLocation(int x, int y) {
