@@ -31,8 +31,8 @@ public class Tile {
     }
 
     public void setLocation(int x, int y) {
-        loc.set(0, x);
-        loc.set(1, y);
+        if(loc.size()==0){loc.add(x);loc.add(y);}
+        else{loc.set(0, x); loc.set(1,y);}
     }
 
     public ArrayList<Integer> getLocation() {
