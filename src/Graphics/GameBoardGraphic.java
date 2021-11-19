@@ -11,8 +11,8 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
-    private static final int WIDTH = 2560;
-    private static final int HEIGHT = 1440;
+    private static final int WIDTH = 2000;
+    private static final int HEIGHT = 900;
     private Font Font;
     private JButton nextTurn;
     private JButton move;
@@ -29,35 +29,34 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         win.setLayout(new GridBagLayout());
         addMouseListener(this);
 
-        GridBagConstraints frameGbc = new GridBagConstraints();
-        frameGbc.gridx = 0;
-        frameGbc.gridy = 0;
+        localTileLoc = new HashMap<>();
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints frameGBC = new GridBagConstraints();
+
         playerDeckView =  new JPanel(){
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 for(Pawn p: GameState.pawnLoc){
                     for(int i=0; i<p.getHand().size(); i++){
                         for(int a=100; a<500; a+=100){
-                            g.drawImage(p.getHand().get(i).getImage(), (i+1)*100, a, null);
+                            g.drawImage(p.getHand().get(i).getImage().getScaledInstance(100, 175,  Image.SCALE_SMOOTH), -100,-100, null);
                         }
                     }
                 }
             }
         };
-        this.add(playerDeckView, frameGbc);
+        frameGBC.gridx = 1;
+        frameGBC.gridy = 0;
+        add(playerDeckView, frameGBC);
 
-        localTileLoc = new HashMap<>();
-
-
-        GridBagLayoutgrid = new GridBagLayout();
         gbc = new GridBagConstraints();
-        this.setLayout(GridBagLayoutgrid);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gameTiles = new JPanel();
+        GridBagLayoutgrid = new GridBagLayout();
         gameTiles.setLayout(GridBagLayoutgrid);
-        frameGbc.gridx = 1;
-        frameGbc.gridy = 1;
-        add(gameTiles, frameGbc);
+        frameGBC.gridx = 2;
+        frameGBC.gridy = 0;
+        add(gameTiles, frameGBC);
 
         int x = 2; int y=0; int i =0;
         for(Tile t: GameState.tileLoc){
