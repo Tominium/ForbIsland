@@ -25,6 +25,8 @@ public class GameState {
                     ,"Lost Lagoon","Iron Gate","Howling Garden","Gold Gate","Fools' Landing", "Dunes of Deception",
                     "Crimson Forest", "Coral Palace", "Copper Gate", "Cliffs of Abandon", "Cave of Shadows", "" +
                     "Cave of Embers", "Bronze Gate", "Breakers Bridge"};
+    private static HashMap<int[], Tile> dupl;
+    private static int[] loc;
 
     public GameState(int numPlayers, String diff){
         collectedTreasures = new String[4];
@@ -34,6 +36,8 @@ public class GameState {
         floodDeck = new FloodDeck();
         turn = 0;
         actionCount = 0;
+        dupl = GameBoardGraphic.localTileLoc;
+        loc = new int[0];
 
         setRoles(numPlayers);
         shuffleTiles();
@@ -100,6 +104,40 @@ public class GameState {
 //        }
 //        return false;
 //    }
+
+    public boolean checkLose(){
+        if(dupl.get(findLoc("Fool's Landing", loc)).isSunk()){
+            return true;
+        }
+        else if(dupl.get(findLoc("Temple of the Moon", loc)).isSunk() &&
+        dupl.get(findLoc("Temple of the Sun", loc)).isSunk()){
+            return true;
+        }
+        else if(dupl.get(findLoc("Tidal Palace", loc)).isSunk() &&
+                dupl.get(findLoc("Coral Palace", loc)).isSunk()){
+            return true;
+        }
+        else if(dupl.get(findLoc("Whispering Garden", loc)).isSunk() &&
+                dupl.get(findLoc("Howling Garden", loc)).isSunk()){
+            return true;
+        }
+        else if(dupl.get(findLoc("Cave of Embers", loc)).isSunk() &&
+                dupl.get(findLoc("Cave of Shadows", loc)).isSunk()){
+            return true;
+        }
+        return false;
+
+    }
+
+    public int[] findLoc(String tileName, int[] location){
+        for (Map.Entry<int[], Tile> entry : dupl.entrySet()) {
+            if (entry.equals(tileName)) {
+                loc = entry.getKey();
+                return loc;
+            }
+        }
+        return loc;
+    }
 
 
 
