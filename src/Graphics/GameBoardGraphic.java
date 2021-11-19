@@ -18,6 +18,8 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private JButton move;
     private JPanel gameTiles;
     private JPanel playerDeckView;
+    private GridBagLayout playerDeckGBL;
+    private GridBagConstraints playerDeckGBC;
     private JPanel heliPanel;
     private JPanel specialAbility;
     private final GridBagLayout GridBagLayoutgrid;
@@ -33,19 +35,21 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         this.setLayout(new GridBagLayout());
         GridBagConstraints frameGBC = new GridBagConstraints();
 
+        playerDeckGBL = new GridBagLayout();
+        playerDeckGBC = new GridBagConstraints();
         playerDeckView =  new JPanel(){
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
+            protected void paintComponent(Graphics g){
+                setLayout(playerDeckGBL);
                 for(Pawn p: GameState.pawnLoc){
                     for(int i=0; i<p.getHand().size(); i++){
-                        for(int a=100; a<500; a+=100){
-                            g.drawImage(p.getHand().get(i).getImage().getScaledInstance(100, 175,  Image.SCALE_SMOOTH), -100,-100, null);
-                        }
-                    }
-                }
-            }
-        };
-        frameGBC.gridx = 1;
+                        for(int ii=0; ii<p.getHand().size(); ii++){
+                            playerDeckGBC.gridx = ii;
+                            playerDeckGBC.gridy = i;
+                            Image image = p.getHand().get(i).getImage().getScaledInstance(50, 100,  Image.SCALE_SMOOTH); // transform it
+                            add(new JLabel(new ImageIcon(image)), playerDeckGBC);
+                        }}}}};
+
+        frameGBC.gridx = 0;
         frameGBC.gridy = 0;
         add(playerDeckView, frameGBC);
 
@@ -54,10 +58,20 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         gameTiles = new JPanel();
         GridBagLayoutgrid = new GridBagLayout();
         gameTiles.setLayout(GridBagLayoutgrid);
-        frameGBC.gridx = 2;
+        paintTile();
+        frameGBC.gridx = 1;
         frameGBC.gridy = 0;
+        frameGBC.weightx = 0.01;
         add(gameTiles, frameGBC);
 
+        setSize(WIDTH, HEIGHT);
+        setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
+        setResizable(false);
+        add(new Panel());
+        setVisible(true);
+    }
+
+    private void paintTile(){
         int x = 2; int y=0; int i =0;
         for(Tile t: GameState.tileLoc){
             gbc.gridx = x;
@@ -118,14 +132,6 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                 }
             }
         }
-
-
-
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
-        setResizable(false);
-        add(new Panel());
-        setVisible(true);
     }
 
     public void movePawn(){}
