@@ -87,7 +87,7 @@ public class HelpMenu extends JFrame {
         pEight.setForeground(new Color(98, 98, 103,255));
         pEight.setLocation(625,650);
         win.add(pEight);
-
+        // buttons
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setResizable(false);
