@@ -25,20 +25,20 @@ public class TreasureDeck {
 
         for(int i = 0; i < 5; i++)
         {
-            deck.push(new TreasureCard("Earth", "Cards.TreasureCard"));
-            deck.push(new TreasureCard("Wind", "Cards.TreasureCard"));
-            deck.push(new TreasureCard("Fire", "Cards.TreasureCard"));
-            deck.push(new TreasureCard("Ocean", "Cards.TreasureCard"));
+            deck.push(new TreasureCard("Earth", "TreasureCard"));
+            deck.push(new TreasureCard("Wind", "TreasureCard"));
+            deck.push(new TreasureCard("Fire", "TreasureCard"));
+            deck.push(new TreasureCard("Ocean", "TreasureCard"));
         }
 
         for(int i = 0; i < 3; i++)
-            deck.push(new WatersRise(null, "Water.WatersRise"));
+            deck.push(new WatersRise("WatersRise", "WatersRise"));
 
         for(int i = 0; i < 3; i++)
-            deck.push(new SpecialCard("HelicopterRide", "Cards.SpecialCard"));
+            deck.push(new SpecialCard("HelicopterRide", "SpecialCard"));
 
         for(int i = 0; i < 2; i++)
-            deck.push(new SpecialCard("Sandbags", "Cards.SpecialCard"));
+            deck.push(new SpecialCard("Sandbag", "SpecialCard"));
 
         shuffle();
     }

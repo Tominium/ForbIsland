@@ -1,6 +1,5 @@
 package Decks;
 
-import Cards.Card;
 import Cards.FloodCard;
 import Logic.GameState;
 
@@ -20,7 +19,7 @@ public class FloodDeck {
         used = new ArrayDeque<FloodCard>();
 
         for(int i = 0; i < 24; i++)
-            deck.push(new FloodCard(GameState.TILENAMES[i], "Cards.FloodCard"));
+            deck.push(new FloodCard(GameState.TILENAMES[i], "FloodCard"));
         shuffle();
     }
 

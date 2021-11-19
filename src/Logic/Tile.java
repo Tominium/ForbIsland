@@ -21,7 +21,7 @@ public class Tile {
         sunk = false;
         treasure = "";
         loc = new ArrayList<Integer>();
-        String url = "src/Assets/zones/" + name + ".png";
+        String url = "src/Assets/zones/" + name + ".png.png";
         try{
             image = ImageIO.read(new File(url));
         }
@@ -31,8 +31,8 @@ public class Tile {
     }
 
     public void setLocation(int x, int y) {
-        loc.set(0, x);
-        loc.set(1, y);
+        if(loc.size()==0){loc.add(x);loc.add(y);}
+        else{loc.set(0, x); loc.set(1,y);}
     }
 
     public ArrayList<Integer> getLocation() {
@@ -97,6 +97,10 @@ public class Tile {
         if(treasure != "")
             return true;
         return false;
+    }
+
+    public boolean returnSunk(){
+        return sunk;
     }
 
 
