@@ -21,7 +21,7 @@ public class Tile {
         sunk = false;
         treasure = "";
         loc = new ArrayList<Integer>();
-        String url = "src/Assets/zones/" + name + ".png";
+        String url = "src/Assets/zones/" + name + ".png.png";
         try{
             image = ImageIO.read(new File(url));
         }

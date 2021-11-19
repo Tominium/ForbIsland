@@ -14,7 +14,7 @@ public class FloodCard {
     public FloodCard(String name, String type){
         cardName = name;
         cardType = type;
-        String url = "src/Assets/zones/" + name + ".png";
+        String url = "src/Assets/zones/" + name + ".png.png";
         try{
             image = ImageIO.read(new File(url));
         }
