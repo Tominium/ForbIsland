@@ -25,6 +25,8 @@ public class GameState {
                     ,"Lost Lagoon","Iron Gate","Howling Garden","Gold Gate","Fools' Landing", "Dunes of Deception",
                     "Crimson Forest", "Coral Palace", "Copper Gate", "Cliffs of Abandon", "Cave of Shadows", "" +
                     "Cave of Embers", "Bronze Gate", "Breakers Bridge"};
+    private static HashMap<int[], Tile> dupl;
+    private static int[] loc;
 
     public GameState(int numPlayers, String diff){
         collectedTreasures = new String[4];
@@ -34,6 +36,8 @@ public class GameState {
         floodDeck = new FloodDeck();
         turn = 0;
         actionCount = 0;
+        dupl = GameBoardGraphic.localTileLoc;
+        loc = new int[0];
 
         setRoles(numPlayers);
         shuffleTiles();
@@ -67,39 +71,74 @@ public class GameState {
     public void setOriginalPlayerLocation(int x, int y, Pawn p) {
         p.setLocation(x, y);
     }
-    public boolean check(Tile t, Pawn p) {
-        ArrayList<Integer> temp = p.getLocation();
 
+    public boolean check(Tile t, Pawn p) {
         if(t.isSunk()==true)
             return false;
-        else if(t.getLocation().get(0)==temp.get(0)+1||t.getLocation().get(0)==temp.get(0)-1)
+        else if(p.getRole().equals("Explorer")&&
+                ((t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)+1)||
+                        (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)+1)||
+                        (t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)-1)||
+                        (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)-1)))
             return true;
-        else if(t.getLocation().get(1)==temp.get(1)+1||t.getLocation().get(1)==temp.get(1)-1)
+        else if(p.getRole().equals("Pilot"))
+            return true;
+        else if((t.getLocation().get(0)==p.getLocation().get(0)+1||t.getLocation().get(0)==p.getLocation().get(0)-1)||
+                (t.getLocation().get(1)==p.getLocation().get(1)+1||t.getLocation().get(1)==p.getLocation().get(1)-1))
             return true;
         else
             return false;
     }
-//    public boolean movePawn(int x, int y) {
-//        for (Map.Entry<Pawn, int[]> entry : pawnLoc.entrySet())
-//            if(entry.getKey().getTurnNum()==turn) {
-//                int[] temp = entry.getValue();
-//                temp[0] = x;
-//                temp[1] = y;
-//                return true;
-//            }
-//        return false;
-//    }
-//
-//    public boolean shore(int x, int y) {
-//        for (Map.Entry<Tile, int[]> entry : tileLoc.entrySet()) {
-//            int[] temp = entry.getValue();
-//            if(temp[0]==x&&temp[1]==y) {
-//                entry.getKey().shoreUp();
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public boolean movePawn(Tile t, Pawn p) {
+        if(check(t, p)) {
+            p.setLocation(t.getLocation().get(0), t.getLocation().get(1));
+            return true;
+        }
+        return false;
+
+    }
+
+    public boolean shore(Tile t) {
+        if(t.isSunk()==false&&t.isFlooded()==true) {
+            t.shoreUp();
+            return true;
+        }
+        return true;
+    }
+
+    public boolean checkLose(){
+        if(dupl.get(findLoc("Fool's Landing", loc)).isSunk()){
+            return true;
+        }
+        else if(dupl.get(findLoc("Temple of the Moon", loc)).isSunk() &&
+        dupl.get(findLoc("Temple of the Sun", loc)).isSunk()){
+            return true;
+        }
+        else if(dupl.get(findLoc("Tidal Palace", loc)).isSunk() &&
+                dupl.get(findLoc("Coral Palace", loc)).isSunk()){
+            return true;
+        }
+        else if(dupl.get(findLoc("Whispering Garden", loc)).isSunk() &&
+                dupl.get(findLoc("Howling Garden", loc)).isSunk()){
+            return true;
+        }
+        else if(dupl.get(findLoc("Cave of Embers", loc)).isSunk() &&
+                dupl.get(findLoc("Cave of Shadows", loc)).isSunk()){
+            return true;
+        }
+        return false;
+
+    }
+
+    public int[] findLoc(String tileName, int[] location){
+        for (Map.Entry<int[], Tile> entry : dupl.entrySet()) {
+            if (entry.equals(tileName)) {
+                loc = entry.getKey();
+                return loc;
+            }
+        }
+        return loc;
+    }
 
 
 
