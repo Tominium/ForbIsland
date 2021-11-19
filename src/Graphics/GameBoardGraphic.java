@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 2000;
@@ -24,7 +25,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private JPanel specialAbility;
     private final GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
-    private HashMap<int[], Tile> localTileLoc;
+    public static HashMap<int[], Tile> localTileLoc;
 
     public GameBoardGraphic(){
         Container win = getContentPane();
@@ -132,6 +133,13 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                 }
             }
         }
+
+
+        setSize(WIDTH, HEIGHT);
+        setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
+        setResizable(false);
+        add(new Panel());
+        setVisible(true);
     }
 
     public void movePawn(){}
@@ -149,6 +157,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     public void winGraphics(){}
 
     public void loseGraphics(){}
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
