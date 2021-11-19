@@ -13,8 +13,8 @@ public class GameState {
     public static String[] collectedTreasures;
     private BufferedImage boardTemplate;
     public static WaterMeter waterMeter;
-    private static TreasureDeck treasureDeck;
-    private static FloodDeck floodDeck;
+    public static TreasureDeck treasureDeck;
+    public static FloodDeck floodDeck;
     public static ArrayList<Pawn> pawnLoc;
     public static ArrayList<Tile> tileLoc;
     private static int turn;
@@ -28,6 +28,8 @@ public class GameState {
 
     public GameState(int numPlayers, String diff){
         collectedTreasures = new String[4];
+        pawnLoc = new ArrayList<>();
+        tileLoc = new ArrayList<>();
         treasureDeck = new TreasureDeck();
         floodDeck = new FloodDeck();
         turn = 0;
