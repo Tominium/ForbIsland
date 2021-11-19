@@ -46,7 +46,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             int[] loc = {x,y};
 
             GameState.tileLoc.add(t);
-            t.setOriginalLocation(x, y);
+            t.setLocation(x, y);
             localTileLoc.put(loc, t);
             Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
             this.add(new JLabel(new ImageIcon(image)), gbc);
