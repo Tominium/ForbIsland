@@ -71,39 +71,40 @@ public class GameState {
     public void setOriginalPlayerLocation(int x, int y, Pawn p) {
         p.setLocation(x, y);
     }
-    public boolean check(Tile t, Pawn p) {
-        ArrayList<Integer> temp = p.getLocation();
 
+    public boolean check(Tile t, Pawn p) {
         if(t.isSunk()==true)
             return false;
-        else if(t.getLocation().get(0)==temp.get(0)+1||t.getLocation().get(0)==temp.get(0)-1)
+        else if(p.getRole().equals("Explorer")&&
+                ((t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)+1)||
+                        (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)+1)||
+                        (t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)-1)||
+                        (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)-1)))
             return true;
-        else if(t.getLocation().get(1)==temp.get(1)+1||t.getLocation().get(1)==temp.get(1)-1)
+        else if(p.getRole().equals("Pilot"))
+            return true;
+        else if((t.getLocation().get(0)==p.getLocation().get(0)+1||t.getLocation().get(0)==p.getLocation().get(0)-1)||
+                (t.getLocation().get(1)==p.getLocation().get(1)+1||t.getLocation().get(1)==p.getLocation().get(1)-1))
             return true;
         else
             return false;
     }
-//    public boolean movePawn(int x, int y) {
-//        for (Map.Entry<Pawn, int[]> entry : pawnLoc.entrySet())
-//            if(entry.getKey().getTurnNum()==turn) {
-//                int[] temp = entry.getValue();
-//                temp[0] = x;
-//                temp[1] = y;
-//                return true;
-//            }
-//        return false;
-//    }
-//
-//    public boolean shore(int x, int y) {
-//        for (Map.Entry<Tile, int[]> entry : tileLoc.entrySet()) {
-//            int[] temp = entry.getValue();
-//            if(temp[0]==x&&temp[1]==y) {
-//                entry.getKey().shoreUp();
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public boolean movePawn(Tile t, Pawn p) {
+        if(check(t, p)) {
+            p.setLocation(t.getLocation().get(0), t.getLocation().get(1));
+            return true;
+        }
+        return false;
+
+    }
+
+    public boolean shore(Tile t) {
+        if(t.isSunk()==false&&t.isFlooded()==true) {
+            t.shoreUp();
+            return true;
+        }
+        return true;
+    }
 
     public boolean checkLose(){
         if(dupl.get(findLoc("Fool's Landing", loc)).isSunk()){
