@@ -2,6 +2,10 @@ package Logic;
 
 import Cards.Card;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Pawn implements Comparable<Pawn>{
@@ -10,6 +14,7 @@ public class Pawn implements Comparable<Pawn>{
     private int turnNum;
     private int actionCount;
     private ArrayList<Integer> loc;
+    private BufferedImage icon;
 
     public Pawn(String r, int tn){
         role = r;
@@ -17,6 +22,15 @@ public class Pawn implements Comparable<Pawn>{
         actionCount = 0;
         loc = new ArrayList<Integer>();
         hand = new ArrayList<>();
+
+        String url = "src/Assets/PawnIcons/" + role + ".png";
+        try{
+            icon = ImageIO.read(new File(url));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
         addCard(GameState.treasureDeck.getCard());
         addCard(GameState.treasureDeck.getCard());
         addCard(GameState.treasureDeck.getCard());
@@ -30,6 +44,8 @@ public class Pawn implements Comparable<Pawn>{
     public ArrayList<Integer> getLocation() {
         return loc;
     }
+
+    public BufferedImage getIcon(){return icon;}
 
     public String getRole(){
         return role;
@@ -48,6 +64,11 @@ public class Pawn implements Comparable<Pawn>{
     }
 
     public boolean addCard(Card c){
+        if(c.getType().equals("WatersRise")){
+            GameState.treasureDeck.discardCard(c);
+            addCard(GameState.treasureDeck.getCard());
+            return true;
+        }
         if(hand.size() >= 5){
             return false;
         }else{
