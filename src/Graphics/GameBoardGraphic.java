@@ -1,7 +1,8 @@
 package Graphics;
 
+import Graphics.Components.playerDeckPanel;
+import Graphics.Components.waterMeterPanel;
 import Logic.GameState;
-import Logic.Pawn;
 import Logic.Tile;
 
 import javax.swing.*;
@@ -9,50 +10,34 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
-import java.util.Map;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
-    private static final int WIDTH = 2000;
-    private static final int HEIGHT = 900;
+    private static final int WIDTH = 1600;
+    private static final int HEIGHT = 1082 ;
     private Font Font;
     private JButton nextTurn;
     private JButton move;
     private JPanel gameTiles;
-    private JPanel playerDeckView;
-    private GridBagLayout playerDeckGBL;
-    private GridBagConstraints playerDeckGBC;
+    private playerDeckPanel playerDeckView;
+    private waterMeterPanel waterMeter;
     private JPanel heliPanel;
     private JPanel specialAbility;
     private final GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
     public static HashMap<int[], Tile> localTileLoc;
+    private JPanel mainComps;
 
     public GameBoardGraphic(){
-        Container win = getContentPane();
-        win.setLayout(new GridBagLayout());
         addMouseListener(this);
+        mainComps = new JPanel();
+        mainComps.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 100));
+        mainComps.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
         localTileLoc = new HashMap<>();
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints frameGBC = new GridBagConstraints();
 
-        playerDeckGBL = new GridBagLayout();
-        playerDeckGBC = new GridBagConstraints();
-        playerDeckView =  new JPanel(){
-            protected void paintComponent(Graphics g){
-                setLayout(playerDeckGBL);
-                for(Pawn p: GameState.pawnLoc){
-                    for(int i=0; i<p.getHand().size(); i++){
-                        for(int ii=0; ii<p.getHand().size(); ii++){
-                            playerDeckGBC.gridx = ii;
-                            playerDeckGBC.gridy = i;
-                            Image image = p.getHand().get(i).getImage().getScaledInstance(50, 100,  Image.SCALE_SMOOTH); // transform it
-                            add(new JLabel(new ImageIcon(image)), playerDeckGBC);
-                        }}}}};
+        playerDeckView =  new playerDeckPanel();
 
-        frameGBC.gridx = 0;
-        frameGBC.gridy = 0;
-        add(playerDeckView, frameGBC);
+        mainComps.add(playerDeckView);
 
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -60,20 +45,29 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         GridBagLayoutgrid = new GridBagLayout();
         gameTiles.setLayout(GridBagLayoutgrid);
         paintTile();
-        frameGBC.gridx = 1;
+        mainComps.add(gameTiles);
+
+        waterMeter = new waterMeterPanel();
+        mainComps.add(waterMeter);
+
+        this.getContentPane().setLayout(new GridBagLayout());
+        GridBagConstraints frameGBC = new GridBagConstraints();
+        frameGBC.gridx = 0;
         frameGBC.gridy = 0;
-        frameGBC.weightx = 0.01;
-        add(gameTiles, frameGBC);
+        add(mainComps, frameGBC);
+
+
 
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
-        setResizable(false);
-        add(new Panel());
+        setResizable(true);
         setVisible(true);
     }
 
     private void paintTile(){
         int x = 2; int y=0; int i =0;
+        gbc.ipadx = 2;
+        gbc.ipady = 2;
         for(Tile t: GameState.tileLoc){
             gbc.gridx = x;
             gbc.gridy = y;
@@ -162,8 +156,8 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         Component a = findComponentAt(e.getPoint());
-        int griX = GridBagLayoutgrid.getConstraints(a).gridx;
-        int griY = GridBagLayoutgrid.getConstraints(a).gridy;
+        int griX = playerDeckView.getGBL().getConstraints(a).gridx;
+        int griY = playerDeckView.getGBL().getConstraints(a).gridy;
         System.out.println("(" + griX + ", " + griY + ")");
     }
 
