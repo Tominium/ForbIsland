@@ -5,7 +5,6 @@ import Decks.TreasureDeck;
 import Graphics.GameBoardGraphic;
 import Water.WaterMeter;
 
-
 import java.awt.image.BufferedImage;
 import java.util.*;
 
@@ -38,6 +37,11 @@ public class GameState {
         actionCount = 0;
         dupl = GameBoardGraphic.localTileLoc;
         loc = new int[0];
+
+        if(diff.equals("Novice")){waterMeter = new WaterMeter(2.0);}
+        else if(diff.equals("Normal")){waterMeter = new WaterMeter(2.25);}
+        else if(diff.equals("Elite")){waterMeter = new WaterMeter(2.5);}
+        else{waterMeter = new WaterMeter(3.0);}
 
         setRoles(numPlayers);
         shuffleTiles();
