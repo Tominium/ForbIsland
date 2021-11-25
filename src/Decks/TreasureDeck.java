@@ -31,15 +31,11 @@ public class TreasureDeck {
             deck.push(new TreasureCard("Ocean", "TreasureCard"));
         }
 
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 3; i++){
             deck.push(new WatersRise("WatersRise", "WatersRise"));
-
-        for(int i = 0; i < 3; i++)
             deck.push(new SpecialCard("HelicopterRide", "SpecialCard"));
-
-        for(int i = 0; i < 2; i++)
             deck.push(new SpecialCard("Sandbag", "SpecialCard"));
-
+        }
         shuffle();
     }
 
