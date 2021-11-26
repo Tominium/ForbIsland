@@ -4,6 +4,7 @@ import Logic.GameState;
 import Logic.Pawn;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class playerDeckPanel extends JPanel {
@@ -12,6 +13,7 @@ public class playerDeckPanel extends JPanel {
     private GridBagLayout playerDeckGBL;
 
     public playerDeckPanel(){
+        setBorder(new EmptyBorder(0, 0, 0 ,35));
         playerDeckGBC = new GridBagConstraints();
         playerDeckGBL = new GridBagLayout();
         setLayout(playerDeckGBL);
