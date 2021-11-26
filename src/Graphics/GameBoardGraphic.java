@@ -15,22 +15,21 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 1600;
     private static final int HEIGHT = 1082 ;
     private Font Font;
-    private JButton nextTurn;
-    private JButton move;
     private JPanel gameTiles;
+    private final GridBagLayout GridBagLayoutgrid;
+    private GridBagConstraints gbc;
     private playerDeckPanel playerDeckView;
     private waterMeterPanel waterMeter;
     private JPanel heliPanel;
     private JPanel specialAbility;
-    private final GridBagLayout GridBagLayoutgrid;
-    private GridBagConstraints gbc;
-    public static HashMap<int[], Tile> localTileLoc;
+    public static HashMap<Point, Tile> localTileLoc;
     private JPanel mainComps;
+    private JPanel sideComps;
 
     public GameBoardGraphic(){
         addMouseListener(this);
         mainComps = new JPanel();
-        mainComps.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 100));
+        mainComps.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 0));
         mainComps.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
         localTileLoc = new HashMap<>();
@@ -56,8 +55,20 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         frameGBC.gridy = 0;
         add(mainComps, frameGBC);
 
+        sideComps = new JPanel();
+        sideComps.setLayout(new FlowLayout(FlowLayout.LEFT, 100, 0));
+        sideComps.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        sideComps.setFont(new Font("Arial", Font.BOLD, 18));
+        JButton move = new JButton("Move"); move.setPreferredSize(new Dimension(200, 100)); sideComps.add(move);
+        JButton shoreUp = new JButton("Shore Up"); shoreUp.setPreferredSize(new Dimension(200, 100)); sideComps.add(shoreUp);
+        JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(200, 100)); sideComps.add(tradeB);
+        JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(200, 100)); sideComps.add(capture);
 
+        frameGBC.gridx = 0;
+        frameGBC.gridy = 1;
+        add(sideComps, frameGBC);
 
+        pack();
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
         setResizable(true);
@@ -69,12 +80,12 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         gbc.ipadx = 2;
         gbc.ipady = 2;
         for(Tile t: GameState.tileLoc){
+            if(t.getName().contains("Fool")){GameState.setOriginalPlayerLocation(x, y);}
             gbc.gridx = x;
             gbc.gridy = y;
-            int[] loc = {x,y};
             t.setLocation(x,y);
-            localTileLoc.put(loc, t);
-            Image image = t.getImage().getScaledInstance(100, 100,  Image.SCALE_SMOOTH); // transform it
+            localTileLoc.put(new Point(x, y), t);
+            Image image = t.getImage().getScaledInstance(120, 120,  Image.SCALE_SMOOTH); // transform it
             gameTiles.add(new JLabel(new ImageIcon(image)), gbc);
             if(i == 0|| i == 5){
                 if(x == 3){
@@ -156,9 +167,10 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         Component a = findComponentAt(e.getPoint());
-        int griX = playerDeckView.getGBL().getConstraints(a).gridx;
-        int griY = playerDeckView.getGBL().getConstraints(a).gridy;
+        int griX = GridBagLayoutgrid.getConstraints(a).gridx;
+        int griY = GridBagLayoutgrid.getConstraints(a).gridy;
         System.out.println("(" + griX + ", " + griY + ")");
+        System.out.println(GameState.check(localTileLoc.get(new Point(griX,griY)), GameState.pawnLoc.get(0)));
     }
 
     @Override
