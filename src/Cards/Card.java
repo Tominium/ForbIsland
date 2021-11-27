@@ -2,7 +2,6 @@ package Cards;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class Card {
@@ -14,9 +13,9 @@ public class Card {
     public Card(String name, String type){
         cardName = name;
         cardType = type;
-        String url = "src/Assets/Cards/" + name + ".png";
+        String url = "/Assets/Cards/" + name + ".png";
         try{
-            image = ImageIO.read(new File(url));
+            image = ImageIO.read(Card.class.getResource(url));
         }
         catch (IOException e) {
             e.printStackTrace();
