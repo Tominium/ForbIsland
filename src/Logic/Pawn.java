@@ -4,7 +4,6 @@ import Cards.Card;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,6 +14,7 @@ public class Pawn implements Comparable<Pawn>{
     private int actionCount;
     private ArrayList<Integer> loc;
     private BufferedImage icon;
+    private BufferedImage pawn;
 
     public Pawn(String r, int tn){
         role = r;
@@ -23,9 +23,11 @@ public class Pawn implements Comparable<Pawn>{
         loc = new ArrayList<Integer>();
         hand = new ArrayList<>();
 
-        String url = "src/Assets/PawnIcons/" + role + ".png";
+        String url = "/Assets/PawnIcons/" + role + ".png";
+        String url1 =  "/Assets/PawnPieces/" + role + ".png";
         try{
-            icon = ImageIO.read(new File(url));
+            icon = ImageIO.read(Pawn.class.getResource(url));
+            pawn = ImageIO.read(Pawn.class.getResource(url));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -52,6 +54,8 @@ public class Pawn implements Comparable<Pawn>{
     }
 
     public BufferedImage getIcon(){return icon;}
+
+    public BufferedImage getPiece(){return pawn;}
 
     public String getRole(){
         return role;
