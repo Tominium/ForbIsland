@@ -2,9 +2,9 @@ package Logic;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Tile {
 
@@ -21,9 +21,9 @@ public class Tile {
         sunk = false;
         treasure = "";
         loc = new ArrayList<Integer>();
-        String url = "src/Assets/zones/" + name + ".png.png";
+        String url = "/Assets/zones/" + name + ".png.png";
         try{
-            image = ImageIO.read(new File(url));
+            image = ImageIO.read(Tile.class.getResource(url));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -42,9 +42,9 @@ public class Tile {
     public boolean floodTile() {
         if(flooded == false) {
             flooded = true;
-            String url = "src/Assets/zones/" + name + "_flood.png";
+            String url = "/Assets/zones/" + name + "_flood.png";
             try{
-                image = ImageIO.read(new File(url));
+                image = ImageIO.read(this.getClass().getResource(url));
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -65,9 +65,9 @@ public class Tile {
     public boolean shoreUp() {
         if(sunk == false&&flooded == true) {
             flooded = false;
-            String url = "src/Assets/zones/" + name + ".png";
+            String url = "/Assets/zones/" + name + ".png";
             try{
-                image = ImageIO.read(new File(url));
+                image = ImageIO.read(this.getClass().getResource(url));
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -99,6 +99,14 @@ public class Tile {
         return false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        Tile t = (Tile)o;
+        return this.getName().equals(t.getName());
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, flooded, image, sunk, treasure, loc);
+    }
 }
