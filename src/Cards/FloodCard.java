@@ -2,7 +2,6 @@ package Cards;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class FloodCard {
@@ -14,9 +13,9 @@ public class FloodCard {
     public FloodCard(String name, String type){
         cardName = name;
         cardType = type;
-        String url = "src/Assets/zones/" + name + ".png.png";
+        String url = "/Assets/zones/" + name + ".png.png";
         try{
-            image = ImageIO.read(new File(url));
+            image = ImageIO.read(this.getClass().getResource(url));
         }
         catch (IOException e) {
             e.printStackTrace();
