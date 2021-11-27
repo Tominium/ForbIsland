@@ -83,7 +83,7 @@ public class GameState {
     }
 
     public static boolean check(Tile t, Pawn p) {
-        if(t.isSunk()==true)
+        if(t==null || t.isSunk()==true)
             return false;
         ArrayList<Integer> pawnL = p.getLocation();
         ArrayList<Integer> tileL = t.getLocation();
