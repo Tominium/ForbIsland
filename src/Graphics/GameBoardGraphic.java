@@ -3,12 +3,14 @@ package Graphics;
 import Graphics.Components.playerDeckPanel;
 import Graphics.Components.waterMeterPanel;
 import Logic.GameState;
+import Logic.Pawn;
 import Logic.Tile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
@@ -56,7 +58,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         add(mainComps, frameGBC);
 
         sideComps = new JPanel();
-        sideComps.setLayout(new FlowLayout(FlowLayout.LEFT, 100, 0));
+        sideComps.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
         sideComps.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         sideComps.setFont(new Font("Arial", Font.BOLD, 18));
         JButton move = new JButton("Move"); move.setPreferredSize(new Dimension(200, 100)); sideComps.add(move);
@@ -138,13 +140,20 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                 }
             }
         }
+        gbc.ipadx = 0;
+        gbc.ipady = 0;
+        for(Pawn p: GameState.pawnLoc){
+            gbc.gridx = p.getLocation().get(0);
+            gbc.gridy = p.getLocation().get(1);
+            BufferedImage result = new BufferedImage(120, 120, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D gbi = result.createGraphics();
+            BufferedImage piece = p.getPiece();
+            gbi.drawImage(localTileLoc.get(new Point(gbc.gridx, gbc.gridy)).getImage(), 0, 0, this);
+            gbi.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.75f));
+            gbi.drawImage(p.getPiece(), 0, 0, this);
+            gameTiles.add(new JLabel(new ImageIcon(result)), gbc);
+        }
 
-
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
-        setResizable(false);
-        add(new Panel());
-        setVisible(true);
     }
 
     public void movePawn(){}
