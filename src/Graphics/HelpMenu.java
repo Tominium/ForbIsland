@@ -5,12 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HelpMenu extends JFrame implements ActionListener {
-    JLabel label = new JLabel();
-    private JFrame helpMenu;
     private JButton back, pOne, pTwo, pThree, pFour, pFive, pSix, pSeven, pEight;
     private JLabel heading, page;
-    private static int WIDTH = 800;
-    private static int HEIGHT = 1000;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 950;
 
     public HelpMenu() {
         super("Help Menu");
@@ -19,7 +17,7 @@ public class HelpMenu extends JFrame implements ActionListener {
 
         heading = new JLabel("Help Menu");
         heading.setSize(750, 60);
-        heading.setFont(new Font("Calibri", Font.BOLD, 50));
+        heading.setFont(new Font("Impact", Font.BOLD, 50));
         heading.setForeground(new Color(98, 98, 103, 255));
         heading.setHorizontalAlignment(JLabel.CENTER);
         heading.setVerticalAlignment(JLabel.CENTER);
@@ -32,14 +30,14 @@ public class HelpMenu extends JFrame implements ActionListener {
 
         back = new JButton("Back");
         back.setSize(100,45);
-        back.setFont(new Font("Calibri", Font.BOLD, 14));
+        back.setFont(new Font("Arial", Font.BOLD, 14));
         back.setForeground(new Color(98, 98, 103,255));
         back.setLocation(30,75);
         win.add(back);
 
         pOne = new JButton("1");
         pOne.setSize(50,35);
-        pOne.setFont(new Font("Calibri", Font.BOLD, 12));
+        pOne.setFont(new Font("Arial", Font.BOLD, 12));
         pOne.setForeground(new Color(98, 98, 103,255));
         pOne.setLocation(100,850);
         pOne.addActionListener(this);
@@ -47,7 +45,7 @@ public class HelpMenu extends JFrame implements ActionListener {
 
         pTwo= new JButton("2");
         pTwo.setSize(50,35);
-        pTwo.setFont(new Font("Calibri", Font.BOLD, 12));
+        pTwo.setFont(new Font("Arial", Font.BOLD, 12));
         pTwo.setForeground(new Color(98, 98, 103,255));
         pTwo.setLocation(175,850);
         pTwo.addActionListener(this);
@@ -55,7 +53,7 @@ public class HelpMenu extends JFrame implements ActionListener {
 
         pThree = new JButton("3");
         pThree.setSize(50,35);
-        pThree.setFont(new Font("Calibri", Font.BOLD, 12));
+        pThree.setFont(new Font("Arial", Font.BOLD, 12));
         pThree.setForeground(new Color(98, 98, 103,255));
         pThree.setLocation(250,850);
         pThree.addActionListener(this);
@@ -63,7 +61,7 @@ public class HelpMenu extends JFrame implements ActionListener {
 
         pFour = new JButton("4");
         pFour.setSize(50,35);
-        pFour.setFont(new Font("Calibri", Font.BOLD, 12));
+        pFour.setFont(new Font("Arial", Font.BOLD, 12));
         pFour.setForeground(new Color(98, 98, 103,255));
         pFour.setLocation(325,850);
         pFour.addActionListener(this);
@@ -71,7 +69,7 @@ public class HelpMenu extends JFrame implements ActionListener {
 
         pFive = new JButton("5");
         pFive.setSize(50,35);
-        pFive.setFont(new Font("Calibri", Font.BOLD, 12));
+        pFive.setFont(new Font("Arial", Font.BOLD, 12));
         pFive.setForeground(new Color(98, 98, 103,255));
         pFive.setLocation(400,850);
         pFive.addActionListener(this);
@@ -79,7 +77,7 @@ public class HelpMenu extends JFrame implements ActionListener {
 
         pSix = new JButton("6");
         pSix.setSize(50,35);
-        pSix.setFont(new Font("Calibri", Font.BOLD, 12));
+        pSix.setFont(new Font("Arial", Font.BOLD, 12));
         pSix.setForeground(new Color(98, 98, 103,255));
         pSix.setLocation(475,850);
         pSix.addActionListener(this);
@@ -87,7 +85,7 @@ public class HelpMenu extends JFrame implements ActionListener {
 
         pSeven = new JButton("7");
         pSeven.setSize(50,35);
-        pSeven.setFont(new Font("Calibri", Font.BOLD, 12));
+        pSeven.setFont(new Font("Arial", Font.BOLD, 12));
         pSeven.setForeground(new Color(98, 98, 103,255));
         pSeven.setLocation(550,850);
         pSeven.addActionListener(this);
@@ -95,7 +93,7 @@ public class HelpMenu extends JFrame implements ActionListener {
 
         pEight = new JButton("8");
         pEight.setSize(50,35);
-        pEight.setFont(new Font("Calibri", Font.BOLD, 12));
+        pEight.setFont(new Font("Arial", Font.BOLD, 12));
         pEight.setForeground(new Color(98, 98, 103,255));
         pEight.setLocation(625,850);
         pEight.addActionListener(this);
