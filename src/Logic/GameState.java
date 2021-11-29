@@ -30,6 +30,7 @@ public class GameState {
                     "Cave of Embers", "Bronze Gate", "Breakers Bridge"};
     private static HashMap<Point, Tile> dupl;
     private static int[] loc;
+    private static ArrayList<int[]> coords;
 
     public GameState(int numPlayers, String diff){
         collectedTreasures = new String[4];
@@ -40,6 +41,7 @@ public class GameState {
         turn = 0;
         actionCount = 0;
         dupl = GameBoardGraphic.localTileLoc;
+        coords = new ArrayList<int[]>();
         //loc = new int[0];
 
         if(diff.equals("Novice")){waterMeter = new WaterMeter(2.0);}
@@ -123,13 +125,6 @@ public class GameState {
 
     }
 
-    public boolean shore(Tile t) {
-        if(t.isSunk()==false&&t.isFlooded()==true) {
-            t.shoreUp();
-            return true;
-        }
-        return true;
-    }
 
 //    public boolean checkLose(){
 //        if(dupl.get(findLoc("Fool's Landing", loc)).isSunk()){
@@ -179,6 +174,25 @@ public class GameState {
         }
         return total;
     }
+
+    public boolean shore(Tile t, Pawn p){
+        if(check(t, p)){
+            if(t.isSunk()==false&&t.isFlooded()==true) {
+                t.shoreUp();
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public ArrayList<int[]> returnCoords(Pawn p, Tile t){
+        for(int i = 0; i < 4; i++){
+            coords.add();
+        }
+        return coords;
+    }
+
 
 
 
