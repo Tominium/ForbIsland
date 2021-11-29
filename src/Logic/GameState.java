@@ -1,5 +1,7 @@
 package Logic;
 
+import Cards.Card;
+import Cards.TreasureCard;
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
 import Graphics.GameBoardGraphic;
@@ -20,7 +22,7 @@ public class GameState {
     public static FloodDeck floodDeck;
     public static ArrayList<Pawn> pawnLoc;
     public static ArrayList<Tile> tileLoc;
-    private static int turn;
+    public static int turn;
     private static int actionCount;
     public final static String[] TILENAMES =
             {"Whispering Garden","Watchtower","Twilight Hollow","Tidal Palace"
@@ -92,7 +94,7 @@ public class GameState {
         }
     }
 
-    public static boolean check(Tile t, Pawn p) {
+    public static boolean checkMove(Tile t, Pawn p) {
         if(t==null || t.isSunk()==true)
             return false;
         ArrayList<Integer> pawnL = p.getLocation();
@@ -115,12 +117,11 @@ public class GameState {
         return false;
     }
     public boolean movePawn(Tile t, Pawn p) {
-        if(check(t, p)) {
+        if(checkMove(t, p)) {
             p.setLocation(t.getLocation().get(0), t.getLocation().get(1));
             return true;
         }
         return false;
-
     }
 
     public boolean shore(Tile t) {
@@ -180,6 +181,30 @@ public class GameState {
         return total;
     }
 
+    public static boolean checkTrade(Pawn b) {
+        Pawn temp = GameState.pawnLoc.get(turn);
 
+        ArrayList<Integer> aLoc = temp.getLocation();
+        ArrayList<Integer> bLoc = b.getLocation();
+
+        if(aLoc.get(0)==bLoc.get(0)&&aLoc.get(1)==bLoc.get(1))
+            return true;
+        else if(aLoc.get(0)==bLoc.get(0)+1&&aLoc.get(1)==bLoc.get(1))
+            return true;
+        else if(aLoc.get(0)==bLoc.get(0)-1&&aLoc.get(1)==bLoc.get(1))
+            return true;
+        else if(aLoc.get(0)==bLoc.get(0)&&aLoc.get(1)==bLoc.get(1)+1)
+            return true;
+        else if(aLoc.get(0)==bLoc.get(0)&&aLoc.get(1)==bLoc.get(1)-1)
+            return true;
+        else
+            return false;
+    }
+    public static void trade(Pawn b, Card c) {
+        if(checkTrade(b)) {
+            GameState.pawnLoc.get(turn).removeCard(c);
+            b.addCard(c);
+        }
+    }
 
 }
