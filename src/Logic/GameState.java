@@ -164,6 +164,22 @@ public class GameState {
 //        return loc;
 //    }
 
+    public static HashMap<Point, ArrayList<Integer>> pawnLocs(){
+        HashMap<Point, ArrayList<Integer>> total = new HashMap<>();
+
+        for(int i=0; i< pawnLoc.size();i++){
+            Point p = new Point(pawnLoc.get(i).getLocation().get(0), pawnLoc.get(i).getLocation().get(1));
+            if(total.containsKey(p)){
+                total.get(p).add(i);
+            }
+            else{
+                total.put(p, new ArrayList<Integer>());
+                total.get(p).add(i);
+            }
+        }
+        return total;
+    }
+
 
 
 }
