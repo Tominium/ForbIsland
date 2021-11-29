@@ -112,7 +112,7 @@ public class GameBoard extends JLayeredPane {
             for(int ii: pawnLocs.get(p)){
                 Pawn pp = GameState.pawnLoc.get(ii);
                 BufferedImage piece = pp.getPiece();
-                gbi.drawImage(resize(pp.getPiece(),30,45), (ii+1)*20, 0+(ii*3), this);
+                gbi.drawImage(resize(pp.getPiece(),30,45), (ii+1)*20, 0+(ii*10), this);
             }
             result = resize(result,120,120);
             this.add(new JLabel(new ImageIcon(result)), gbc, 0);
