@@ -69,6 +69,16 @@ public class GameState {
             tileLoc.add(new Tile(TILENAMES[i])); //TO BE CHANGED
         }
         Collections.shuffle(tileLoc);
+        for(int i=0; i<6; i++){
+            String name = floodDeck.getCard().getCardName();
+            for(int ii=0; ii<tileLoc.size(); ii++){
+                if(tileLoc.get(ii).getName().equals(name)){
+                    Tile t = tileLoc.get(ii);
+                    t.floodTile();
+                    tileLoc.set(ii, t);
+                }
+            }
+        }
     }
 
     public double riseWaterLevel() {
