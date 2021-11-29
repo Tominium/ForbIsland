@@ -97,7 +97,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
         if(griX!=-1) {
             System.out.println("(" + griX + ", " + griY + ")");
-            System.out.println(GameState.check(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(0)));
+            System.out.println(GameState.checkMove(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(0)));
             for(int i=0; i<GameState.tileLoc.size(); i++){
                 if(GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY)))){
                     Tile t = GameState.tileLoc.get(i); t.floodTile(); GameState.tileLoc.set(i, t);
