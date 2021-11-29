@@ -13,6 +13,8 @@ public class MainMenuFrame extends JFrame {
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 563;
     private Font font;
+    private Font font2;
+    private Font font3;
     private Timer t;
     int x;
 
@@ -20,8 +22,11 @@ public class MainMenuFrame extends JFrame {
         super("Forbidden Island");
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Assets/ForbiddenIsle.otf")).deriveFont(50f);
+            font2 = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Assets/dpcomic.ttf")).deriveFont(20f);
+
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
+            ge.registerFont(font2);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
@@ -32,15 +37,15 @@ public class MainMenuFrame extends JFrame {
         JLabel intro = new JLabel("Press anywhere to begin");
         intro.setSize(300, 100);
         //intro.setForeground(new Color(255, 255, 255));
-        intro.setLocation(410,400);
-        intro.setFont(new Font("Myriad Pro",Font.PLAIN,12));
+        intro.setLocation(390,400);
+        intro.setFont(font2);
         intro.setVisible(false);
         win.add(intro);
 
         JLabel hehe = new JLabel("Enjoy the scenery!");
         hehe.setSize(250,100);
-        hehe.setLocation(430,400);
-        hehe.setFont(new Font("Myriad Pro",Font.PLAIN,12));
+        hehe.setLocation(420,400);
+        hehe.setFont(font2);
         hehe.setVisible(false);
         win.add(hehe);
 
