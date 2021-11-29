@@ -8,6 +8,8 @@ import Logic.Tile;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameBoard extends JLayeredPane {
 
@@ -98,20 +100,38 @@ public class GameBoard extends JLayeredPane {
         gbc.ipadx = 0;
         gbc.ipady = 0;
 
-        for(Pawn p: GameState.pawnLoc){
-            int index = 0;
+        HashMap<Point, ArrayList<Integer>> pawnLocs = GameState.pawnLocs();
+        System.out.println(pawnLocs);
+
+        for(Point p: pawnLocs.keySet()){
             BufferedImage result = new BufferedImage(120, 120, BufferedImage.TYPE_INT_ARGB);
             Graphics2D gbi = result.createGraphics();
-            gbi.drawImage(resize(GameBoardGraphic.localTileLoc.get(new Point(gbc.gridx, gbc.gridy)).getImage(),120,120), 0, 0, this);
-            gbc.gridx = p.getLocation().get(0);
-            gbc.gridy = p.getLocation().get(1);
-            BufferedImage piece = p.getPiece();
-//            gbi.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.75f));
-            gbi.drawImage(resize(p.getPiece(),30,45), (0+(40*index)), 25, this);
-//            result = resize(result,120,120);
-            index++;
-            this.add(new JLabel(new ImageIcon(result)), gbc, index);
+            gbi.drawImage(resize(GameBoardGraphic.localTileLoc.get(p).getImage(),120,120), 0, 0, this);
+            gbc.gridx = p.x;
+            gbc.gridy = p.y;
+            for(int ii: pawnLocs.get(p)){
+                Pawn pp = GameState.pawnLoc.get(ii);
+                BufferedImage piece = pp.getPiece();
+                gbi.drawImage(resize(pp.getPiece(),30,45), (ii+1)*20, 0+(ii*3), this);
+            }
+            result = resize(result,120,120);
+            this.add(new JLabel(new ImageIcon(result)), gbc, 0);
         }
+
+//        for(Pawn p: GameState.pawnLoc){
+//            int index = 0;
+//            BufferedImage result = new BufferedImage(120, 120, BufferedImage.TYPE_INT_ARGB);
+//            Graphics2D gbi = result.createGraphics();
+//            gbi.drawImage(resize(GameBoardGraphic.localTileLoc.get(new Point(gbc.gridx, gbc.gridy)).getImage(),120,120), 0, 0, this);
+//            gbc.gridx = p.getLocation().get(0);
+//            gbc.gridy = p.getLocation().get(1);
+//            BufferedImage piece = p.getPiece();
+////            gbi.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.75f));
+//            gbi.drawImage(resize(p.getPiece(),30,45), (0+(40*index)), 25, this);
+////            result = resize(result,120,120);
+//            index++;
+//            this.add(new JLabel(new ImageIcon(result)), gbc, index);
+//        }
 
         this.repaint();
         this.revalidate();
