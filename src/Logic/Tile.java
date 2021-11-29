@@ -17,6 +17,7 @@ public class Tile {
 
     public Tile(String n) {
         name = n;
+        image = null;
         flooded = false;
         sunk = false;
         treasure = "";
@@ -42,9 +43,9 @@ public class Tile {
     public boolean floodTile() {
         if(flooded == false) {
             flooded = true;
-            String url = "/Assets/zones/" + name + "_flood.png";
+            String url = "/Assets/zones/" + name + "_flood.png.png";
             try{
-                image = ImageIO.read(this.getClass().getResource(url));
+                image = ImageIO.read(Tile.class.getResource(url));
             }
             catch (IOException e) {
                 e.printStackTrace();
