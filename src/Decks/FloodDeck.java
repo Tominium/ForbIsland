@@ -33,8 +33,8 @@ public class FloodDeck {
     }
 
     public FloodCard getCard(){
-        if(deck.size()>0){return deck.pop();}
-        else{resetDeck(); return deck.pop();}
+        if(deck.size()>0){used.add(deck.peek());return deck.pop();}
+        else{resetDeck(); used.add(deck.peek()); return deck.pop();}
     }
 
     private void resetDeck(){
