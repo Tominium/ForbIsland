@@ -27,13 +27,12 @@ public class Pawn implements Comparable<Pawn>{
         String url1 =  "/Assets/PawnPieces/" + role + ".png";
         try{
             icon = ImageIO.read(Pawn.class.getResource(url));
-            pawn = ImageIO.read(Pawn.class.getResource(url));
+            pawn = ImageIO.read(Pawn.class.getResource(url1));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
-        addCard(GameState.treasureDeck.getCard());
         addCard(GameState.treasureDeck.getCard());
         addCard(GameState.treasureDeck.getCard());
     }
