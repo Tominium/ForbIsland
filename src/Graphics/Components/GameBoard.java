@@ -39,7 +39,6 @@ public class GameBoard extends JLayeredPane {
         gbc.ipadx = 2;
         gbc.ipady = 2;
         for(Tile t: GameState.tileLoc){
-            if(t.getName().contains("Fool")){GameState.setOriginalPlayerLocation(x, y);}
             gbc.gridx = x;
             gbc.gridy = y;
             t.setLocation(x,y);
@@ -100,8 +99,11 @@ public class GameBoard extends JLayeredPane {
         gbc.ipadx = 0;
         gbc.ipady = 0;
 
+        GameState.setOriginalPlayerLocation();
+
         HashMap<Point, ArrayList<Integer>> pawnLocs = GameState.pawnLocs();
         System.out.println(pawnLocs);
+
 
         for(Point p: pawnLocs.keySet()){
             BufferedImage result = new BufferedImage(120, 120, BufferedImage.TYPE_INT_ARGB);
@@ -112,7 +114,7 @@ public class GameBoard extends JLayeredPane {
             for(int ii: pawnLocs.get(p)){
                 Pawn pp = GameState.pawnLoc.get(ii);
                 BufferedImage piece = pp.getPiece();
-                gbi.drawImage(resize(pp.getPiece(),30,45), (ii+1)*20, 0+(ii*10), this);
+                gbi.drawImage(resize(pp.getPiece(),30,45), (ii+1)*10, 0+(ii*10), this);
             }
             result = resize(result,120,120);
             this.add(new JLabel(new ImageIcon(result)), gbc, 0);

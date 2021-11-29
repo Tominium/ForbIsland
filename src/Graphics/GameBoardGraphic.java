@@ -69,7 +69,9 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         setVisible(true);
     }
 
-    public void movePawn(){}
+    public void movePawn(){
+
+    }
 
     public void tradeable(){}
 
