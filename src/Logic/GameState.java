@@ -179,7 +179,9 @@ public class GameState {
         }
         return total;
     }
-
+    /*public static boolean captureTreasure(){
+        for()
+    }*/
 
 
 }
