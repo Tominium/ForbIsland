@@ -1,7 +1,5 @@
 package Logic;
 
-import Cards.Card;
-import Cards.TreasureCard;
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
 import Graphics.GameBoardGraphic;
@@ -19,7 +17,7 @@ public class GameState {
     public static FloodDeck floodDeck;
     public static ArrayList<Pawn> pawnLoc;
     public static ArrayList<Tile> tileLoc;
-    public static int turn;
+    private static int turn;
     private static int actionCount;
     public final static String[] TILENAMES =
             {"Whispering Garden","Watchtower","Twilight Hollow","Tidal Palace"
@@ -29,6 +27,7 @@ public class GameState {
                     "Cave of Embers", "Bronze Gate", "Breakers Bridge"};
     private static HashMap<Point, Tile> dupl;
     private static int[] loc;
+    private static ArrayList<int[]> coords;
 
     public GameState(int numPlayers, String diff){
         collectedTreasures = new String[4];
@@ -39,6 +38,7 @@ public class GameState {
         turn = 0;
         actionCount = 0;
         dupl = GameBoardGraphic.localTileLoc;
+        coords = new ArrayList<int[]>();
         //loc = new int[0];
 
         if(diff.equals("Novice")){waterMeter = new WaterMeter(2.0);}
@@ -96,7 +96,7 @@ public class GameState {
         }
     }
 
-    public static boolean checkMove(Tile t, Pawn p) {
+    public static boolean check(Tile t, Pawn p) {
         if(t==null || t.isSunk()==true)
             return false;
         ArrayList<Integer> pawnL = p.getLocation();
@@ -119,20 +119,14 @@ public class GameState {
         return false;
     }
     public boolean movePawn(Tile t, Pawn p) {
-        if(checkMove(t, p)) {
+        if(check(t, p)) {
             p.setLocation(t.getLocation().get(0), t.getLocation().get(1));
             return true;
         }
         return false;
+
     }
 
-    public boolean shore(Tile t) {
-        if(t.isSunk()==false&&t.isFlooded()==true) {
-            t.shoreUp();
-            return true;
-        }
-        return true;
-    }
 
 //    public boolean checkLose(){
 //        if(dupl.get(findLoc("Fool's Landing", loc)).isSunk()){
@@ -183,41 +177,19 @@ public class GameState {
         return total;
     }
 
-    public static boolean checkTrade(Pawn b) {
-        Pawn temp = GameState.pawnLoc.get(turn);
-
-        ArrayList<Integer> aLoc = temp.getLocation();
-        ArrayList<Integer> bLoc = b.getLocation();
-
-        if(aLoc.get(0)==bLoc.get(0)&&aLoc.get(1)==bLoc.get(1))
-            return true;
-        else if(aLoc.get(0)==bLoc.get(0)+1&&aLoc.get(1)==bLoc.get(1))
-            return true;
-        else if(aLoc.get(0)==bLoc.get(0)-1&&aLoc.get(1)==bLoc.get(1))
-            return true;
-        else if(aLoc.get(0)==bLoc.get(0)&&aLoc.get(1)==bLoc.get(1)+1)
-            return true;
-        else if(aLoc.get(0)==bLoc.get(0)&&aLoc.get(1)==bLoc.get(1)-1)
-            return true;
-        else
-            return false;
-    }
-    public static void trade(Pawn b, Card c) {
-        if(checkTrade(b)) {
-            GameState.pawnLoc.get(turn).removeCard(c);
-            b.addCard(c);
-        }
-    }
-    public static boolean collectTreasure(){
-        int count  = 0;
-        for(int i = 0; i<Pawn.getHand().size(); i++){
-            if(Pawn.getHand().get(i)==Pawn.getHand().get(i+1)){
-                count++;
+    public boolean shore(Tile t, Pawn p){
+        if(check(t, p)){
+            if(t.isSunk()==false&&t.isFlooded()==true) {
+                t.shoreUp();
+                return true;
             }
         }
-        if(count == 4){
-            return true;
-        }
         return false;
+
     }
+
+
+
+
+
 }

@@ -24,6 +24,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     public static HashMap<Point, Tile> localTileLoc;
     private JPanel mainComps;
     private JPanel sideComps;
+    private JPanel specialComps;
 
     public GameBoardGraphic(){
         addMouseListener(this);
@@ -53,14 +54,18 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         sideComps.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
         sideComps.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         sideComps.setFont(new Font("Arial", Font.BOLD, 18));
-        JButton move = new JButton("Move"); move.setPreferredSize(new Dimension(200, 100)); sideComps.add(move);
-        JButton shoreUp = new JButton("Shore Up"); shoreUp.setPreferredSize(new Dimension(200, 100)); sideComps.add(shoreUp);
-        JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(200, 100)); sideComps.add(tradeB);
-        JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(200, 100)); sideComps.add(capture);
+        JButton move = new JButton("Move"); move.setPreferredSize(new Dimension(140, 70)); sideComps.add(move);
+        JButton shoreUp = new JButton("Shore Up"); shoreUp.setPreferredSize(new Dimension(140, 70)); sideComps.add(shoreUp);
+        JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(140, 70)); sideComps.add(tradeB);
+        JButton helicopter = new JButton("Helicopter"); helicopter.setPreferredSize(new Dimension(140, 70)); sideComps.add(helicopter);
+        JButton sandbag = new JButton("Sandbag"); sandbag.setPreferredSize(new Dimension(140, 70)); sideComps.add(sandbag);
+        JButton nextTurn = new JButton("Next Turn"); nextTurn.setPreferredSize(new Dimension(140, 70)); sideComps.add(nextTurn);
 
         frameGBC.gridx = 0;
         frameGBC.gridy = 1;
         add(sideComps, frameGBC);
+
+
 
         pack();
         setSize(WIDTH, HEIGHT);
@@ -77,7 +82,9 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     public void removeCard(){}
 
-    public void shoreUp(){}
+    public void shoreUp(){
+
+    }
 
     public void sandBag(){}
 
@@ -97,7 +104,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
         if(griX!=-1) {
             System.out.println("(" + griX + ", " + griY + ")");
-            System.out.println(GameState.checkMove(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(0)));
+            System.out.println(GameState.check(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(0)));
             for(int i=0; i<GameState.tileLoc.size(); i++){
                 if(GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY)))){
                     Tile t = GameState.tileLoc.get(i); t.floodTile(); GameState.tileLoc.set(i, t);
