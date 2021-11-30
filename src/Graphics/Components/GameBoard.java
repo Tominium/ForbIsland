@@ -15,9 +15,13 @@ public class GameBoard extends JLayeredPane {
 
     private GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
+    private BufferedImage highlight;
 
     public GameBoard(){
 
+        try{
+            highlight = ImageIO.read();
+        }
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         GridBagLayoutgrid = new GridBagLayout();
@@ -139,6 +143,8 @@ public class GameBoard extends JLayeredPane {
         this.revalidate();
     }
 
+
+
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
@@ -149,4 +155,6 @@ public class GameBoard extends JLayeredPane {
 
         return dimg;
     }
+
+
 }
