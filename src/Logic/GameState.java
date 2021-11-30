@@ -187,7 +187,18 @@ public class GameState {
         return false;
 
     }
-
+    public static boolean collectTreasure(){
+        int count  = 0;
+        for(int i = 0; i<Pawn.getHand().size(); i++){
+            if(Pawn.getHand().get(i)==Pawn.getHand().get(i+1)){
+                count++;
+            }
+        }
+        if(count == 4){
+            return true;
+        }
+        return false;
+    }
 
 
 
