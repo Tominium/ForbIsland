@@ -28,11 +28,14 @@ public class HelpMenu extends JFrame implements ActionListener {
         page.setLocation(150,100);
         win.add(page);
 
+        ImageIcon icon = new ImageIcon("src/Assets/HelpPages/pOne.png");
+        page.setIcon(icon);
         back = new JButton("Back");
         back.setSize(100,45);
         back.setFont(new Font("Arial", Font.BOLD, 14));
         back.setForeground(new Color(98, 98, 103,255));
         back.setLocation(30,75);
+        back.addActionListener(this);
         win.add(back);
 
         pOne = new JButton("1");
@@ -148,6 +151,9 @@ public class HelpMenu extends JFrame implements ActionListener {
             link+="pEight.png";
             ImageIcon icon = new ImageIcon(link);
             page.setIcon(icon);
+        }
+        else if(e.getSource()==back){
+            dispose();
         }
     }
 }

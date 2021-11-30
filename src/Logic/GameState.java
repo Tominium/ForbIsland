@@ -7,10 +7,7 @@ import Water.WaterMeter;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class GameState {
     public static String[] collectedTreasures;
@@ -49,8 +46,8 @@ public class GameState {
         else if(diff.equals("Elite")){waterMeter = new WaterMeter(2.5);}
         else{waterMeter = new WaterMeter(3.0);}
 
-        setRoles(numPlayers);
         shuffleTiles();
+        setRoles(numPlayers);
 
         new GameBoardGraphic();
     }
@@ -88,9 +85,14 @@ public class GameState {
         return waterMeter.getWaterLevel();
     }
 
-    public static void setOriginalPlayerLocation(int x, int y) {
+    public static void setOriginalPlayerLocation() {
         for(Pawn p: pawnLoc){
-            p.setLocation(x, y);
+            if(p.getRole().equals("Diver")){for(Tile t: tileLoc){if(t.getName().equals("Iron Gate")){p.setLocation(t.getLocation().get(0), t.getLocation().get(1));}}}
+            if(p.getRole().equals("Explorer")){for(Tile t: tileLoc){if(t.getName().equals("Copper Gate")){p.setLocation(t.getLocation().get(0), t.getLocation().get(1));}}}
+            if(p.getRole().equals("Messenger")){for(Tile t: tileLoc){if(t.getName().equals("Silver Gate")){p.setLocation(t.getLocation().get(0), t.getLocation().get(1));}}}
+            if(p.getRole().equals("Navigator")){for(Tile t: tileLoc){if(t.getName().equals("Gold Gate")){p.setLocation(t.getLocation().get(0), t.getLocation().get(1));}}}
+            if(p.getRole().equals("Pilot")){for(Tile t: tileLoc){if(t.getName().contains("Fool")){p.setLocation(t.getLocation().get(0), t.getLocation().get(1));}}}
+            if(p.getRole().equals("Engineer")){for(Tile t: tileLoc){if(t.getName().equals("Bronze Gate")){p.setLocation(t.getLocation().get(0), t.getLocation().get(1));}}}
         }
     }
 
