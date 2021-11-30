@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Pawn implements Comparable<Pawn>{
     private String role;
-    private ArrayList<Card> hand;
+    private static ArrayList<Card> hand;
     private int turnNum;
     private int actionCount;
     private ArrayList<Integer> loc;
@@ -60,7 +60,7 @@ public class Pawn implements Comparable<Pawn>{
         return role;
     }
 
-    public ArrayList<Card> getHand(){
+    public static ArrayList<Card> getHand(){
         return hand;
     }
 
@@ -68,7 +68,7 @@ public class Pawn implements Comparable<Pawn>{
         return turnNum;
     }
 
-    public void setDeck(ArrayList<Card> newDeck){
+    public static void setDeck(ArrayList<Card> newDeck){
         hand = newDeck;
     }
 
