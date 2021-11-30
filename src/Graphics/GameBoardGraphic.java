@@ -24,7 +24,6 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     public static HashMap<Point, Tile> localTileLoc;
     private JPanel mainComps;
     private JPanel sideComps;
-    private JPanel specialComps;
 
     public GameBoardGraphic(){
         addMouseListener(this);
@@ -82,9 +81,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     public void removeCard(){}
 
-    public void shoreUp(){
-
-    }
+    public void shoreUp(){}
 
     public void sandBag(){}
 
