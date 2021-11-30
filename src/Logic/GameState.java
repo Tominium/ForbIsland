@@ -186,12 +186,6 @@ public class GameState {
 
     }
 
-    public ArrayList<int[]> returnCoords(Pawn p, Tile t){
-        for(int i = 0; i < 4; i++){
-            coords.add();
-        }
-        return coords;
-    }
 
 
 
