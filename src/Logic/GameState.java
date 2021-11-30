@@ -225,6 +225,7 @@ public class GameState {
         else
             return false;
     }
+
     public static void trade(Pawn b, Card c) {
         if(checkTrade(b)) {
             GameState.pawnLoc.get(turn).removeCard(c);

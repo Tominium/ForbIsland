@@ -7,17 +7,21 @@ import Logic.Tile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GameBoard extends JLayeredPane {
+public class GameBoard extends JLayeredPane implements MouseListener {
 
     private GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
+    private String action;
 
     public GameBoard(){
 
+        addMouseListener(this);
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         GridBagLayoutgrid = new GridBagLayout();
@@ -135,6 +139,7 @@ public class GameBoard extends JLayeredPane {
     }
 
     public void moveP(){
+        action = "move";
         ArrayList<int[]> ret = GameState.coords();
         ArrayList<Point> real = new ArrayList<>();
         for(int[] re: ret){
@@ -240,6 +245,43 @@ public class GameBoard extends JLayeredPane {
 
         this.repaint();
         this.revalidate();
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(action.contains("move")){
+            Component a = findComponentAt(e.getPoint());
+        int griX = this.getGridBagLayoutgrid().getConstraints(a).gridx;
+        int griY = this.getGridBagLayoutgrid().getConstraints(a).gridy;
+        Tile t = GameBoardGraphic.localTileLoc.get(new Point(griX, griY));
+        if(GameState.checkMove(t, GameState.pawnLoc.get(0))){
+            Pawn p = GameState.pawnLoc.get(0);
+            p.setLocation(griX, griY);
+            GameState.pawnLoc.set(0, p);
+            action = "";
+            paintTile();
+        }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }
