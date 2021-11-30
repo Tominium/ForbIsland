@@ -183,6 +183,29 @@ public class GameState {
         return total;
     }
 
+    public static ArrayList<int[]> coords(){
+        Pawn p = pawnLoc.get(turn);
+        ArrayList<int[]> ret = new ArrayList<>();
+        Tile temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0), p.getLocation().get(1)+1));
+        if(temp!= null && checkMove(temp, p)){
+            ret.add(new int[]{p.getLocation().get(0), p.getLocation().get(1) + 1});
+        }
+        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0), p.getLocation().get(1)-1));
+        if(temp!=null && checkMove(temp, p)){
+            ret.add(new int[]{p.getLocation().get(0), p.getLocation().get(1)-1});
+        }
+        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)+1, p.getLocation().get(1)));
+        if(temp!=null && checkMove(temp, p)){
+            ret.add(new int[]{p.getLocation().get(0)+1, p.getLocation().get(1)});
+        }
+        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)-1, p.getLocation().get(1)-1));
+        if(temp!=null && checkMove(temp, p)){
+            ret.add(new int[]{p.getLocation().get(0)-1, p.getLocation().get(1)});
+        }
+        return ret;
+
+    }
+
     public static boolean checkTrade(Pawn b) {
         Pawn temp = GameState.pawnLoc.get(turn);
 

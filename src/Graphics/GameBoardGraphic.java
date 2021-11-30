@@ -8,9 +8,12 @@ import Logic.Tile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 1600;
@@ -54,6 +57,10 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         sideComps.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         sideComps.setFont(new Font("Arial", Font.BOLD, 18));
         JButton move = new JButton("Move"); move.setPreferredSize(new Dimension(200, 100)); sideComps.add(move);
+        move.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                movePawn();
+            }});
         JButton shoreUp = new JButton("Shore Up"); shoreUp.setPreferredSize(new Dimension(200, 100)); sideComps.add(shoreUp);
         JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(200, 100)); sideComps.add(tradeB);
         JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(200, 100)); sideComps.add(capture);
@@ -70,7 +77,9 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     }
 
     public void movePawn(){
-
+        gameTiles.moveP();
+        mainComps.repaint();
+        mainComps.revalidate();
     }
 
     public void tradeable(){}
@@ -92,21 +101,21 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Component a = findComponentAt(e.getPoint());
-        int griX = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridx;
-        int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
-        if(griX!=-1) {
-            System.out.println("(" + griX + ", " + griY + ")");
-            System.out.println(GameState.checkMove(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(0)));
-            for(int i=0; i<GameState.tileLoc.size(); i++){
-                if(GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY)))){
-                    Tile t = GameState.tileLoc.get(i); t.floodTile(); GameState.tileLoc.set(i, t);
-                    gameTiles.paintTile();
-                    mainComps.repaint();
-                    mainComps.revalidate();
-                }
-            }
-        }
+//        Component a = findComponentAt(e.getPoint());
+//        int griX = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridx;
+//        int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
+//        if(griX!=-1) {
+//            System.out.println("(" + griX + ", " + griY + ")");
+//            System.out.println(GameState.checkMove(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(0)));
+//            for(int i=0; i<GameState.tileLoc.size(); i++){
+//                if(GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY)))){
+//                    Tile t = GameState.tileLoc.get(i); t.floodTile(); GameState.tileLoc.set(i, t);
+//                    gameTiles.paintTile();
+//                    mainComps.repaint();
+//                    mainComps.revalidate();
+//                }
+//            }
+//        }
     }
 
     @Override
