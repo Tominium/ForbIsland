@@ -352,6 +352,15 @@ public class GameBoard extends JLayeredPane{
 
     }
 
+    public void useCard(){
+        removeAll();
+        add(new useCard());
+
+        this.repaint();
+        this.revalidate();
+
+    }
+
     public String getAction(){return action;}
     public void resetAction(){action="";}
 }

@@ -4,6 +4,9 @@ import Logic.GameState;
 import Logic.Pawn;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class tradePanel extends JPanel {
 
@@ -17,31 +20,6 @@ public class tradePanel extends JPanel {
 
         JButton card1 = new JButton();
         card1.setBounds(100,100,100,100);
-//        card1.setOpaque(false);
-//        card1.setContentAreaFilled(false);
-//        card1.setBorderPainted(false);
-        JButton card2 = new JButton();
-        card2.setBounds(100,100,100,100);
-//        card2.setOpaque(false);
-//        card2.setContentAreaFilled(false);
-//        card2.setBorderPainted(false);
-//        JButton card1 = new JButton();
-//        card1.setBounds(100,100,100,100);
-////        card1.setOpaque(false);
-////        card1.setContentAreaFilled(false);
-////        card1.setBorderPainted(false);
-//        JButton card1 = new JButton();
-//        card1.setBounds(100,100,100,100);
-////        card1.setOpaque(false);
-////        card1.setContentAreaFilled(false);
-////        card1.setBorderPainted(false);
-//        JButton card1 = new JButton();
-//        card1.setBounds(100,100,100,100);
-////        card1.setOpaque(false);
-////        card1.setContentAreaFilled(false);
-////        card1.setBorderPainted(false);
-
-
 
     }
 }

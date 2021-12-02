@@ -57,18 +57,23 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         sideComps.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
         sideComps.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         sideComps.setFont(new Font("Arial", Font.BOLD, 18));
-        JButton move = new JButton("Move"); move.setPreferredSize(new Dimension(200, 100)); sideComps.add(move);
+        JButton move = new JButton("Move"); move.setPreferredSize(new Dimension(150, 50)); sideComps.add(move);
         move.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 movePawn();
             }});
-        JButton shoreUp = new JButton("Shore Up"); shoreUp.setPreferredSize(new Dimension(200, 100)); sideComps.add(shoreUp);
+        JButton shoreUp = new JButton("Shore Up"); shoreUp.setPreferredSize(new Dimension(150, 50)); sideComps.add(shoreUp);
         shoreUp.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 shoreUp();
             }});
-        JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(200, 100)); sideComps.add(tradeB);
-        JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(200, 100)); sideComps.add(capture);
+        JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(150, 50)); sideComps.add(tradeB);
+        JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(150, 50)); sideComps.add(capture);
+        JButton useCard = new JButton("Use Card"); useCard.setPreferredSize(new Dimension(150, 50)); sideComps.add(useCard);
+        useCard.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                useCard();
+            }});
 
         frameGBC.gridx = 0;
         frameGBC.gridy = 1;
@@ -93,6 +98,13 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     public void shoreUp(){
         gameTiles.shoreUp();
+    }
+
+    public void useCard(){
+        sideComps.setVisible(false);
+        gameTiles.useCard();
+        this.repaint();
+        this.revalidate();
     }
 
     public void sandBag(){}
