@@ -352,6 +352,13 @@ public class GameBoard extends JLayeredPane{
 
     }
 
+    public void tradePanel() {
+        this.removeAll();
+        add(new tradePanel());
+        this.repaint();
+        this.revalidate();
+    }
+
     public String getAction(){return action;}
     public void resetAction(){action="";}
 }

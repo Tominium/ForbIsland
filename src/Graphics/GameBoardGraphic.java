@@ -2,6 +2,7 @@ package Graphics;
 
 import Graphics.Components.GameBoard;
 import Graphics.Components.playerDeckPanel;
+import Graphics.Components.tradePanel;
 import Graphics.Components.waterMeterPanel;
 import Logic.GameState;
 import Logic.Pawn;
@@ -68,6 +69,10 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                 shoreUp();
             }});
         JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(200, 100)); sideComps.add(tradeB);
+        tradeB.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                tradeable();
+            }});
         JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(200, 100)); sideComps.add(capture);
 
         frameGBC.gridx = 0;
@@ -87,7 +92,13 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         mainComps.revalidate();
     }
 
-    public void tradeable(){}
+    public void tradeable(){
+        gameTiles.tradePanel();
+        sideComps.setVisible(false);
+        waterMeter.setVisible(false);
+        mainComps.repaint();
+        mainComps.revalidate();
+    }
 
     public void removeCard(){}
 
