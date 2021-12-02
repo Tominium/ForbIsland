@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class GameState {
-    public static String[] collectedTreasures;
+    public static ArrayList<String> collectedTreasures;
     private BufferedImage boardTemplate;
     public static WaterMeter waterMeter;
     public static TreasureDeck treasureDeck;
@@ -33,7 +33,7 @@ public class GameState {
     private static int[] loc;
 
     public GameState(int numPlayers, String diff){
-        collectedTreasures = new String[4];
+        collectedTreasures = new ArrayList<String>();
         pawnLoc = new ArrayList<>();
         tileLoc = new ArrayList<>();
         treasureDeck = new TreasureDeck();
@@ -247,6 +247,25 @@ public class GameState {
     }
     public static void updatePawnLoc(Pawn b){
         pawnLoc.set(turn, b);
+    }
+
+    public static boolean collectTreasure(Pawn p){
+        int count = 1;
+        String firstCard = p.getHand().get(0).getCardName();
+        for(int i = 1; i < p.getHand().size(); i++){
+            if(firstCard.equals(p.getHand().get(i).getCardName())){
+                count++;
+            }
+            else{
+                firstCard = p.getHand().get(i).getCardName();
+            }
+        }
+
+        if(count >= 4){
+            collectedTreasures.add(firstCard);
+            return true;
+        }
+        return false;
     }
 
 }
