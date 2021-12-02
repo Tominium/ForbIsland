@@ -66,9 +66,9 @@ public class Tile {
     public boolean shoreUp() {
         if(sunk == false&&flooded == true) {
             flooded = false;
-            String url = "/Assets/zones/" + name + ".png";
+            String url = "/Assets/zones/" + name + ".png.png";
             try{
-                image = ImageIO.read(this.getClass().getResource(url));
+                image = ImageIO.read(Tile.class.getResource(url));
             }
             catch (IOException e) {
                 e.printStackTrace();
