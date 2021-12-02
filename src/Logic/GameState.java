@@ -1,7 +1,6 @@
 package Logic;
 
 import Cards.Card;
-import Cards.TreasureCard;
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
 import Graphics.GameBoardGraphic;
@@ -9,7 +8,10 @@ import Water.WaterMeter;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class GameState {
     public static String[] collectedTreasures;
@@ -83,6 +85,16 @@ public class GameState {
     public double riseWaterLevel() {
         waterMeter.watersRise();
         return waterMeter.getWaterLevel();
+    }
+
+    public static boolean iterateAction(){
+        actionCount++;
+        if(actionCount==3){actionCount=0; iterateTurn(); return false;}
+        return true;
+    }
+    public static void iterateTurn(){
+        turn++;
+        if(turn>=pawnLoc.size()){turn =0;}
     }
 
     public static void setOriginalPlayerLocation() {
@@ -167,11 +179,12 @@ public class GameState {
 //        return loc;
 //    }
 
-    public static HashMap<Point, ArrayList<Integer>> pawnLocs(){
+    public static HashMap<Point, ArrayList<Integer>> pawnLocHash(){
         HashMap<Point, ArrayList<Integer>> total = new HashMap<>();
 
-        for(int i=0; i< pawnLoc.size();i++){
+        for(int i=0; i < pawnLoc.size();i++){
             Point p = new Point(pawnLoc.get(i).getLocation().get(0), pawnLoc.get(i).getLocation().get(1));
+            System.out.println(pawnLoc.get(i).getLocation().get(0) + " " + pawnLoc.get(i).getLocation().get(1));
             if(total.containsKey(p)){
                 total.get(p).add(i);
             }
@@ -188,7 +201,7 @@ public class GameState {
         ArrayList<int[]> ret = new ArrayList<>();
         Tile temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0), p.getLocation().get(1)+1));
         if(temp!= null && checkMove(temp, p)){
-            ret.add(new int[]{p.getLocation().get(0), p.getLocation().get(1) + 1});
+            ret.add(new int[]{p.getLocation().get(0), p.getLocation().get(1)+1});
         }
         temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0), p.getLocation().get(1)-1));
         if(temp!=null && checkMove(temp, p)){
@@ -198,7 +211,7 @@ public class GameState {
         if(temp!=null && checkMove(temp, p)){
             ret.add(new int[]{p.getLocation().get(0)+1, p.getLocation().get(1)});
         }
-        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)-1, p.getLocation().get(1)-1));
+        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)-1, p.getLocation().get(1)));
         if(temp!=null && checkMove(temp, p)){
             ret.add(new int[]{p.getLocation().get(0)-1, p.getLocation().get(1)});
         }
@@ -231,6 +244,9 @@ public class GameState {
             GameState.pawnLoc.get(turn).removeCard(c);
             b.addCard(c);
         }
+    }
+    public static void updatePawnLoc(Pawn b){
+        pawnLoc.set(turn, b);
     }
 
 }

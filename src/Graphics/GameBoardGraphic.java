@@ -4,6 +4,7 @@ import Graphics.Components.GameBoard;
 import Graphics.Components.playerDeckPanel;
 import Graphics.Components.waterMeterPanel;
 import Logic.GameState;
+import Logic.Pawn;
 import Logic.Tile;
 
 import javax.swing.*;
@@ -13,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 1600;
@@ -119,6 +119,22 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 //                }
 //            }
 //        }
+
+        if(gameTiles.getAction().contains("move")){
+            Component a = findComponentAt(e.getPoint());
+            int griX = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridx;
+            int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
+            System.out.println("(" + griX + ", " + griY + ")");
+            Tile t = GameBoardGraphic.localTileLoc.get(new Point(griX, griY));
+            if(GameState.checkMove(t, GameState.pawnLoc.get(GameState.turn))){
+                Pawn b = GameState.pawnLoc.get(GameState.turn);
+                System.out.println(b.setLocation(griX, griY));
+                GameState.updatePawnLoc(b);
+                gameTiles.resetAction();
+                gameTiles.paintTile();
+                GameState.iterateAction();
+            }
+        }
     }
 
     @Override

@@ -37,7 +37,7 @@ public class Pawn implements Comparable<Pawn>{
         addCard(GameState.treasureDeck.getCard());
     }
 
-    public void setLocation(int x, int y) {
+    public String setLocation(int x, int y) {
         if(loc.size()==0){
             loc.add(x);
             loc.add(y);
@@ -46,6 +46,7 @@ public class Pawn implements Comparable<Pawn>{
             loc.set(0, x);
             loc.set(1, y);
         }
+        return "New Location: (" + loc.get(0) + ", " + loc.get(1) + ")";
     }
 
     public ArrayList<Integer> getLocation() {

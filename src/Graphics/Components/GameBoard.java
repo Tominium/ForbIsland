@@ -7,25 +7,25 @@ import Logic.Tile;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GameBoard extends JLayeredPane implements MouseListener {
+public class GameBoard extends JLayeredPane{
 
     private GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
     private String action;
+    private int runCnt;
 
     public GameBoard(){
 
-        addMouseListener(this);
+        action = "";
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         GridBagLayoutgrid = new GridBagLayout();
         setLayout(GridBagLayoutgrid);
+        runCnt = 0;
         paintTile();
     }
 
@@ -39,6 +39,7 @@ public class GameBoard extends JLayeredPane implements MouseListener {
 
     public void paintTile(){
         this.removeAll();
+
         int x = 2; int y=0; int i =0;
         gbc.ipadx = 2;
         gbc.ipady = 2;
@@ -103,14 +104,15 @@ public class GameBoard extends JLayeredPane implements MouseListener {
         gbc.ipadx = 0;
         gbc.ipady = 0;
 
-        GameState.setOriginalPlayerLocation();
-
-        HashMap<Point, ArrayList<Integer>> pawnLocs = GameState.pawnLocs();
+        if(runCnt==0){GameState.setOriginalPlayerLocation(); runCnt++;}
+        HashMap<Point, ArrayList<Integer>> pawnLocs = GameState.pawnLocHash();
+        //System.out.println(pawnLocs);
 
 
         for(Point p: pawnLocs.keySet()){
             BufferedImage result = new BufferedImage(120, 120, BufferedImage.TYPE_INT_ARGB);
             Graphics2D gbi = result.createGraphics();
+            //System.out.println(GameBoardGraphic.localTileLoc.get(p).getName());
             gbi.drawImage(resize(GameBoardGraphic.localTileLoc.get(p).getImage(),120,120), 0, 0, this);
             gbc.gridx = p.x;
             gbc.gridy = p.y;
@@ -148,18 +150,17 @@ public class GameBoard extends JLayeredPane implements MouseListener {
         System.out.println(real);
 
         this.removeAll();
+
         int x = 2; int y=0; int i =0;
         gbc.ipadx = 2;
         gbc.ipady = 2;
         for(Tile t: GameState.tileLoc){
             gbc.gridx = x;
             gbc.gridy = y;
-            t.setLocation(x,y);
             Point temp = new Point(x, y);
-            GameBoardGraphic.localTileLoc.put(new Point(x, y), t);
             Image image = t.getImage().getScaledInstance(120, 120,  Image.SCALE_SMOOTH); // transform it
             if(real.contains(temp)){
-                image = t.getImage().getScaledInstance(115, 115,  Image.SCALE_SMOOTH);
+                image = t.getImage().getScaledInstance(117, 117,  Image.SCALE_SMOOTH);
                 JLabel test = new JLabel(new ImageIcon(image));
                 test.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(134, 3, 148)));
                 this.add(test, gbc);
@@ -221,12 +222,8 @@ public class GameBoard extends JLayeredPane implements MouseListener {
         gbc.ipadx = 0;
         gbc.ipady = 0;
 
-        GameState.setOriginalPlayerLocation();
 
-        HashMap<Point, ArrayList<Integer>> pawnLocs = GameState.pawnLocs();
-
-        System.out.println(GameState.pawnLoc.get(0).getRole());
-
+        HashMap<Point, ArrayList<Integer>> pawnLocs = GameState.pawnLocHash();
 
         for(Point p: pawnLocs.keySet()){
             BufferedImage result = new BufferedImage(120, 120, BufferedImage.TYPE_INT_ARGB);
@@ -248,40 +245,6 @@ public class GameBoard extends JLayeredPane implements MouseListener {
 
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if(action.contains("move")){
-            Component a = findComponentAt(e.getPoint());
-        int griX = this.getGridBagLayoutgrid().getConstraints(a).gridx;
-        int griY = this.getGridBagLayoutgrid().getConstraints(a).gridy;
-        Tile t = GameBoardGraphic.localTileLoc.get(new Point(griX, griY));
-        if(GameState.checkMove(t, GameState.pawnLoc.get(0))){
-            Pawn p = GameState.pawnLoc.get(0);
-            p.setLocation(griX, griY);
-            GameState.pawnLoc.set(0, p);
-            action = "";
-            paintTile();
-        }
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public String getAction(){return action;}
+    public void resetAction(){action="";}
 }
