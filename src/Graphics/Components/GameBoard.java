@@ -160,9 +160,9 @@ public class GameBoard extends JLayeredPane{
             Point temp = new Point(x, y);
             Image image = t.getImage().getScaledInstance(120, 120,  Image.SCALE_SMOOTH); // transform it
             if(real.contains(temp)){
-                image = t.getImage().getScaledInstance(117, 117,  Image.SCALE_SMOOTH);
+                image = t.getImage().getScaledInstance(115, 115,  Image.SCALE_SMOOTH);
                 JLabel test = new JLabel(new ImageIcon(image));
-                test.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(134, 3, 148)));
+                test.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(134, 3, 148), 5));
                 this.add(test, gbc);
             }
             else{
