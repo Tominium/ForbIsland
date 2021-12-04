@@ -2,6 +2,7 @@ package Graphics;
 
 import Graphics.Components.GameBoard;
 import Graphics.Components.playerDeckPanel;
+import Graphics.Components.useCard;
 import Graphics.Components.waterMeterPanel;
 import Logic.GameState;
 import Logic.Pawn;
@@ -101,13 +102,18 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     }
 
     public void useCard(){
-        sideComps.setVisible(false);
-        gameTiles.useCard();
-        this.repaint();
-        this.revalidate();
+//        sideComps.setVisible(false);
+//        gameTiles.useCard();
+//        this.repaint();
+//        this.revalidate();
+        new useCard(this);
     }
 
-    public void sandBag(){}
+    public void sandBag(){
+        gameTiles.sandBag();
+        mainComps.repaint();
+        mainComps.revalidate();
+    }
 
     public void helicopter(){}
 
@@ -120,22 +126,22 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(gameTiles.getAction().contains("shore")){
+        if(gameTiles.getAction().contains("shore") || gameTiles.getAction().contains("sandbag")){
             Component a = findComponentAt(e.getPoint());
             int griX = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridx;
             int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
             if (griX != -1) {
                 Point temp = new Point(GameState.pawnLoc.get(GameState.turn).getLocation().get(0),GameState.pawnLoc.get(GameState.turn).getLocation().get(1));
-                if(GameState.checkMove(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(GameState.turn)) || temp.equals(new Point(griX, griY))){
+                if(GameState.checkMove(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(GameState.turn)) || temp.equals(new Point(griX, griY)) || gameTiles.getAction().contains("sandbag")){
                     for (int i = 0; i < GameState.tileLoc.size(); i++) {
-                        if (GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY)))) {
+                        if (GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY)))|| gameTiles.getAction().contains("sandbag")) {
                             System.out.println("(" + griX + ", " + griY + ")");
                             Tile t = GameState.tileLoc.get(i);
                             t.shoreUp();
                             GameState.tileLoc.set(i, t);
                             gameTiles.resetAction();
                             gameTiles.paintTile();
-                            GameState.iterateAction();
+                            if(!gameTiles.getAction().contains("sandbag")){GameState.iterateAction();}
                         }
                     }
                 }
