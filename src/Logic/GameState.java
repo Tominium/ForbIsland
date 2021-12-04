@@ -3,9 +3,11 @@ package Logic;
 import Cards.Card;
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
+import Graphics.Components.discardCard;
 import Graphics.GameBoardGraphic;
 import Water.WaterMeter;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.HashMap;
 
 public class GameState {
     public static ArrayList<String> collectedTreasures;
+    private static GameBoardGraphic gb;
     private BufferedImage boardTemplate;
     public static WaterMeter waterMeter;
     public static TreasureDeck treasureDeck;
@@ -51,7 +54,7 @@ public class GameState {
         shuffleTiles();
         setRoles(numPlayers);
 
-        new GameBoardGraphic();
+        gb = new GameBoardGraphic(this);
     }
 
     private static void setRoles(int np){
@@ -87,12 +90,50 @@ public class GameState {
         return waterMeter.getWaterLevel();
     }
 
-    public static boolean iterateAction(){
+    public boolean iterateAction(){
         actionCount++;
-        if(actionCount==3){actionCount=0; iterateTurn(); return false;}
+        if(actionCount==3){
+            actionCount=0;
+            iterateTurn();
+            return false;
+        }
         return true;
     }
-    public static void iterateTurn(){
+    public void iterateTurn(){
+            Card c = treasureDeck.getCard();
+            if (c.getCardName().contains("Water")) {
+                treasureDeck.discardCard(c);
+                waterMeter.watersRise();
+                JOptionPane.showMessageDialog(gb,
+                        "You have drawn a Waters Rise Card!", "Waters Rise!",
+                        JOptionPane.ERROR_MESSAGE);
+                gb.updateAll();
+            }
+            else if(pawnLoc.get(turn).getHand().size()==4) {
+                discardCard temp = new discardCard(this, 1);
+                pawnLoc.get(turn).addCard(c);
+                gb.getPlayerDeckView().updatePanel();
+                gb.updateAll();
+            }
+            else if(pawnLoc.get(turn).getHand().size()==5){
+                discardCard temp = new discardCard(this, 2);
+                pawnLoc.get(turn).addCard(c);
+                gb.getPlayerDeckView().updatePanel();
+                gb.updateAll();
+            }
+            else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
+                gb.updateAll();}
+        c = treasureDeck.getCard();
+        if (c.getCardName().contains("Water")) {
+            treasureDeck.discardCard(c);
+            waterMeter.watersRise();
+            JOptionPane.showMessageDialog(gb,
+                    "You have drawn a Waters Rise Card!", "Waters Rise!",
+                    JOptionPane.ERROR_MESSAGE);
+            gb.updateAll();
+        }
+        else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
+            gb.updateAll();}
         turn++;
         if(turn>=pawnLoc.size()){turn =0;}
     }
@@ -269,5 +310,7 @@ public class GameState {
 
         return false;
     }
+
+    public TreasureDeck getTreasureDeck(){return treasureDeck;}
 
 }

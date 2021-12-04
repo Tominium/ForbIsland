@@ -28,7 +28,7 @@ public class GameBoard extends JLayeredPane{
 
         action = "";
         gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        //gbc.fill = GridBagConstraints.HORIZONTAL;
         GridBagLayoutgrid = new GridBagLayout();
         setLayout(GridBagLayoutgrid);
         runCnt = 0;

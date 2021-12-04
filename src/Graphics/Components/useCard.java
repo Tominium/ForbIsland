@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class useCard extends JFrame {
     private JPanel panel;
-    private static int WIDTH = 1000;
-    private static int HEIGHT = 800;
+    private static int WIDTH = 650;
+    private static int HEIGHT = 500;
     private GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
     private GameBoardGraphic gb;
@@ -29,15 +29,16 @@ public class useCard extends JFrame {
         panel.setLayout(GridBagLayoutgrid);
         ArrayList<JButton> buttons = new ArrayList<JButton>();
         for(Pawn p: GameState.pawnLoc){
-            JButton temp = new JButton(new ImageIcon(p.getIcon().getScaledInstance(100, 138, Image.SCALE_SMOOTH)));
+            JButton temp = new JButton(new ImageIcon(p.getIcon().getScaledInstance(120, 166, Image.SCALE_SMOOTH)));
             temp.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     showCards(p);
                 }});
             buttons.add(temp);
         }
-        int i=0;
+        int i=5;
         for(JButton b: buttons){gbc.gridx=i; gbc.gridy=0; panel.add(b, gbc); i++;}
+
         add(panel);
 
 
@@ -52,7 +53,7 @@ public class useCard extends JFrame {
 
         ArrayList<JButton> buttons = new ArrayList<JButton>();
         for(Card c: bb.getHand()){
-            JButton temp = new JButton(new ImageIcon(c.getImage()));
+            JButton temp = new JButton(new ImageIcon(c.getImage().getScaledInstance(125, 184, Image.SCALE_SMOOTH)));
             temp.setOpaque(true);
             temp.setContentAreaFilled(false);
             temp.setBorderPainted(false);
@@ -68,9 +69,39 @@ public class useCard extends JFrame {
         int i=0;
         for(JButton b: buttons){gbc.gridx=i; gbc.gridy=0; panel.add(b, gbc); i++;}
 
+
+        gbc.gridx = 5; gbc.gridy =1;
+        JButton temp = new JButton("Back");
+        temp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                back();
+            }
+        });
+        temp.setPreferredSize(new Dimension(75, 50));
+        panel.add(temp, gbc);
+
         panel.repaint();
         panel.revalidate();
         this.revalidate();
 
+    }
+    public void back(){
+        panel.removeAll();
+        ArrayList<JButton> buttons = new ArrayList<JButton>();
+        for(Pawn p: GameState.pawnLoc){
+            JButton temp = new JButton(new ImageIcon(p.getIcon().getScaledInstance(120, 166, Image.SCALE_SMOOTH)));
+            temp.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    showCards(p);
+                }});
+            buttons.add(temp);
+        }
+        int i=5;
+        for(JButton b: buttons){gbc.gridx=i; gbc.gridy=0; panel.add(b, gbc); i++;}
+
+        panel.repaint();
+        panel.revalidate();
+        this.revalidate();
     }
 }

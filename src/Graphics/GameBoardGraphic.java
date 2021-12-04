@@ -12,16 +12,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
-import static Logic.GameState.coords;
 import static Logic.GameState.turn;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
-    private static final int WIDTH = 1600;
-    private static final int HEIGHT = 1082 ;
+    private static final int WIDTH = 1800;
+    private static final int HEIGHT = 1150 ;
     private Font Font;
+    private GameState gameState;
     private GameBoard gameTiles;
     private playerDeckPanel playerDeckView;
     private waterMeterPanel waterMeter;
@@ -32,7 +31,9 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private JPanel sideComps;
     private JPanel specialComps;
 
-    public GameBoardGraphic(){
+    public GameBoardGraphic(GameState gs){
+        gameState = gs;
+
         addMouseListener(this);
         mainComps = new JPanel();
         mainComps.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 0));
@@ -80,6 +81,11 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         useCard.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 useCard();
+            }});
+        JButton endTurn = new JButton("End Turn"); useCard.setPreferredSize(new Dimension(150, 50)); sideComps.add(endTurn);
+        endTurn.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                gameState.iterateTurn();
             }});
 
         frameGBC.gridx = 0;
@@ -164,7 +170,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                             GameState.tileLoc.set(i, t);
                             gameTiles.resetAction();
                             gameTiles.paintTile();
-                            if(!gameTiles.getAction().contains("sandbag")){GameState.iterateAction();}
+                            if(!gameTiles.getAction().contains("sandbag")){gameState.iterateAction();}
                         }
                     }
                 }
@@ -183,7 +189,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                 GameState.updatePawnLoc(b);
                 gameTiles.resetAction();
                 gameTiles.paintTile();
-                GameState.iterateAction();
+                gameState.iterateAction();
             }
         }
     }
@@ -206,5 +212,16 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public playerDeckPanel getPlayerDeckView(){return playerDeckView;}
+
+    public void updateAll(){
+        mainComps.repaint();
+        mainComps.revalidate();
+        sideComps.repaint();
+        sideComps.revalidate();
+        this.repaint();
+        this.revalidate();
     }
 }

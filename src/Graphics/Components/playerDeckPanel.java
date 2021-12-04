@@ -20,12 +20,14 @@ public class playerDeckPanel extends JPanel {
         playerDeckGBC.ipadx = 2;
         playerDeckGBC.ipady = 5;
         int i =0;
+        int divider = (int) (GameState.pawnLoc.get(0).getHand().size() /2.5);
+        if(divider ==0){divider=1;}
         for(Pawn p: GameState.pawnLoc){
             for(int ii=0; ii<=p.getHand().size(); ii++){
                 Image image;
-                if(ii==0){image = p.getIcon().getScaledInstance(90, 132, Image.SCALE_SMOOTH);}
+                if(ii==0){image = p.getIcon().getScaledInstance(90/divider, 132/divider, Image.SCALE_SMOOTH);}
                 else{
-                    image = p.getHand().get(ii-1).getImage().getScaledInstance(90, 132, Image.SCALE_SMOOTH);
+                    image = p.getHand().get(ii-1).getImage().getScaledInstance(90/divider, 132/divider, Image.SCALE_SMOOTH);
                 }
                 playerDeckGBC.gridx = ii;
                 playerDeckGBC.gridy = i;
@@ -41,12 +43,14 @@ public class playerDeckPanel extends JPanel {
         playerDeckGBC.ipadx = 2;
         playerDeckGBC.ipady = 5;
         int i =0;
+        int divider = (int) (GameState.pawnLoc.get(0).getHand().size() /2.5);
+        if(divider ==0){divider=1;}
         for(Pawn p: GameState.pawnLoc){
             for(int ii=0; ii<=p.getHand().size(); ii++){
                 Image image;
-                if(ii==0){image = p.getIcon().getScaledInstance(90, 132, Image.SCALE_SMOOTH);}
+                if(ii==0){image = p.getIcon().getScaledInstance(90/divider, 132/divider, Image.SCALE_SMOOTH);}
                 else{
-                    image = p.getHand().get(ii-1).getImage().getScaledInstance(90, 132, Image.SCALE_SMOOTH);
+                    image = p.getHand().get(ii-1).getImage().getScaledInstance(90/divider, 132/divider, Image.SCALE_SMOOTH);
                 }
                 playerDeckGBC.gridx = ii;
                 playerDeckGBC.gridy = i;
