@@ -18,12 +18,12 @@ public class playerDeckPanel extends JPanel {
         playerDeckGBL = new GridBagLayout();
         setLayout(playerDeckGBL);
         playerDeckGBC.ipadx = 2;
-        playerDeckGBC.ipady = 2;
+        playerDeckGBC.ipady = 5;
         int i =0;
         for(Pawn p: GameState.pawnLoc){
             for(int ii=0; ii<=p.getHand().size(); ii++){
                 Image image;
-                if(ii==0){image = p.getIcon();}
+                if(ii==0){image = p.getIcon().getScaledInstance(90, 132, Image.SCALE_SMOOTH);}
                 else{
                     image = p.getHand().get(ii-1).getImage().getScaledInstance(90, 132, Image.SCALE_SMOOTH);
                 }
@@ -39,12 +39,12 @@ public class playerDeckPanel extends JPanel {
     public void updatePanel(){
         removeAll();
         playerDeckGBC.ipadx = 2;
-        playerDeckGBC.ipady = 2;
+        playerDeckGBC.ipady = 5;
         int i =0;
         for(Pawn p: GameState.pawnLoc){
             for(int ii=0; ii<=p.getHand().size(); ii++){
                 Image image;
-                if(ii==0){image = p.getIcon();}
+                if(ii==0){image = p.getIcon().getScaledInstance(90, 132, Image.SCALE_SMOOTH);}
                 else{
                     image = p.getHand().get(ii-1).getImage().getScaledInstance(90, 132, Image.SCALE_SMOOTH);
                 }

@@ -23,7 +23,7 @@ public class Pawn implements Comparable<Pawn>{
         loc = new ArrayList<Integer>();
         hand = new ArrayList<>();
 
-        String url = "/Assets/PawnIcons/" + role + ".png";
+        String url = "/Assets/PawnIcons1/" + role + ".png";
         String url1 =  "/Assets/PawnPieces/" + role + ".png";
         try{
             icon = ImageIO.read(Pawn.class.getResource(url));

@@ -5,9 +5,11 @@ import Logic.GameState;
 import Logic.Pawn;
 import Logic.Tile;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,6 +19,10 @@ public class GameBoard extends JLayeredPane{
     private GridBagConstraints gbc;
     private String action;
     private int runCnt;
+    private BufferedImage air;
+    private BufferedImage eau;
+    private BufferedImage feu;
+    private BufferedImage terre;
 
     public GameBoard(){
 
@@ -26,6 +32,19 @@ public class GameBoard extends JLayeredPane{
         GridBagLayoutgrid = new GridBagLayout();
         setLayout(GridBagLayoutgrid);
         runCnt = 0;
+        try{
+            air = ImageIO.read(Pawn.class.getResource("/Assets/Treasures/AIR_clear.png"));
+            air = resize(air, 100, 100);
+            eau = ImageIO.read(Pawn.class.getResource("/Assets/Treasures/EAU_clear.png"));
+            eau = resize(eau, 100, 100);
+            feu = ImageIO.read(Pawn.class.getResource("/Assets/Treasures/FEU_clear.png"));
+            feu = resize(feu, 100, 100);
+            terre = ImageIO.read(Pawn.class.getResource("/Assets/Treasures/TERRE_clear.png"));
+            terre = resize(terre, 100, 100);
+        }
+        catch(IOException e){
+
+        }
         paintTile();
     }
 
@@ -124,6 +143,10 @@ public class GameBoard extends JLayeredPane{
             result = resize(result,120,120);
             this.add(new JLabel(new ImageIcon(result)), gbc, 0);
         }
+        gbc.gridx = 1; gbc.gridy = 0; add(new JLabel(new ImageIcon(air)), gbc);
+        gbc.gridx = 4; gbc.gridy = 0; add(new JLabel(new ImageIcon(eau)), gbc);
+        gbc.gridx = 1; gbc.gridy = 5; add(new JLabel(new ImageIcon(feu)), gbc);
+        gbc.gridx = 4; gbc.gridy = 5; add(new JLabel(new ImageIcon(terre)), gbc);
 
         this.repaint();
         this.revalidate();
@@ -239,6 +262,10 @@ public class GameBoard extends JLayeredPane{
             result = resize(result,120,120);
             this.add(new JLabel(new ImageIcon(result)), gbc, 0);
         }
+        gbc.gridx = 1; gbc.gridy = 0; add(new JLabel(new ImageIcon(air)), gbc);
+        gbc.gridx = 4; gbc.gridy = 0; add(new JLabel(new ImageIcon(eau)), gbc);
+        gbc.gridx = 1; gbc.gridy = 5; add(new JLabel(new ImageIcon(feu)), gbc);
+        gbc.gridx = 4; gbc.gridy = 5; add(new JLabel(new ImageIcon(terre)), gbc);
 
         this.repaint();
         this.revalidate();
@@ -346,6 +373,10 @@ public class GameBoard extends JLayeredPane{
             result = resize(result,120,120);
             this.add(new JLabel(new ImageIcon(result)), gbc, 0);
         }
+        gbc.gridx = 1; gbc.gridy = 0; add(new JLabel(new ImageIcon(air)), gbc);
+        gbc.gridx = 4; gbc.gridy = 0; add(new JLabel(new ImageIcon(eau)), gbc);
+        gbc.gridx = 1; gbc.gridy = 5; add(new JLabel(new ImageIcon(feu)), gbc);
+        gbc.gridx = 4; gbc.gridy = 5; add(new JLabel(new ImageIcon(terre)), gbc);
 
         this.repaint();
         this.revalidate();
@@ -451,6 +482,10 @@ public class GameBoard extends JLayeredPane{
             result = resize(result,120,120);
             this.add(new JLabel(new ImageIcon(result)), gbc, 0);
         }
+        gbc.gridx = 1; gbc.gridy = 0; add(new JLabel(new ImageIcon(air)), gbc);
+        gbc.gridx = 4; gbc.gridy = 0; add(new JLabel(new ImageIcon(eau)), gbc);
+        gbc.gridx = 1; gbc.gridy = 5; add(new JLabel(new ImageIcon(feu)), gbc);
+        gbc.gridx = 4; gbc.gridy = 5; add(new JLabel(new ImageIcon(terre)), gbc);
 
         this.repaint();
         this.revalidate();
@@ -458,4 +493,5 @@ public class GameBoard extends JLayeredPane{
 
     public String getAction(){return action;}
     public void resetAction(){action="";}
+
 }

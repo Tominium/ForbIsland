@@ -29,7 +29,7 @@ public class useCard extends JFrame {
         panel.setLayout(GridBagLayoutgrid);
         ArrayList<JButton> buttons = new ArrayList<JButton>();
         for(Pawn p: GameState.pawnLoc){
-            JButton temp = new JButton(new ImageIcon(p.getIcon()));
+            JButton temp = new JButton(new ImageIcon(p.getIcon().getScaledInstance(100, 138, Image.SCALE_SMOOTH)));
             temp.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     showCards(p);
@@ -53,6 +53,9 @@ public class useCard extends JFrame {
         ArrayList<JButton> buttons = new ArrayList<JButton>();
         for(Card c: bb.getHand()){
             JButton temp = new JButton(new ImageIcon(c.getImage()));
+            temp.setOpaque(true);
+            temp.setContentAreaFilled(false);
+            temp.setBorderPainted(false);
             temp.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     if(c.getCardName().contains("Sandbag")){

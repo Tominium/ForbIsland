@@ -60,7 +60,7 @@ public class GameState {
 
         for(int i=0; i<np; i++) {
             int pos = (int)(Math.random()*roles.size())+0;
-            Pawn p = new Pawn(roles.remove(pos), i+1);
+            Pawn p = new Pawn(roles.remove(pos), i);
             pawnLoc.add(p);
         }
     }
@@ -249,8 +249,9 @@ public class GameState {
         pawnLoc.set(turn, b);
     }
 
-    public static boolean collectTreasure(Pawn p){
+    public static boolean collectTreasure(){
         int count = 1;
+        Pawn p = pawnLoc.get(turn);
         String firstCard = p.getHand().get(0).getCardName();
         for(int i = 1; i < p.getHand().size(); i++){
             if(firstCard.equals(p.getHand().get(i).getCardName())){
@@ -265,6 +266,7 @@ public class GameState {
             collectedTreasures.add(firstCard);
             return true;
         }
+
         return false;
     }
 
