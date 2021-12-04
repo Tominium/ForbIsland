@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static Logic.GameState.captureTreasure;
 import static Logic.GameState.turn;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
@@ -61,28 +62,39 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         sideComps.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
         sideComps.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         sideComps.setFont(new Font("Arial", Font.BOLD, 18));
-        JButton move = new JButton("Move"); move.setPreferredSize(new Dimension(150, 50)); sideComps.add(move);
+        JButton move = new JButton("Move"); move.setPreferredSize(new Dimension(110, 35)); sideComps.add(move);
         move.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 movePawn();
             }});
-        JButton shoreUp = new JButton("Shore Up"); shoreUp.setPreferredSize(new Dimension(150, 50)); sideComps.add(shoreUp);
+        JButton shoreUp = new JButton("Shore Up"); shoreUp.setPreferredSize(new Dimension(110, 35)); sideComps.add(shoreUp);
         shoreUp.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 shoreUp();
             }});
-        JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(150, 50)); sideComps.add(tradeB);
+        JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(110, 35)); sideComps.add(tradeB);
         tradeB.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 tradeable();
             }});
-        JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(150, 50)); sideComps.add(capture);
-        JButton useCard = new JButton("Use Card"); useCard.setPreferredSize(new Dimension(150, 50)); sideComps.add(useCard);
+        JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(110, 35)); sideComps.add(capture);
+        capture.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                captureTreasure();
+            }});
+        JButton useCard = new JButton("Use Card"); useCard.setPreferredSize(new Dimension(110, 35)); sideComps.add(useCard);
         useCard.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 useCard();
             }});
-        JButton endTurn = new JButton("End Turn"); useCard.setPreferredSize(new Dimension(150, 50)); sideComps.add(endTurn);
+        JButton special = new JButton("Special Ability"); special.setPreferredSize(new Dimension(110, 35)); sideComps.add(special);
+        special.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                specialAbility();
+            }
+        });
+        JButton endTurn = new JButton("End Turn"); endTurn.setPreferredSize(new Dimension(110, 35)); sideComps.add(endTurn);
         endTurn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 gameState.iterateTurn();
@@ -146,7 +158,15 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     public void helicopter(){}
 
-    public void specialAbility(){}
+    public void specialAbility(){
+        Pawn p = GameState.pawnLoc.get(GameState.turn);
+        if(p.getRole().contains("Engineer")){
+            gameTiles.engineer();
+            gameTiles.sandBag();
+            mainComps.repaint();
+            mainComps.revalidate();
+        }
+    }
 
     public void winGraphics(){}
 
@@ -155,6 +175,28 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(gameTiles.getAction().contains("engineer")){
+            Component a = findComponentAt(e.getPoint());
+            int griX = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridx;
+            int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
+            System.out.println("Test 1");
+            if(griX != -1){
+                for(int i = 0; i < GameState.tileLoc.size(); i++){
+                    if(GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY)))){
+                        Tile t = GameState.tileLoc.get(i);
+                        t.shoreUp();
+                        GameState.tileLoc.set(i, t);
+                        gameTiles.resetAction();
+                        gameState.iterateAction();
+                        gameTiles.paintTile();
+                        gameTiles.sandBag();
+                        mainComps.repaint();
+                        gameTiles.revalidate();
+                    }
+                }
+            }
+        }
+
         if(gameTiles.getAction().contains("shore") || gameTiles.getAction().contains("sandbag")){
             Component a = findComponentAt(e.getPoint());
             int griX = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridx;

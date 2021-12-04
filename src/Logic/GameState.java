@@ -3,7 +3,6 @@ package Logic;
 import Cards.Card;
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
-import Graphics.Components.discardCard;
 import Graphics.GameBoardGraphic;
 import Water.WaterMeter;
 
@@ -26,6 +25,7 @@ public class GameState {
     public static ArrayList<Tile> tileLoc;
     public static int turn;
     private static int actionCount;
+    public Object wait;
     public final static String[] TILENAMES =
             {"Whispering Garden","Watchtower","Twilight Hollow","Tidal Palace"
                     ,"Temple of the Sun","Temple of the Moon","Silver Gate","Phantom Rock","Observatory","Misty Marsh"
@@ -46,6 +46,7 @@ public class GameState {
         dupl = GameBoardGraphic.localTileLoc;
         //loc = new int[0];
 
+        wait = false;
         if(diff.equals("Novice")){waterMeter = new WaterMeter(2.0);}
         else if(diff.equals("Normal")){waterMeter = new WaterMeter(2.25);}
         else if(diff.equals("Elite")){waterMeter = new WaterMeter(2.5);}
@@ -99,41 +100,57 @@ public class GameState {
         }
         return true;
     }
-    public void iterateTurn(){
-            Card c = treasureDeck.getCard();
-            if (c.getCardName().contains("Water")) {
-                treasureDeck.discardCard(c);
-                waterMeter.watersRise();
-                JOptionPane.showMessageDialog(gb,
-                        "You have drawn a Waters Rise Card!", "Waters Rise!",
-                        JOptionPane.ERROR_MESSAGE);
-                gb.updateAll();
-            }
-            else if(pawnLoc.get(turn).getHand().size()==4) {
-                discardCard temp = new discardCard(this, 1);
-                pawnLoc.get(turn).addCard(c);
-                gb.getPlayerDeckView().updatePanel();
-                gb.updateAll();
-            }
-            else if(pawnLoc.get(turn).getHand().size()==5){
-                discardCard temp = new discardCard(this, 2);
-                pawnLoc.get(turn).addCard(c);
-                gb.getPlayerDeckView().updatePanel();
-                gb.updateAll();
-            }
-            else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
-                gb.updateAll();}
-        c = treasureDeck.getCard();
-        if (c.getCardName().contains("Water")) {
-            treasureDeck.discardCard(c);
-            waterMeter.watersRise();
-            JOptionPane.showMessageDialog(gb,
-                    "You have drawn a Waters Rise Card!", "Waters Rise!",
-                    JOptionPane.ERROR_MESSAGE);
-            gb.updateAll();
-        }
-        else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
-            gb.updateAll();}
+    public void iterateTurn() {
+//            Card c = treasureDeck.getCard();
+//            if (c.getCardName().contains("Water")) {
+//                treasureDeck.discardCard(c);
+//                waterMeter.watersRise();
+//                JOptionPane.showMessageDialog(gb,
+//                        "You have drawn a Waters Rise Card!", "Waters Rise!",
+//                        JOptionPane.ERROR_MESSAGE);
+//                gb.updateAll();
+//            }
+//            else if(pawnLoc.get(turn).getHand().size()==4) {
+//                discardCard temp = new discardCard(this, 1, gb);
+//                synchronized(wait){
+//                    while ((boolean)wait) {
+//                        try {
+//                            wait.wait();
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//                pawnLoc.get(turn).addCard(c);
+//                gb.getPlayerDeckView().updatePanel();
+//                gb.updateAll();
+//            }
+//            else if(pawnLoc.get(turn).getHand().size()==5){
+//                discardCard temp = new discardCard(this, 2, gb);
+//                synchronized (wait){
+//                    try {
+//                        wait.wait();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                pawnLoc.get(turn).addCard(c);
+//                gb.getPlayerDeckView().updatePanel();
+//                gb.updateAll();
+//            }
+//            else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
+//                gb.updateAll();}
+//        c = treasureDeck.getCard();
+//        if (c.getCardName().contains("Water")) {
+//            treasureDeck.discardCard(c);
+//            waterMeter.watersRise();
+//            JOptionPane.showMessageDialog(gb,
+//                    "You have drawn a Waters Rise Card!", "Waters Rise!",
+//                    JOptionPane.ERROR_MESSAGE);
+//            gb.updateAll();
+//        }
+//        else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
+//            gb.updateAll();}
         turn++;
         if(turn>=pawnLoc.size()){turn =0;}
     }
@@ -290,27 +307,51 @@ public class GameState {
         pawnLoc.set(turn, b);
     }
 
-    public static boolean collectTreasure(){
-        int count = 1;
+    public static boolean captureTreasure(){
         Pawn p = pawnLoc.get(turn);
-        String firstCard = p.getHand().get(0).getCardName();
-        for(int i = 1; i < p.getHand().size(); i++){
-            if(firstCard.equals(p.getHand().get(i).getCardName())){
-                count++;
-            }
-            else{
+        Point pe = new Point(p.getLocation().get(0), p.getLocation().get(1));
+        Tile t = GameBoardGraphic.localTileLoc.get(pe);
+        String cardName = "";
+        if(t.getName().contains("Temple") || t.getName().contains("Garden") || t.getName().contains("Palace") || t.getName().contains("Cave")){
+            if(t.getName().contains("Temple")) cardName = "Earth";
+            else if(t.getName().contains("Cave")) cardName = "Fire";
+            else if(t.getName().contains("Palace")) cardName = "Ocean";
+            else cardName = "Wind";
+        }
+        else{
+            JOptionPane.showMessageDialog(gb,
+                    "You Are Not On The Correct Tile To Capture A Treasure", "Cannot Capture Treasure",
+                    JOptionPane.ERROR_MESSAGE); return false;}
+
+        int count = 0;
+        String firstCard = "";
+        for(int i = 0; i < p.getHand().size(); i++){
+            if(p.getHand().get(i).getCardName().contains(cardName)){
                 firstCard = p.getHand().get(i).getCardName();
+                count++;
             }
         }
 
         if(count >= 4){
             collectedTreasures.add(firstCard);
+            for(int i=0; i<count; i++){
+                if(p.getHand().get(i).getCardName().contains(cardName)){
+                    treasureDeck.discardCard(p.getHand().get(i));
+                    p.removeCard(p.getHand().get(i));
+                }
+            }
             return true;
         }
+        else{
+            JOptionPane.showMessageDialog(gb,
+                    "You Do Not Have Enough Treasure Cards", "Cannot Capture Treasure",
+                    JOptionPane.ERROR_MESSAGE); return false;}
 
-        return false;
     }
 
     public TreasureDeck getTreasureDeck(){return treasureDeck;}
+    public void changeWait(){synchronized(wait){
+        wait = false;
+        wait.notify();}}
 
 }

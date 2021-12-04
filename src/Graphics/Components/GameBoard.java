@@ -384,7 +384,7 @@ public class GameBoard extends JLayeredPane{
     }
 
     public void sandBag(){
-        action = "sandbag";
+        if(!action.equals("engineer")){action = "sandbag";}
 
         ArrayList<int[]> ret = GameState.coords();
         ArrayList<Point> real = new ArrayList<>();
@@ -491,6 +491,7 @@ public class GameBoard extends JLayeredPane{
         this.revalidate();
     }
 
+    public void engineer(){action = "engineer";}
     public String getAction(){return action;}
     public void resetAction(){action="";}
 

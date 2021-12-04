@@ -2,8 +2,10 @@ package Graphics.Components;
 
 import Cards.Card;
 import Logic.GameState;
+import Graphics.GameBoardGraphic;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,21 +19,24 @@ public class discardCard extends JFrame {
     private GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
     private GameState gb;
+    private GameBoardGraphic gs;
     private Card chosen = null;
     private Card chosen1 = null;
 
-    public discardCard(GameState gb, int a){
+    public discardCard(GameState gb, int a, GameBoardGraphic gs){
         panel = new JPanel();
         GridBagLayoutgrid = new GridBagLayout();
         gbc = new GridBagConstraints();
 
+        this.gs = gs;
         this.gb = gb;
 
         panel.setLayout(GridBagLayoutgrid);
         ArrayList<JButton> buttons = new ArrayList<JButton>();
         ArrayList<Card> pawnDeck = GameState.pawnLoc.get(GameState.turn).getHand();
         for(Card c: pawnDeck){
-            JButton temp = new JButton(new ImageIcon(c.getImage().getScaledInstance(125, 184, Image.SCALE_SMOOTH)));
+            JButton temp = new JButton(new ImageIcon(c.getImage().getScaledInstance(100, 147, Image.SCALE_SMOOTH)));
+            //temp.setBorder(new EmptyBorder(30, 0, 0 ,0));
             temp.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     if(chosen==null){chosen=c;}
@@ -39,17 +44,23 @@ public class discardCard extends JFrame {
                 }});
             buttons.add(temp);
         }
-        gbc.gridx =0; gbc.gridy = -1;
+        gbc.gridx =-1; gbc.gridy = -1;
         if(a==1){
-            panel.add(new JLabel("After you draw treasure cards, you will have too many cards in your hand. Please select a card to discard"), gbc);
+            JLabel temp = new JLabel("After you draw treasure cards, you will have too many cards in your hand. Please select a card to discard",SwingConstants.CENTER);
+            temp.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+            temp.setBorder(new EmptyBorder(0, 0, 30 ,0));
+            panel.add(temp, gbc);
         }
         else if(a==2){
-            panel.add(new JLabel("After you draw treasure cards, you will have too many cards in your hand. Please select " +2+" cards to discard"), gbc);
+            JLabel temp = new JLabel("After you draw treasure cards, you will have too many cards in your hand. Please select " +2+" cards to discard",SwingConstants.CENTER);
+            temp.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+            temp.setBorder(new EmptyBorder(0, 0, 30 ,0));
+            panel.add(temp, gbc);
         }
         int i=0;
         for(JButton b: buttons){gbc.gridx=i; gbc.gridy=3; panel.add(b, gbc); i++;}
 
-        gbc.gridx = 5; gbc.gridy =1;
+        gbc.gridx = 6; gbc.gridy =7;
         JButton temp = new JButton("Confirm");
         temp.addActionListener(new ActionListener() {
             @Override
@@ -58,10 +69,13 @@ public class discardCard extends JFrame {
                 GameState.pawnLoc.get(GameState.turn).removeCard(chosen);
                 if(chosen1 != null){gb.getTreasureDeck().discardCard(chosen1);
                     GameState.pawnLoc.get(GameState.turn).removeCard(chosen1);}
+                gb.changeWait();
 
                 dispose();
             }
         });
+
+        panel.add(temp, gbc);
 
         GridBagConstraints frameGBC = new GridBagConstraints();
         setLayout(new GridBagLayout());
