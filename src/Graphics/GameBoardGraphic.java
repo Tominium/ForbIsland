@@ -1,9 +1,6 @@
 package Graphics;
 
-import Graphics.Components.GameBoard;
-import Graphics.Components.playerDeckPanel;
-import Graphics.Components.useCard;
-import Graphics.Components.waterMeterPanel;
+import Graphics.Components.*;
 import Logic.GameState;
 import Logic.Pawn;
 import Logic.Tile;
@@ -14,7 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+
+import static Logic.GameState.coords;
+import static Logic.GameState.turn;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 1600;
@@ -69,6 +71,10 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                 shoreUp();
             }});
         JButton tradeB = new JButton("Trade"); tradeB.setPreferredSize(new Dimension(150, 50)); sideComps.add(tradeB);
+        tradeB.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                tradeable();
+            }});
         JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(150, 50)); sideComps.add(capture);
         JButton useCard = new JButton("Use Card"); useCard.setPreferredSize(new Dimension(150, 50)); sideComps.add(useCard);
         useCard.addActionListener(new ActionListener(){
@@ -93,7 +99,24 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         mainComps.revalidate();
     }
 
-    public void tradeable(){}
+    public void tradeable(){
+        HashMap<Point, ArrayList<Integer>> temp = GameState.pawnLocHash();
+        boolean tf = false;
+
+        for(ArrayList<Integer> a: temp.values()) {
+            if (a.contains(turn) && a.size() > 1) {
+                tf = true;
+            }
+        }
+        if(tf) {
+            new tradePanel(this);
+        }
+        else
+            JOptionPane.showMessageDialog(this,
+                    "You have no friends on this tile hahahaha", "haha",
+                    JOptionPane.ERROR_MESSAGE);
+
+    }
 
     public void removeCard(){}
 
