@@ -19,37 +19,43 @@ public class playerDeckPanel extends JPanel {
         setLayout(playerDeckGBL);
         playerDeckGBC.ipadx = 2;
         playerDeckGBC.ipady = 2;
+        int i =0;
         for(Pawn p: GameState.pawnLoc){
-            System.out.println(p.getTurnNum());
-            for(int i=0; i<GameState.pawnLoc.size(); i++){
-                for(int ii=0; ii<=p.getHand().size(); ii++){
-                    playerDeckGBC.gridx = ii;
-                    playerDeckGBC.gridy = i;
-                    Image image;
-                    if(ii==0){image = p.getIcon();}
-                    else{
-                        image = p.getHand().get(ii - 1).getImage().getScaledInstance(90, 132, Image.SCALE_SMOOTH);
-                    }
-                    add(new JLabel(new ImageIcon(image)), playerDeckGBC);
-                }}}
+            for(int ii=0; ii<=p.getHand().size(); ii++){
+                Image image;
+                if(ii==0){image = p.getIcon();}
+                else{
+                    image = p.getHand().get(ii-1).getImage().getScaledInstance(90, 132, Image.SCALE_SMOOTH);
+                }
+                playerDeckGBC.gridx = ii;
+                playerDeckGBC.gridy = i;
+                add(new JLabel(new ImageIcon(image)), playerDeckGBC);
+            }
+            i++;
+        }
     }
+    //getImage().getScaledInstance(90, 132, Image.SCALE_SMOOTH);
 
     public void updatePanel(){
-        playerDeckGBC.ipadx = 5;
-        playerDeckGBC.ipady = 5;
+        removeAll();
+        playerDeckGBC.ipadx = 2;
+        playerDeckGBC.ipady = 2;
+        int i =0;
         for(Pawn p: GameState.pawnLoc){
-            System.out.println(p.getTurnNum());
-            for(int i=0; i<GameState.pawnLoc.size(); i++){
-                for(int ii=0; ii<p.getHand().size(); ii++){
-                    playerDeckGBC.gridx = ii;
-                    playerDeckGBC.gridy = i;
-                    Image image;
-                    if(ii==0){image = p.getIcon();}
-                    else{
-                        image = p.getHand().get(ii - 1).getImage().getScaledInstance(90, 132, Image.SCALE_SMOOTH);
-                    }
-                    add(new JLabel(new ImageIcon(image)), playerDeckGBC);
-                }}}
+            for(int ii=0; ii<=p.getHand().size(); ii++){
+                Image image;
+                if(ii==0){image = p.getIcon();}
+                else{
+                    image = p.getHand().get(ii-1).getImage().getScaledInstance(90, 132, Image.SCALE_SMOOTH);
+                }
+                playerDeckGBC.gridx = ii;
+                playerDeckGBC.gridy = i;
+                add(new JLabel(new ImageIcon(image)), playerDeckGBC);
+            }
+            i++;
+        }
+        repaint();
+        revalidate();
     }
 
     public GridBagConstraints getGBC() {
