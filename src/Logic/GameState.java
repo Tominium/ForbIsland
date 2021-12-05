@@ -3,6 +3,7 @@ package Logic;
 import Cards.Card;
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
+import Graphics.Components.discardCard;
 import Graphics.GameBoardGraphic;
 import Water.WaterMeter;
 
@@ -101,56 +102,40 @@ public class GameState {
         return true;
     }
     public void iterateTurn() {
-//            Card c = treasureDeck.getCard();
-//            if (c.getCardName().contains("Water")) {
-//                treasureDeck.discardCard(c);
-//                waterMeter.watersRise();
-//                JOptionPane.showMessageDialog(gb,
-//                        "You have drawn a Waters Rise Card!", "Waters Rise!",
-//                        JOptionPane.ERROR_MESSAGE);
-//                gb.updateAll();
-//            }
-//            else if(pawnLoc.get(turn).getHand().size()==4) {
-//                discardCard temp = new discardCard(this, 1, gb);
-//                synchronized(wait){
-//                    while ((boolean)wait) {
-//                        try {
-//                            wait.wait();
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//                pawnLoc.get(turn).addCard(c);
-//                gb.getPlayerDeckView().updatePanel();
-//                gb.updateAll();
-//            }
-//            else if(pawnLoc.get(turn).getHand().size()==5){
-//                discardCard temp = new discardCard(this, 2, gb);
-//                synchronized (wait){
-//                    try {
-//                        wait.wait();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                pawnLoc.get(turn).addCard(c);
-//                gb.getPlayerDeckView().updatePanel();
-//                gb.updateAll();
-//            }
-//            else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
-//                gb.updateAll();}
-//        c = treasureDeck.getCard();
-//        if (c.getCardName().contains("Water")) {
-//            treasureDeck.discardCard(c);
-//            waterMeter.watersRise();
-//            JOptionPane.showMessageDialog(gb,
-//                    "You have drawn a Waters Rise Card!", "Waters Rise!",
-//                    JOptionPane.ERROR_MESSAGE);
-//            gb.updateAll();
-//        }
-//        else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
-//            gb.updateAll();}
+            Card c = treasureDeck.getCard();
+            if (c.getCardName().contains("Water")) {
+                treasureDeck.discardCard(c);
+                waterMeter.watersRise();
+                JOptionPane.showMessageDialog(gb,
+                        "You have drawn a Waters Rise Card!", "Waters Rise!",
+                        JOptionPane.ERROR_MESSAGE);
+                gb.updateAll();
+            }
+            else if(pawnLoc.get(turn).getHand().size()==4) {
+                discardCard temp = new discardCard(this, 1, gb);
+                pawnLoc.get(turn).addCard(c);
+                gb.getPlayerDeckView().updatePanel();
+                gb.updateAll();
+            }
+            else if(pawnLoc.get(turn).getHand().size()==5){
+                discardCard temp = new discardCard(this, 2, gb);
+                pawnLoc.get(turn).addCard(c);
+                gb.getPlayerDeckView().updatePanel();
+                gb.updateAll();
+            }
+            else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
+                gb.updateAll();}
+        c = treasureDeck.getCard();
+        if (c.getCardName().contains("Water")) {
+            treasureDeck.discardCard(c);
+            waterMeter.watersRise();
+            JOptionPane.showMessageDialog(gb,
+                    "You have drawn a Waters Rise Card!", "Waters Rise!",
+                    JOptionPane.ERROR_MESSAGE);
+            gb.updateAll();
+        }
+        else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
+            gb.updateAll();}
         turn++;
         if(turn>=pawnLoc.size()){turn =0;}
     }
@@ -173,19 +158,19 @@ public class GameState {
         ArrayList<Integer> tileL = t.getLocation();
         if(pawnL.get(0)==tileL.get(0)){if(pawnL.get(1)+1==tileL.get(1) || pawnL.get(1)-1==tileL.get(1)){return true;}}
         if(pawnL.get(1)==tileL.get(1)){if(pawnL.get(0)+1==tileL.get(0) || pawnL.get(0)-1==tileL.get(0)){return true;}}
-//        else if(p.getRole().equals("Explorer")&&
-//                ((t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)+1)||
-//                        (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)+1)||
-//                        (t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)-1)||
-//                        (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)-1)))
-//            return true;
-//        else if(p.getRole().equals("Pilot"))
-//            return true;
-//        else if((t.getLocation().get(0)==p.getLocation().get(0)+1||t.getLocation().get(0)==p.getLocation().get(0)-1)||
-//                (t.getLocation().get(1)==p.getLocation().get(1)+1||t.getLocation().get(1)==p.getLocation().get(1)-1))
-//            return true;
-//        else
-//            return false;
+        else if(p.getRole().equals("Explorer")&&
+                ((t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)+1)||
+                        (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)+1)||
+                        (t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)-1)||
+                        (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)-1)))
+            return true;
+        else if(p.getRole().equals("Pilot"))
+            return true;
+        else if((t.getLocation().get(0)==p.getLocation().get(0)+1||t.getLocation().get(0)==p.getLocation().get(0)-1)||
+                (t.getLocation().get(1)==p.getLocation().get(1)+1||t.getLocation().get(1)==p.getLocation().get(1)-1))
+            return true;
+        else
+            return false;
         return false;
     }
     public boolean movePawn(Tile t, Pawn p) {
@@ -252,29 +237,6 @@ public class GameState {
             }
         }
         return total;
-    }
-
-    public static ArrayList<int[]> coords(){
-        Pawn p = pawnLoc.get(turn);
-        ArrayList<int[]> ret = new ArrayList<>();
-        Tile temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0), p.getLocation().get(1)+1));
-        if(temp!= null && checkMove(temp, p)){
-            ret.add(new int[]{p.getLocation().get(0), p.getLocation().get(1)+1});
-        }
-        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0), p.getLocation().get(1)-1));
-        if(temp!=null && checkMove(temp, p)){
-            ret.add(new int[]{p.getLocation().get(0), p.getLocation().get(1)-1});
-        }
-        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)+1, p.getLocation().get(1)));
-        if(temp!=null && checkMove(temp, p)){
-            ret.add(new int[]{p.getLocation().get(0)+1, p.getLocation().get(1)});
-        }
-        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)-1, p.getLocation().get(1)));
-        if(temp!=null && checkMove(temp, p)){
-            ret.add(new int[]{p.getLocation().get(0)-1, p.getLocation().get(1)});
-        }
-        return ret;
-
     }
 
     public static boolean checkTrade(Pawn b) {
@@ -350,8 +312,5 @@ public class GameState {
     }
 
     public TreasureDeck getTreasureDeck(){return treasureDeck;}
-    public void changeWait(){synchronized(wait){
-        wait = false;
-        wait.notify();}}
 
 }

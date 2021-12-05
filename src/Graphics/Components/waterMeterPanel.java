@@ -14,8 +14,12 @@ public class waterMeterPanel extends JPanel {
     }
 
     public void update(){
+        removeAll();
+
         JLabel label = new JLabel(new ImageIcon(GameState.waterMeter.getMeter()));
         label.setBorder(new EmptyBorder(100, 35, 0 ,0));
         add(label);
+        this.repaint();
+        this.revalidate();
     }
 }

@@ -20,7 +20,7 @@ public class playerDeckPanel extends JPanel {
         playerDeckGBC.ipadx = 2;
         playerDeckGBC.ipady = 5;
         int i =0;
-        int divider = (int) (GameState.pawnLoc.get(0).getHand().size() /2.25);
+        int divider = (int) (GameState.pawnLoc.get(0).getHand().size() /2.1);
         if(divider ==0){divider=1;}
         for(Pawn p: GameState.pawnLoc){
             for(int ii=0; ii<=p.getHand().size(); ii++){
@@ -43,7 +43,7 @@ public class playerDeckPanel extends JPanel {
         playerDeckGBC.ipadx = 2;
         playerDeckGBC.ipady = 5;
         int i =0;
-        int divider = (int) (GameState.pawnLoc.get(0).getHand().size() /2.25);
+        int divider = (int) (GameState.pawnLoc.get(0).getHand().size() /2.1);
         if(divider ==0){divider=1;}
         for(Pawn p: GameState.pawnLoc){
             for(int ii=0; ii<=p.getHand().size(); ii++){

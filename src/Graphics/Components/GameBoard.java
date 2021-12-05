@@ -165,12 +165,6 @@ public class GameBoard extends JLayeredPane{
 
     public void moveP(){
         action = "move";
-        ArrayList<int[]> ret = GameState.coords();
-        ArrayList<Point> real = new ArrayList<>();
-        for(int[] re: ret){
-            real.add(new Point(re[0], re[1]));
-        }
-        System.out.println(real);
 
         this.removeAll();
 
@@ -182,7 +176,8 @@ public class GameBoard extends JLayeredPane{
             gbc.gridy = y;
             Point temp = new Point(x, y);
             Image image = t.getImage().getScaledInstance(120, 120,  Image.SCALE_SMOOTH); // transform it
-            if(real.contains(temp)){
+
+            if(GameState.checkMove(t, GameState.pawnLoc.get(GameState.turn))){
                 image = t.getImage().getScaledInstance(115, 115,  Image.SCALE_SMOOTH);
                 JLabel test = new JLabel(new ImageIcon(image));
                 test.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(134, 3, 148), 5));
@@ -275,12 +270,6 @@ public class GameBoard extends JLayeredPane{
     public void shoreUp(){
         action = "shore";
 
-        ArrayList<int[]> ret = GameState.coords();
-        ArrayList<Point> real = new ArrayList<>();
-        for(int[] re: ret){
-            real.add(new Point(re[0], re[1]));
-        }
-        System.out.println(real);
 
         this.removeAll();
 
@@ -292,8 +281,7 @@ public class GameBoard extends JLayeredPane{
             gbc.gridy = y;
             Point temp = new Point(x, y);
             Image image = t.getImage().getScaledInstance(120, 120,  Image.SCALE_SMOOTH); // transform it
-            Boolean self = real.contains(temp) || temp.equals(new Point(GameState.pawnLoc.get(GameState.turn).getLocation().get(0),GameState.pawnLoc.get(GameState.turn).getLocation().get(1)));
-            if(self&&t.isFlooded()){
+            if(GameState.checkMove(t, GameState.pawnLoc.get(GameState.turn))&&t.isFlooded()){
                 image = t.getImage().getScaledInstance(115, 115,  Image.SCALE_SMOOTH);
                 JLabel test = new JLabel(new ImageIcon(image));
                 test.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(134, 3, 148), 5));
@@ -385,14 +373,6 @@ public class GameBoard extends JLayeredPane{
 
     public void sandBag(){
         if(!action.equals("engineer")){action = "sandbag";}
-
-        ArrayList<int[]> ret = GameState.coords();
-        ArrayList<Point> real = new ArrayList<>();
-        for(int[] re: ret){
-            real.add(new Point(re[0], re[1]));
-        }
-        System.out.println(real);
-
         this.removeAll();
 
         int x = 2; int y=0; int i =0;

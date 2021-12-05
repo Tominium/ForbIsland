@@ -261,6 +261,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     public void updateAll(){
         mainComps.repaint();
         mainComps.revalidate();
+        waterMeter.update();
         sideComps.repaint();
         sideComps.revalidate();
         this.repaint();
