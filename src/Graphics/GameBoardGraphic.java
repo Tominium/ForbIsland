@@ -87,13 +87,6 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             public void actionPerformed(ActionEvent e){
                 useCard();
             }});
-        JButton special = new JButton("Special Ability"); special.setPreferredSize(new Dimension(110, 35)); sideComps.add(special);
-        special.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                specialAbility();
-            }
-        });
         JButton endTurn = new JButton("End Turn"); endTurn.setPreferredSize(new Dimension(110, 35)); sideComps.add(endTurn);
         endTurn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -139,7 +132,13 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     public void removeCard(){}
 
     public void shoreUp(){
-        gameTiles.shoreUp();
+        if(GameState.pawnLoc.get(GameState.turn).getRole().contains("Engineer")){
+            gameTiles.engineer();
+            gameTiles.shoreUp();
+            mainComps.repaint();
+            mainComps.revalidate();
+        }
+        else {gameTiles.shoreUp();}
     }
 
     public void useCard(){
@@ -158,16 +157,6 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     public void helicopter(){}
 
-    public void specialAbility(){
-        Pawn p = GameState.pawnLoc.get(GameState.turn);
-        if(p.getRole().contains("Engineer")){
-            gameTiles.engineer();
-            gameTiles.sandBag();
-            mainComps.repaint();
-            mainComps.revalidate();
-        }
-    }
-
     public void winGraphics(){}
 
     public void loseGraphics(){}
@@ -182,14 +171,13 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             System.out.println("Test 1");
             if(griX != -1){
                 for(int i = 0; i < GameState.tileLoc.size(); i++){
-                    if(GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY)))){
+                    if(GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY))) && GameState.checkShore(GameState.tileLoc.get(i),GameState.pawnLoc.get(GameState.turn) )){
                         Tile t = GameState.tileLoc.get(i);
                         t.shoreUp();
                         GameState.tileLoc.set(i, t);
-                        gameTiles.resetAction();
                         gameState.iterateAction();
                         gameTiles.paintTile();
-                        gameTiles.sandBag();
+                        gameTiles.shoreUp();
                         mainComps.repaint();
                         gameTiles.revalidate();
                     }
@@ -203,16 +191,16 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
             if (griX != -1) {
                 Point temp = new Point(GameState.pawnLoc.get(GameState.turn).getLocation().get(0),GameState.pawnLoc.get(GameState.turn).getLocation().get(1));
-                if(GameState.checkMove(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(GameState.turn)) || temp.equals(new Point(griX, griY)) || gameTiles.getAction().contains("sandbag")){
+                if(GameState.checkShore(localTileLoc.get(new Point(griX, griY)), GameState.pawnLoc.get(GameState.turn)) || temp.equals(new Point(griX, griY)) || gameTiles.getAction().contains("sandbag")){
                     for (int i = 0; i < GameState.tileLoc.size(); i++) {
                         if (GameState.tileLoc.get(i).equals(localTileLoc.get(new Point(griX, griY)))|| gameTiles.getAction().contains("sandbag")) {
                             System.out.println("(" + griX + ", " + griY + ")");
                             Tile t = GameState.tileLoc.get(i);
                             t.shoreUp();
                             GameState.tileLoc.set(i, t);
-                            gameTiles.resetAction();
                             gameTiles.paintTile();
-                            if(!gameTiles.getAction().contains("sandbag")){gameState.iterateAction();}
+                            if(!gameTiles.getAction().contains("sandbag") || !gameTiles.getAction().contains("engineer")){gameState.iterateAction();}
+                            gameTiles.resetAction();
                         }
                     }
                 }

@@ -98,7 +98,7 @@ public class Pawn implements Comparable<Pawn>{
         return -1;
     }
 
-    public boolean iterateActionCount(){
+    public boolean iterateMoveCount(){
         if(actionCount<3){actionCount++; return true;}
         return false;
     }
