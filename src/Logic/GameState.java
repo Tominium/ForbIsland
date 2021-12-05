@@ -10,10 +10,7 @@ import Water.WaterMeter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class GameState {
     public static ArrayList<String> collectedTreasures;
@@ -189,39 +186,6 @@ public class GameState {
         return true;
     }
 
-//    public boolean checkLose(){
-//        if(dupl.get(findLoc("Fool's Landing", loc)).isSunk()){
-//            return true;
-//        }
-//        else if(dupl.get(findLoc("Temple of the Moon", loc)).isSunk() &&
-//        dupl.get(findLoc("Temple of the Sun", loc)).isSunk()){
-//            return true;
-//        }
-//        else if(dupl.get(findLoc("Tidal Palace", loc)).isSunk() &&
-//                dupl.get(findLoc("Coral Palace", loc)).isSunk()){
-//            return true;
-//        }
-//        else if(dupl.get(findLoc("Whispering Garden", loc)).isSunk() &&
-//                dupl.get(findLoc("Howling Garden", loc)).isSunk()){
-//            return true;
-//        }
-//        else if(dupl.get(findLoc("Cave of Embers", loc)).isSunk() &&
-//                dupl.get(findLoc("Cave of Shadows", loc)).isSunk()){
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public int[] findLoc(String tileName, int[] location){
-//        for (Map.Entry<int[], Tile> entry : dupl.entrySet()) {
-//            if (entry.equals(tileName)) {
-//                loc = entry.getKey();
-//                return loc;
-//            }
-//        }
-//        return loc;
-//    }
-
     public static HashMap<Point, ArrayList<Integer>> pawnLocHash(){
         HashMap<Point, ArrayList<Integer>> total = new HashMap<>();
 
@@ -312,5 +276,41 @@ public class GameState {
     }
 
     public TreasureDeck getTreasureDeck(){return treasureDeck;}
+
+    public boolean checkLose(){
+        HashMap<Point, ArrayList<Integer>> locs = GameState.pawnLocHash();
+
+        if(dupl.get("Fool's Landing").isSunk()){
+            return true;
+        }
+        if(dupl.get("Howling Garden").isSunk() && dupl.get("Whispering Garden").isSunk()){
+            return true;
+        }
+        else if(dupl.get("Cave of Shadow").isSunk() && dupl.get("Cave of Embers").isSunk()){
+            return false;
+        }
+        else if(dupl.get("Tidal Palace").isSunk() && dupl.get("Coral Palace").isSunk()){
+            return false;
+        }
+        else if(dupl.get("Temple of the Sun").isSunk() && dupl.get("Temple of the Moon").isSunk()){
+            return false;
+        }
+        return false;
+    }
+
+    public static boolean checkWin(){
+        if(collectedTreasures.indexOf(null) != -1){
+            int counter = 0;
+            for(int i = 0; i < pawnLoc.size(); i++){
+                if(pawnLoc.get(i).getLocation() == dupl.get("Temple Of the Sun").getLocation()){
+                    counter++;
+                }
+            }
+            if(counter == 4){
+
+            }
+        }
+        return false;
+    }
 
 }
