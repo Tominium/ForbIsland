@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HelpMenu extends JFrame implements ActionListener {
-    private JButton back, pOne, pTwo, pThree, pFour, pFive, pSix, pSeven, pEight;
+    private JButton back, pOne, pTwo, pThree, pFour, pFive, pSix, pSeven, pEight, n1;
     private JLabel heading, page, general,navigation;
     private static final int WIDTH = 1100;
     private static final int HEIGHT = 900;
@@ -69,6 +69,10 @@ public class HelpMenu extends JFrame implements ActionListener {
         pEight.addActionListener(this);
         win.add(pEight);
 
+        n1 = new JButton("1");n1.setSize(50,35);n1.setFont(new Font("Arial", Font.BOLD, 12));n1.setForeground(new Color(98, 98, 103,255));n1.setLocation(900,100);
+        n1.addActionListener(this);
+        win.add(n1);
+
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setResizable(false);
@@ -120,6 +124,11 @@ public class HelpMenu extends JFrame implements ActionListener {
         }
         else if(e.getSource()==back){
             dispose();
+        }
+        else if(e.getSource()==n1){
+            link+="new1.png";
+            ImageIcon icon = new ImageIcon(link);
+            page.setIcon(icon);
         }
     }
 }
