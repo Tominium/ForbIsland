@@ -77,7 +77,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             public void actionPerformed(ActionEvent e){
                 tradeable();
             }});
-        JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(110, 35)); sideComps.add(capture);
+        JButton capture = new JButton("Capture Treasure"); capture.setPreferredSize(new Dimension(150, 35)); sideComps.add(capture);
         capture.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 captureTreasure();
@@ -142,11 +142,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     }
 
     public void useCard(){
-//        sideComps.setVisible(false);
-//        gameTiles.useCard();
-//        this.repaint();
-//        this.revalidate();
-        new useCard(this);
+        new useCard(this, gameState);
     }
 
     public void sandBag(){
@@ -199,7 +195,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                             t.shoreUp();
                             GameState.tileLoc.set(i, t);
                             gameTiles.paintTile();
-                            if(!gameTiles.getAction().contains("sandbag") || !gameTiles.getAction().contains("engineer")){gameState.iterateAction();}
+                            if(!gameTiles.getAction().contains("sandbag") && !gameTiles.getAction().contains("engineer")){gameState.iterateAction();}
                             gameTiles.resetAction();
                         }
                     }

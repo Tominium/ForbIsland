@@ -18,8 +18,10 @@ public class useCard extends JFrame {
     private GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
     private GameBoardGraphic gb;
+    private GameState gs;
 
-    public useCard(GameBoardGraphic gb){
+    public useCard(GameBoardGraphic gb, GameState gs){
+        this.gs = gs;
         panel = new JPanel();
         GridBagLayoutgrid = new GridBagLayout();
         gbc = new GridBagConstraints();
@@ -61,8 +63,14 @@ public class useCard extends JFrame {
                 public void actionPerformed(ActionEvent e){
                     if(c.getCardName().contains("Sandbag")){
                         gb.sandBag();
-                        dispose();
                     }
+                    for(int i=0; i<GameState.pawnLoc.size(); i++){
+                        if(bb.equals(GameState.pawnLoc.get(i))){
+                            GameState.pawnLoc.get(i).removeCard(c);
+                            gs.getTreasureDeck().discardCard(c);
+                        }
+                    }
+                    dispose();
                 }});
             buttons.add(temp);
         }

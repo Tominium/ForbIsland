@@ -79,18 +79,20 @@ public class Pawn implements Comparable<Pawn>{
             addCard(GameState.treasureDeck.getCard());
             return true;
         }
-        if(hand.size() >= 5){
-            return false;
-        }else{
+//        if(hand.size() >= 5){
+//            return false;
+//        }
+        else{
             hand.add(c);
             return true;
         }
     }
 
-    public void removeCard(Card c){
+    public boolean removeCard(Card c){
         for(int i=0; i<hand.size(); i++){
-            if(c.equals(hand.get(i))){hand.remove(i); break;}
+            if(c.equals(hand.get(i))){hand.remove(i);return true;}
         }
+        return false;
     }
 
     public int compareTo(Pawn p){

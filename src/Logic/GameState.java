@@ -104,11 +104,18 @@ public class GameState {
               }
               else if(pawnLoc.get(turn).getHand().size()+1 > 5) {
                   discardCard temp = new discardCard(this, 1, gb);
+                  System.out.println("Pre Modal");
+                  temp.setModal(true);
+                  temp.setVisible(true);
+                  System.out.println("Modal");
                   pawnLoc.get(turn).addCard(c);
                   gb.getPlayerDeckView().updatePanel();
                   gb.updateAll();
               }
-              else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
+              else{
+                  if(pawnLoc.get(turn).getHand().size()==4){
+                      System.out.println("Test1");
+                  } pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
                   gb.updateAll();}
           }
 //        c = treasureDeck.getCard();
