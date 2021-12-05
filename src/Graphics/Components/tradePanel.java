@@ -19,12 +19,14 @@ public class tradePanel extends JFrame {
     private GridBagConstraints tradeGBC;
     private GridBagLayout tradeGBL;
     private Card c;
+    private Pawn p;
     private GameBoardGraphic obj;
     private JPanel panel;
     private static int WIDTH = 800;
     private static int HEIGHT = 500;
+    private GameState gs;
 
-    public tradePanel(GameBoardGraphic obj) {
+    public tradePanel(GameBoardGraphic obj, GameState gs) {
         panel = new JPanel();
         this.obj = obj;
         tradeGBC = new GridBagConstraints();
@@ -32,6 +34,7 @@ public class tradePanel extends JFrame {
         panel.setLayout(tradeGBL);
         tradeGBC.ipadx = 2;
         tradeGBC.ipady = 2;
+        this.gs = gs;
 
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation((JFrame.HIDE_ON_CLOSE));
@@ -64,7 +67,6 @@ public class tradePanel extends JFrame {
 
     public void playerSelection() {
         panel.removeAll();
-
         HashMap<Point, ArrayList<Integer>> temp = GameState.pawnLocHash();
         ArrayList<Integer> al = new ArrayList<Integer>();
         for(ArrayList<Integer> a: temp.values()) {
@@ -83,6 +85,10 @@ public class tradePanel extends JFrame {
                 int ii = i;
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        p = GameState.pawnLoc.get(ii);
+                        GameState.trade(p, c);
+                        gs.iterateAction();
+                        dispose();
                     }
                 });
                 tradeGBC.gridx = i;
@@ -93,5 +99,6 @@ public class tradePanel extends JFrame {
         }
         panel.repaint();
         panel.revalidate();
+
     }
 }
