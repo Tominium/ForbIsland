@@ -268,7 +268,7 @@ public class GameBoard extends JLayeredPane{
     }
 
     public void shoreUp(){
-        action = "shore";
+        if(!action.equals("engineer")){action = "shore";}
 
 
         this.removeAll();
@@ -281,7 +281,7 @@ public class GameBoard extends JLayeredPane{
             gbc.gridy = y;
             Point temp = new Point(x, y);
             Image image = t.getImage().getScaledInstance(120, 120,  Image.SCALE_SMOOTH); // transform it
-            if(GameState.checkMove(t, GameState.pawnLoc.get(GameState.turn))&&t.isFlooded()){
+            if((GameState.checkShore(t, GameState.pawnLoc.get(GameState.turn))||temp.equals(new Point(GameState.pawnLoc.get(GameState.turn).getLocation().get(0), GameState.pawnLoc.get(GameState.turn).getLocation().get(1))))&&t.isFlooded()){
                 image = t.getImage().getScaledInstance(115, 115,  Image.SCALE_SMOOTH);
                 JLabel test = new JLabel(new ImageIcon(image));
                 test.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(134, 3, 148), 5));
@@ -372,7 +372,7 @@ public class GameBoard extends JLayeredPane{
     }
 
     public void sandBag(){
-        if(!action.equals("engineer")){action = "sandbag";}
+        action= "sandbag";
         this.removeAll();
 
         int x = 2; int y=0; int i =0;
