@@ -1,5 +1,7 @@
 package Logic;
 
+import Graphics.Components.GameBoard;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -52,12 +54,21 @@ public class Tile {
             }
             return true;
         }
+        if(flooded){
+            sinkTile();
+        }
         return false;
     }
 
     public boolean sinkTile() {
         if(sunk == false&&flooded == true) {
             sunk = true;
+            try{
+                image = GameBoard.resize(ImageIO.read(Tile.class.getResource("/Assets/Empty.png")), 120, 120);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
             return true;
         }
         return false;

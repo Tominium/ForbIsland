@@ -37,7 +37,7 @@ public class FloodDeck {
         else{resetDeck(); used.add(deck.peek()); return deck.pop();}
     }
 
-    private void resetDeck(){
+    public void resetDeck(){
         ArrayList<FloodCard> temp = new ArrayList<>();
         while(used.size()>0)
             temp.add(used.pop());

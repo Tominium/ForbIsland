@@ -1,6 +1,7 @@
 package Logic;
 
 import Cards.Card;
+import Cards.FloodCard;
 import Decks.FloodDeck;
 import Decks.TreasureDeck;
 import Graphics.Components.discardCard;
@@ -10,7 +11,10 @@ import Water.WaterMeter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class GameState {
     public static ArrayList<String> collectedTreasures;
@@ -97,6 +101,7 @@ public class GameState {
               if (c.getCardName().contains("Water")) {
                   treasureDeck.discardCard(c);
                   waterMeter.watersRise();
+                  floodDeck.resetDeck();
                   JOptionPane.showMessageDialog(gb,
                           "You have drawn a Waters Rise Card!", "Waters Rise!",
                           JOptionPane.ERROR_MESSAGE);
@@ -118,17 +123,19 @@ public class GameState {
                   } pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
                   gb.updateAll();}
           }
-//        c = treasureDeck.getCard();
-//        if (c.getCardName().contains("Water")) {
-//            treasureDeck.discardCard(c);
-//            waterMeter.watersRise();
-//            JOptionPane.showMessageDialog(gb,
-//                    "You have drawn a Waters Rise Card!", "Waters Rise!",
-//                    JOptionPane.ERROR_MESSAGE);
-//            gb.updateAll();
-//        }
-//        else{pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
-//            gb.updateAll();}
+        for(int a=0; a<(int)waterMeter.getWaterLevel(); a++){
+            FloodCard fc = floodDeck.getCard();
+            for(int b=0; b<tileLoc.size(); b++){
+                if(tileLoc.get(b).getName().equals(fc.getCardName())){
+                    System.out.println(fc.getCardName());
+                    Tile t = tileLoc.get(b);
+                    t.floodTile();
+                    tileLoc.set(b, t);
+                }
+            }
+        }
+        gb.getGameTiles().paintTile();
+        gb.updateAll();
         turn++;
         if(turn>=pawnLoc.size()){turn =0;}
     }
@@ -152,7 +159,7 @@ public class GameState {
         if(p.getRole().equals("Explorer")&&((t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)+1)|| (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)+1)|| (t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)-1)|| (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)-1))) {
             return true;
         }
-        if(p.getRole().equals("Pilot")) {
+        if(p.getRole().equals("Pilot") && p.iterateMoveCount()>1) {
             return true;
         }
         if(pawnL.get(0)==tileL.get(0)){if(pawnL.get(1)+1==tileL.get(1) || pawnL.get(1)-1==tileL.get(1)){return true;}}
@@ -263,6 +270,11 @@ public class GameState {
                     p.removeCard(p.getHand().get(i));
                 }
             }
+            if(cardName.contains("Wind")){gb.getGameTiles().air();}
+            else if(cardName.contains("Earth")){gb.getGameTiles().terre();}
+            else if(cardName.contains("Fire")){gb.getGameTiles().feu();}
+            else{gb.getGameTiles().eau();}
+            gb.updateAll();
             return true;
         }
         else{

@@ -120,7 +120,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             }
         }
         if(tf) {
-            new tradePanel(this);
+            new tradePanel(this, gameState);
         }
         else
             JOptionPane.showMessageDialog(this,
@@ -241,6 +241,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     }
 
     public playerDeckPanel getPlayerDeckView(){return playerDeckView;}
+    public GameBoard getGameTiles(){return gameTiles;}
 
     public void updateAll(){
         mainComps.repaint();

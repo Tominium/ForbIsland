@@ -475,4 +475,34 @@ public class GameBoard extends JLayeredPane{
     public String getAction(){return action;}
     public void resetAction(){action="";}
 
+    public void air(){
+        try{
+            air = ImageIO.read(Pawn.class.getResource("/Assets/Treasures/AIR.png"));
+            air = resize(air, 100, 100);
+        }
+        catch(IOException e){}
+    }
+    public void eau(){
+        try{
+            eau = ImageIO.read(Pawn.class.getResource("/Assets/Treasures/EAU.png"));
+            eau = resize(eau, 100, 100);
+        }
+        catch(IOException e){}
+    }
+    public void feu(){
+        try{
+            feu = ImageIO.read(Pawn.class.getResource("/Assets/Treasures/FEU.png"));
+            feu = resize(feu, 100, 100);
+        }
+        catch(IOException e){}
+    }
+    public void terre(){
+        try{
+            terre = ImageIO.read(Pawn.class.getResource("/Assets/Treasures/TERRE.png"));
+            terre = resize(terre, 100, 100);
+        }
+        catch(IOException e){}
+    }
+
+
 }
