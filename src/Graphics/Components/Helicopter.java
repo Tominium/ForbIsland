@@ -83,6 +83,10 @@ public class Helicopter extends JFrame {
         panel.add(but, gbc);
         pawnsNew = pawns;
 
+        JLabel newLabel = new JLabel("Choose Players to Move");
+        gbc.gridx= i/2; gbc.gridy = 0;
+        panel.add(newLabel, gbc);
+
         panel.repaint();
         panel.revalidate();
     }

@@ -96,39 +96,39 @@ public class GameState {
     }
     public void iterateTurn() {
         if(GameState.pawnLoc.get(turn).getRole().equals("Pilot")){GameState.pawnLoc.get(turn).reset();}
-          for(int i=0; i<2; i++){
-              Card c = treasureDeck.getCard();
-              if (c.getCardName().contains("Water")) {
-                  treasureDeck.discardCard(c);
-                  waterMeter.watersRise();
-                  if(waterMeter.getWaterLevel() == 6){JOptionPane.showMessageDialog(gb,
-                          "You Have Lost! Water Level Reached Deadly", "Looser!",
-                          JOptionPane.ERROR_MESSAGE); System.exit(1); gb.dispose();}
-                  else{
-                      checkLose();
-                      floodDeck.resetDeck();
-                      JOptionPane.showMessageDialog(gb,
-                              "You have drawn a Waters Rise Card!", "Waters Rise!",
-                              JOptionPane.ERROR_MESSAGE);
-                      gb.updateAll();
-                  }
-              }
-              else if(pawnLoc.get(turn).getHand().size()+1 > 5) {
-                  discardCard temp = new discardCard(this, 1, gb);
-                  System.out.println("Pre Modal");
-                  temp.setModal(true);
-                  temp.setVisible(true);
-                  System.out.println("Modal");
-                  pawnLoc.get(turn).addCard(c);
-                  gb.getPlayerDeckView().updatePanel();
-                  gb.updateAll();
-              }
-              else{
-                  if(pawnLoc.get(turn).getHand().size()==4){
-                      System.out.println("Test1");
-                  } pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
-                  gb.updateAll();}
-          }
+        for(int i=0; i<2; i++){
+            Card c = treasureDeck.getCard();
+            if (c.getCardName().contains("Water")) {
+                treasureDeck.discardCard(c);
+                waterMeter.watersRise();
+                if(waterMeter.getWaterLevel() == 6){JOptionPane.showMessageDialog(gb,
+                        "You Have Lost! Water Level Reached Deadly", "Looser!",
+                        JOptionPane.ERROR_MESSAGE); System.exit(1); gb.dispose();}
+                else{
+                    checkLose();
+                    floodDeck.resetDeck();
+                    JOptionPane.showMessageDialog(gb,
+                            "You have drawn a Waters Rise Card!", "Waters Rise!",
+                            JOptionPane.ERROR_MESSAGE);
+                    gb.updateAll();
+                }
+            }
+            else if(pawnLoc.get(turn).getHand().size()+1 > 5) {
+                discardCard temp = new discardCard(this, 1, gb);
+                System.out.println("Pre Modal");
+                temp.setModal(true);
+                temp.setVisible(true);
+                System.out.println("Modal");
+                pawnLoc.get(turn).addCard(c);
+                gb.getPlayerDeckView().updatePanel();
+                gb.updateAll();
+            }
+            else{
+                if(pawnLoc.get(turn).getHand().size()==4){
+                    System.out.println("Test1");
+                } pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
+                gb.updateAll();}
+        }
         for(int a=0; a<(int)waterMeter.getWaterLevel(); a++){
             FloodCard fc = floodDeck.getCard();
             for(int b=0; b<tileLoc.size(); b++){

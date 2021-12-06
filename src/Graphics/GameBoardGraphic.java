@@ -219,6 +219,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                         GameState.tileLoc.set(i, t);
                         gameState.iterateAction();
                         gameTiles.paintTile();
+                        gameTiles.resetAction();
                         gameTiles.shoreUp();
                         mainComps.repaint();
                         gameTiles.revalidate();
