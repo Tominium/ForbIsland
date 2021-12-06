@@ -23,6 +23,7 @@ public class GameBoard extends JLayeredPane{
     private BufferedImage eau;
     private BufferedImage feu;
     private BufferedImage terre;
+    public Pawn mover;
 
     public GameBoard(){
 
@@ -178,6 +179,111 @@ public class GameBoard extends JLayeredPane{
             Image image = t.getImage().getScaledInstance(120, 120,  Image.SCALE_SMOOTH); // transform it
 
             if(GameState.checkMove(t, GameState.pawnLoc.get(GameState.turn))){
+                image = t.getImage().getScaledInstance(115, 115,  Image.SCALE_SMOOTH);
+                JLabel test = new JLabel(new ImageIcon(image));
+                test.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(134, 3, 148), 5));
+                this.add(test, gbc);
+            }
+            else{
+                this.add(new JLabel(new ImageIcon(image)), gbc);
+            }
+            if(i == 0|| i == 5){
+                if(x == 3){
+                    y++;
+                    i++;
+                    x = 1;
+                }
+                else {
+                    x++;
+                }
+            }
+            else if(i == 1 || i == 4){
+                if(i == 1){
+                    if(x == 4){
+                        y++;
+                        i++;
+                        x = 0;
+                    }
+                    else{
+                        x++;
+                    }
+                }
+                else if(x == 4){
+                    y++;
+                    i++;
+                    x = 2;
+                }
+                else{
+                    x++;
+                }
+            }
+            else if(i == 2 || i == 3){
+                if(i == 2){
+                    if(x == 5){
+                        y++;
+                        i++;
+                        x = 0;
+                    }
+                    else{
+                        x++;
+                    }
+                }
+                else if(x == 5){
+                    y++;
+                    i++;
+                    x = 1;
+                }
+                else{
+                    x++;
+                }
+            }
+        }
+        gbc.ipadx = 0;
+        gbc.ipady = 0;
+
+
+        HashMap<Point, ArrayList<Integer>> pawnLocs = GameState.pawnLocHash();
+
+        for(Point p: pawnLocs.keySet()){
+            BufferedImage result = new BufferedImage(120, 120, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D gbi = result.createGraphics();
+            gbi.drawImage(resize(GameBoardGraphic.localTileLoc.get(p).getImage(),120,120), 0, 0, this);
+            gbc.gridx = p.x;
+            gbc.gridy = p.y;
+            for(int ii: pawnLocs.get(p)){
+                Pawn pp = GameState.pawnLoc.get(ii);
+                BufferedImage piece = pp.getPiece();
+                gbi.drawImage(resize(pp.getPiece(),30,45), (ii+1)*10, 0+(ii*10), this);
+            }
+            result = resize(result,120,120);
+            this.add(new JLabel(new ImageIcon(result)), gbc, 0);
+        }
+        gbc.gridx = 1; gbc.gridy = 0; add(new JLabel(new ImageIcon(air)), gbc);
+        gbc.gridx = 4; gbc.gridy = 0; add(new JLabel(new ImageIcon(eau)), gbc);
+        gbc.gridx = 1; gbc.gridy = 5; add(new JLabel(new ImageIcon(feu)), gbc);
+        gbc.gridx = 4; gbc.gridy = 5; add(new JLabel(new ImageIcon(terre)), gbc);
+
+        this.repaint();
+        this.revalidate();
+
+    }
+
+    public void moveSink(Pawn mover){
+        this.mover = mover;
+        action = "moveSink";
+
+        this.removeAll();
+
+        int x = 2; int y=0; int i =0;
+        gbc.ipadx = 2;
+        gbc.ipady = 2;
+        for(Tile t: GameState.tileLoc){
+            gbc.gridx = x;
+            gbc.gridy = y;
+            Point temp = new Point(x, y);
+            Image image = t.getImage().getScaledInstance(120, 120,  Image.SCALE_SMOOTH); // transform it
+
+            if(GameState.checkMove(t, mover)){
                 image = t.getImage().getScaledInstance(115, 115,  Image.SCALE_SMOOTH);
                 JLabel test = new JLabel(new ImageIcon(image));
                 test.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(134, 3, 148), 5));

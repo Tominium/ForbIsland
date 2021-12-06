@@ -52,22 +52,26 @@ public class useCard extends JFrame {
 
     private void showCards(Pawn bb){
         panel.removeAll();
-
+        int divider = (int) (GameState.pawnLoc.get(0).getHand().size() /2.75);
+        if(divider ==0){divider=1;}
         ArrayList<JButton> buttons = new ArrayList<JButton>();
         for(Card c: bb.getHand()){
-            JButton temp = new JButton(new ImageIcon(c.getImage().getScaledInstance(125, 184, Image.SCALE_SMOOTH)));
+            JButton temp = new JButton(new ImageIcon(c.getImage().getScaledInstance(125/divider, 184/divider, Image.SCALE_SMOOTH)));
             temp.setOpaque(true);
             temp.setContentAreaFilled(false);
             temp.setBorderPainted(false);
             temp.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
+                    GameState.treasureDeck.discardCard(c);
                     if(c.getCardName().contains("Sandbag")){
                         gb.sandBag();
                     }
                     for(int i=0; i<GameState.pawnLoc.size(); i++){
                         if(bb.equals(GameState.pawnLoc.get(i))){
-                            GameState.pawnLoc.get(i).removeCard(c);
-                            gs.getTreasureDeck().discardCard(c);
+                            Pawn temp = GameState.pawnLoc.get(i);
+                            temp.removeCard(c);
+                            GameState.pawnLoc.set(i, temp);
+                            gb.updateAll();
                         }
                     }
                     dispose();

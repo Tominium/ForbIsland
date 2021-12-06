@@ -100,7 +100,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         pack();
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
-        setResizable(true);
+        setResizable(false);
         setVisible(true);
     }
 
@@ -209,13 +209,32 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
             System.out.println("(" + griX + ", " + griY + ")");
             Tile t = GameBoardGraphic.localTileLoc.get(new Point(griX, griY));
-            if(GameState.checkMove(t, GameState.pawnLoc.get(GameState.turn))){
+            Boolean self = gameTiles.getAction().equals("moveSink") && GameState.checkMove(t, gameTiles.mover);
+            if(GameState.checkMove(t, GameState.pawnLoc.get(GameState.turn)) || self){
                 Pawn b = GameState.pawnLoc.get(GameState.turn);
+                if(b.getRole().equals("Pilot")){b.iterateMoveCount();}
+                if(gameTiles.getAction().equals("moveSink")){b = gameTiles.mover;}
                 System.out.println(b.setLocation(griX, griY));
-                GameState.updatePawnLoc(b);
-                gameTiles.resetAction();
+                if(gameTiles.getAction().equals("move")){
+                    GameState.updatePawnLoc(b);
+                    gameState.iterateAction();
+                }
+                else{
+                    for(int i=0; i<GameState.pawnLoc.size(); i++){
+                        if(GameState.pawnLoc.get(i).equals(b)){
+                            b.setLocation(griX, griY);
+                            GameState.pawnLoc.set(i, b);
+                        }
+                    }
+                }
                 gameTiles.paintTile();
-                gameState.iterateAction();
+//                if(gameTiles.getAction().equals("moveSink")){
+//                    synchronized(gameState.syncObject) {
+//                        gameState.syncObject = true;
+//                        gameState.syncObject.notify();
+//                    }
+//                }
+                gameTiles.resetAction();
             }
         }
     }
@@ -244,6 +263,12 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     public GameBoard getGameTiles(){return gameTiles;}
 
     public void updateAll(){
+        playerDeckView.updatePanel();
+        playerDeckView.revalidate();
+        playerDeckView.repaint();
+        waterMeter.update();
+        gameTiles.revalidate();
+        gameTiles.repaint();
         mainComps.repaint();
         mainComps.revalidate();
         waterMeter.update();

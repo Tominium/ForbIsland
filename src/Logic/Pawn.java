@@ -100,10 +100,13 @@ public class Pawn implements Comparable<Pawn>{
         return -1;
     }
 
-    public int iterateMoveCount(){
+    public void iterateMoveCount(){
         actionCount++;
-        return actionCount;
     }
+    public void reset(){
+        actionCount =0;
+    }
+    public int getActionCount(){return actionCount;}
 
 
 

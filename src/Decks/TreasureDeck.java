@@ -3,7 +3,13 @@ package Decks;
 import Cards.Card;
 import Cards.SpecialCard;
 import Cards.TreasureCard;
+import Graphics.Components.GameBoard;
+import Logic.Tile;
 import Water.WatersRise;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,5 +73,20 @@ public class TreasureDeck {
 
     public void discardCard(Card c){
         used.push(c);
+    }
+
+    public BufferedImage getTopUsed(){
+        if(used.isEmpty()){
+            try{
+                return GameBoard.resize(ImageIO.read(Tile.class.getResource("/Assets/Empty.png")), 120, 120);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            return used.peek().getImage();
+        }
+        return used.peek().getImage();
     }
 }

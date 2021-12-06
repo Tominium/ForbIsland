@@ -11,10 +11,7 @@ import Water.WaterMeter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class GameState {
     public static ArrayList<String> collectedTreasures;
@@ -35,6 +32,7 @@ public class GameState {
                     "Cave of Embers", "Bronze Gate", "Breakers Bridge"};
     private static HashMap<Point, Tile> dupl;
     private static int[] loc;
+    public Object syncObject;
 
     public GameState(int numPlayers, String diff){
         collectedTreasures = new ArrayList<String>();
@@ -45,12 +43,13 @@ public class GameState {
         turn = 0;
         actionCount = 0;
         dupl = GameBoardGraphic.localTileLoc;
+        syncObject = false;
         //loc = new int[0];
 
         if(diff.equals("Novice")){waterMeter = new WaterMeter(2.0);}
         else if(diff.equals("Normal")){waterMeter = new WaterMeter(2.25);}
         else if(diff.equals("Elite")){waterMeter = new WaterMeter(2.5);}
-        else{waterMeter = new WaterMeter(3.0);}
+        else{waterMeter = new WaterMeter(2.75);}
 
         shuffleTiles();
         setRoles(numPlayers);
@@ -96,16 +95,23 @@ public class GameState {
         return true;
     }
     public void iterateTurn() {
+        if(GameState.pawnLoc.get(turn).getRole().equals("Pilot")){GameState.pawnLoc.get(turn).reset();}
           for(int i=0; i<2; i++){
               Card c = treasureDeck.getCard();
               if (c.getCardName().contains("Water")) {
                   treasureDeck.discardCard(c);
                   waterMeter.watersRise();
-                  floodDeck.resetDeck();
-                  JOptionPane.showMessageDialog(gb,
-                          "You have drawn a Waters Rise Card!", "Waters Rise!",
-                          JOptionPane.ERROR_MESSAGE);
-                  gb.updateAll();
+                  if(waterMeter.getWaterLevel() == 4.25){JOptionPane.showMessageDialog(gb,
+                          "You Have Lost! Water Level Reached Deadly", "Looser!",
+                          JOptionPane.ERROR_MESSAGE); System.exit(1); gb.dispose();}
+                  else{
+                      checkLose();
+                      floodDeck.resetDeck();
+                      JOptionPane.showMessageDialog(gb,
+                              "You have drawn a Waters Rise Card!", "Waters Rise!",
+                              JOptionPane.ERROR_MESSAGE);
+                      gb.updateAll();
+                  }
               }
               else if(pawnLoc.get(turn).getHand().size()+1 > 5) {
                   discardCard temp = new discardCard(this, 1, gb);
@@ -131,6 +137,28 @@ public class GameState {
                     Tile t = tileLoc.get(b);
                     t.floodTile();
                     tileLoc.set(b, t);
+                    for(Pawn p: GameState.pawnLoc){
+                        if(p.getLocation().equals(t.getLocation()) && t.isSunk() && (!coords(p).isEmpty()||p.getRole().equals("Pilot"))){
+                            JOptionPane.showMessageDialog(gb,
+                                    p.getRole()+ " is on a sinking tile! Click any valid tile to save " + p.getRole(), "Warning",
+                                    JOptionPane.ERROR_MESSAGE);
+                            System.out.println("Sunk " + p.getRole());
+                            gb.getGameTiles().moveSink(p);
+//                            synchronized(syncObject) {
+//                                try {
+//                                    // Calling wait() will block this thread until another thread
+//                                    // calls notify() on the object.
+//                                    syncObject.wait();
+//                                } catch (InterruptedException e) {
+//                                    // Happens if someone interrupts your thread.
+//                                }
+//                            }
+                            gb.updateAll();
+                        }
+                        else if(p.getLocation().equals(t.getLocation()) && t.isSunk() && coords(p).isEmpty()){JOptionPane.showMessageDialog(gb,
+                                "You Lost!", "Looser",
+                                JOptionPane.ERROR_MESSAGE); gb.dispose();}
+                    }
                 }
             }
         }
@@ -159,7 +187,7 @@ public class GameState {
         if(p.getRole().equals("Explorer")&&((t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)+1)|| (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)+1)|| (t.getLocation().get(0)==p.getLocation().get(0)+1&&t.getLocation().get(1)==p.getLocation().get(1)-1)|| (t.getLocation().get(0)==p.getLocation().get(0)-1&&t.getLocation().get(1)==p.getLocation().get(1)-1))) {
             return true;
         }
-        if(p.getRole().equals("Pilot") && p.iterateMoveCount()>1) {
+        if(p.getRole().equals("Pilot") && p.getActionCount()==0) {
             return true;
         }
         if(pawnL.get(0)==tileL.get(0)){if(pawnL.get(1)+1==tileL.get(1) || pawnL.get(1)-1==tileL.get(1)){return true;}}
@@ -205,6 +233,71 @@ public class GameState {
             }
         }
         return total;
+    }
+
+    public static ArrayList<Set<Integer>> coords(Pawn pp){
+        Pawn p = pp;
+        ArrayList<Set<Integer>> ret = new ArrayList<>();
+        Tile temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0), p.getLocation().get(1)+1));
+        if(temp!= null && checkMove(temp, p)){
+            Set<Integer> temp1 = new TreeSet<>();
+            temp1.add(p.getLocation().get(0));
+            temp1.add(p.getLocation().get(1) + 1);
+            ret.add(temp1);
+        }
+        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0), p.getLocation().get(1)-1));
+        if(temp!=null && checkMove(temp, p)){
+            Set<Integer> temp1 = new TreeSet<>();
+            temp1.add(p.getLocation().get(0));
+            temp1.add(p.getLocation().get(1) - 1);
+            ret.add(temp1);
+        }
+        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)+1, p.getLocation().get(1)));
+        if(temp!=null && checkMove(temp, p)){;
+            Set<Integer> temp1 = new TreeSet<>();
+            temp1.add(p.getLocation().get(0)+1);
+            temp1.add(p.getLocation().get(1));
+            ret.add(temp1);
+        }
+        temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)-1, p.getLocation().get(1)));
+        if(temp!=null && checkMove(temp, p)){
+            Set<Integer> temp1 = new TreeSet<>();
+            temp1.add(p.getLocation().get(0)-1);
+            temp1.add(p.getLocation().get(1));
+            ret.add(temp1);
+        }
+        if(p.getRole().equals("Explorer")){
+            temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)+1, p.getLocation().get(1)-1));
+            if(temp!=null && checkMove(temp, p)){
+                Set<Integer> temp1 = new TreeSet<>();
+                temp1.add(p.getLocation().get(0)+1);
+                temp1.add(p.getLocation().get(1)-1);
+                ret.add(temp1);
+            }
+            temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)+1, p.getLocation().get(1)+1));
+            if(temp!=null && checkMove(temp, p)){
+                Set<Integer> temp1 = new TreeSet<>();
+                temp1.add(p.getLocation().get(0)+1);
+                temp1.add(p.getLocation().get(1)+1);
+                ret.add(temp1);
+            }
+            temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)-1, p.getLocation().get(1)-1));
+            if(temp!=null && checkMove(temp, p)){
+                Set<Integer> temp1 = new TreeSet<>();
+                temp1.add(p.getLocation().get(0)-1);
+                temp1.add(p.getLocation().get(1)-1);
+                ret.add(temp1);
+            }
+            temp = GameBoardGraphic.localTileLoc.get(new Point(p.getLocation().get(0)-1, p.getLocation().get(1)+1));
+            if(temp!=null && checkMove(temp, p)){
+                Set<Integer> temp1 = new TreeSet<>();
+                temp1.add(p.getLocation().get(0)-1);
+                temp1.add(p.getLocation().get(1)+1);
+                ret.add(temp1);
+            }
+        }
+        return ret;
+
     }
 
     public static boolean checkTrade(Pawn b) {
@@ -287,23 +380,25 @@ public class GameState {
     public TreasureDeck getTreasureDeck(){return treasureDeck;}
 
     public boolean checkLose(){
-        HashMap<Point, ArrayList<Integer>> locs = GameState.pawnLocHash();
-
-        if(dupl.get("Fool's Landing").isSunk()){
-            return true;
-        }
-        if(dupl.get("Howling Garden").isSunk() && dupl.get("Whispering Garden").isSunk()){
-            return true;
-        }
-        else if(dupl.get("Cave of Shadow").isSunk() && dupl.get("Cave of Embers").isSunk()){
-            return false;
-        }
-        else if(dupl.get("Tidal Palace").isSunk() && dupl.get("Coral Palace").isSunk()){
-            return false;
-        }
-        else if(dupl.get("Temple of the Sun").isSunk() && dupl.get("Temple of the Moon").isSunk()){
-            return false;
-        }
+//        HashMap<Point, ArrayList<Integer>> locs = GameState.pawnLocHash();
+//        dupl = GameBoardGraphic.localTileLoc;
+//
+//        if(GameBoardGraphic.localTileLoc.get("Fool's Landing").isSunk()){
+//            return true;
+//        }
+//        if(GameBoardGraphic.localTileLoc.get("Howling Garden").isSunk() && dupl.get("Whispering Garden").isSunk()){
+//            return true;
+//        }
+//        else if(GameBoardGraphic.localTileLoc.get("Cave of Shadow").isSunk() && dupl.get("Cave of Embers").isSunk()){
+//            return true;
+//        }
+//        else if(GameBoardGraphic.localTileLoc.get("Tidal Palace").isSunk() && dupl.get("Coral Palace").isSunk()){
+//            return true;
+//        }
+//        else if(GameBoardGraphic.localTileLoc.get("Temple of the Sun").isSunk() && dupl.get("Temple of the Moon").isSunk()){
+//            return true;
+//        }
+//        if(waterMeter.hasLostGame()){return true;}
         return false;
     }
 

@@ -21,7 +21,7 @@ public class WaterMeter {
     }
 
     public boolean hasLostGame(){
-        if(waterLevel >= 5.5){
+        if(waterLevel >= 4.25){
             return true;
         }
         return false;
@@ -29,6 +29,7 @@ public class WaterMeter {
 
     public double watersRise(){
         waterLevel += 0.25;
+        System.out.println("Water Level " + waterLevel);
         updateMeter();
         return waterLevel;
     }

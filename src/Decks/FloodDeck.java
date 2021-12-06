@@ -1,8 +1,13 @@
 package Decks;
 
 import Cards.FloodCard;
+import Graphics.Components.GameBoard;
 import Logic.GameState;
+import Logic.Tile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,13 +38,13 @@ public class FloodDeck {
     }
 
     public FloodCard getCard(){
-        if(deck.size()>0){used.add(deck.peek());return deck.pop();}
+        if(!deck.isEmpty()){used.add(deck.peek());return deck.pop();}
         else{resetDeck(); used.add(deck.peek()); return deck.pop();}
     }
 
     public void resetDeck(){
         ArrayList<FloodCard> temp = new ArrayList<>();
-        while(used.size()>0)
+        while(!used.isEmpty())
             temp.add(used.pop());
 
         Collections.shuffle(temp);
@@ -47,5 +52,19 @@ public class FloodDeck {
         deck = new ArrayDeque<FloodCard>(temp);
     }
 
+    public BufferedImage getTopUsed(){
+        if(used.isEmpty()){
+            try{
+                return GameBoard.resize(ImageIO.read(Tile.class.getResource("/Assets/Empty.png")), 120, 120);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            return used.peek().getImage();
+        }
+        return used.peek().getImage();
+    }
 
 }
