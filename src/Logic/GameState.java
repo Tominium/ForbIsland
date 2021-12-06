@@ -355,10 +355,7 @@ public class GameState {
             gb.updateAll();
             return true;
         }
-        else{
-            JOptionPane.showMessageDialog(gb,
-                    "You Do Not Have Enough Treasure Cards", "Cannot Capture Treasure",
-                    JOptionPane.ERROR_MESSAGE); return false;}
+        else{return false;}
 
     }
 
