@@ -11,6 +11,7 @@ public class waterMeterPanel extends JPanel {
 
     private GridBagConstraints gbc;
     private GridBagLayout layout;
+    private JPanel actionPanel;
 
     public waterMeterPanel(){
         layout = new GridBagLayout();
@@ -29,6 +30,8 @@ public class waterMeterPanel extends JPanel {
         image = rotateImageByDegrees(GameState.floodDeck.getTopUsed(), 270);
         image = resize(image, 120, 120);
         add(new JLabel(new ImageIcon(image)), gbc);
+
+
     }
 
     public void update(){

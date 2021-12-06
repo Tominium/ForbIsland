@@ -305,31 +305,11 @@ public class GameState {
 
     }
 
-    public static boolean checkTrade(Pawn b) {
-        Pawn temp = GameState.pawnLoc.get(turn);
-
-        ArrayList<Integer> aLoc = temp.getLocation();
-        ArrayList<Integer> bLoc = b.getLocation();
-
-        if(aLoc.get(0)==bLoc.get(0)&&aLoc.get(1)==bLoc.get(1))
-            return true;
-        else if(aLoc.get(0)==bLoc.get(0)+1&&aLoc.get(1)==bLoc.get(1))
-            return true;
-        else if(aLoc.get(0)==bLoc.get(0)-1&&aLoc.get(1)==bLoc.get(1))
-            return true;
-        else if(aLoc.get(0)==bLoc.get(0)&&aLoc.get(1)==bLoc.get(1)+1)
-            return true;
-        else if(aLoc.get(0)==bLoc.get(0)&&aLoc.get(1)==bLoc.get(1)-1)
-            return true;
-        else
-            return false;
-    }
-
     public static void trade(Pawn b, Card c) {
-        if(checkTrade(b)) {
             GameState.pawnLoc.get(turn).removeCard(c);
             b.addCard(c);
-        }
+            gb.getPlayerDeckView().updatePanel();
+
     }
     public static void updatePawnLoc(Pawn b){
         pawnLoc.set(turn, b);
