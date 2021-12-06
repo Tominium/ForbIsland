@@ -14,9 +14,8 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static Logic.GameState.captureTreasure;
-import static Logic.GameState.turn;
 import static Graphics.Components.playerSelectionPanel.otherPawn;
+import static Logic.GameState.*;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 1800;
@@ -170,6 +169,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     public void helicopter(){
         heliPanel = new Helicopter(this);
+        gameState.checkWinHelicopter();
     }
 
     public void winGraphics(){}
