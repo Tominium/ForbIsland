@@ -367,7 +367,7 @@ public class GameState {
     public boolean checkLose(){
         HashMap<Point, ArrayList<Integer>> locs = GameState.pawnLocHash();
 
-        if(tileLoc.get(returnIndex("Fool's Landing")).isSunk()){
+        if(tileLoc.get(returnIndex("Fools' Landing")).isSunk()){
             return true;
         }
         if(tileLoc.get(returnIndex("Howling Garden")).isSunk() && tileLoc.get(returnIndex("Whispering Garden")).isSunk()){
@@ -401,7 +401,7 @@ public class GameState {
     }
 
     public int returnIndex(String name){
-        return tileLoc.indexOf(name);
+        return tileLoc.indexOf(new Tile(name));
     }
 
 }

@@ -50,6 +50,7 @@ public class FloodDeck {
         Collections.shuffle(temp);
 
         deck = new ArrayDeque<FloodCard>(temp);
+        used = new ArrayDeque<FloodCard>();
     }
 
     public BufferedImage getTopUsed(){
