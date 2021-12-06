@@ -389,7 +389,7 @@ public class GameState {
             else{
                 ArrayList<Set<Integer>> locs = GameState.coords(p);
                 for(int i = 0; i < locs.size(); i++){
-                    Iterator iter = locs.get(0).iterator();
+                    Iterator iter = locs.get(i).iterator();
                     int one = 0;
                     int two = 0;
                     int a = 0;
