@@ -426,7 +426,7 @@ public class GameState {
         if(collectedTreasures.size() == 4){
             int counter = 0;
             for(int i = 0; i < pawnLoc.size(); i++){
-                if(pawnLoc.get(i).getLocation().equals(dupl.get("Fool's Landing").getLocation())){
+                if(pawnLoc.get(i).getLocation().equals(tileLoc.get(returnIndex("Fool's Landing")).getLocation())){
                     counter++;
                 }
             }
