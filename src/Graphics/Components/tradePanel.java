@@ -67,38 +67,76 @@ public class tradePanel extends JFrame {
 
     public void playerSelection() {
         panel.removeAll();
-        HashMap<Point, ArrayList<Integer>> temp = GameState.pawnLocHash();
-        ArrayList<Integer> al = new ArrayList<Integer>();
-        for(ArrayList<Integer> a: temp.values()) {
-            if (a.contains(turn)) {
-                al = a;
+        if(GameState.pawnLoc.get(GameState.turn).getRole().equals("Messenger"))
+        {
+            for(int i = 0; i < GameState.pawnLoc.size(); i++) {
+                if(!(i==GameState.turn)) {
+                    System.out.println(GameState.pawnLoc.get(i).getRole());
+                    Icon icon = new ImageIcon(GameState.pawnLoc.get(i).getIcon());
+                    JButton button = new JButton(icon);
+                    button.setOpaque(true);
+                    button.setContentAreaFilled(false);
+                    button.setBorderPainted(false);
+                    int ii = i;
+                    button.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            p = GameState.pawnLoc.get(ii);
+                            System.out.println(p.getRole());
+                            if(p.getHand().size()>=5)
+                                new discardCard2(obj,gs,p);
+                            GameState.trade(p, c);
+                            gs.iterateAction();
+                            dispose();
+                        }
+                    });
+                    tradeGBC.gridx = i;
+
+                    panel.add(button, tradeGBC);
+                }
+
             }
         }
 
-        for(int i = 0; i < al.size(); i++) {
-            if(!(i==turn)) {
-                Icon icon = new ImageIcon(GameState.pawnLoc.get(al.get(i)).getIcon());
-                JButton button = new JButton(icon);
-                button.setOpaque(true);
-                button.setContentAreaFilled(false);
-                button.setBorderPainted(false);
-                int ii = i;
-                button.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        p = GameState.pawnLoc.get(ii);
-                        GameState.trade(p, c);
-                        gs.iterateAction();
-                        dispose();
-                    }
-                });
-                tradeGBC.gridx = i;
+        else {
+            panel.removeAll();
+            HashMap<Point, ArrayList<Integer>> temp = GameState.pawnLocHash();
+            ArrayList<Integer> al = new ArrayList<Integer>();
+            for (ArrayList<Integer> a : temp.values()) {
+                if (a.contains(turn)) {
+                    al = a;
+                }
+            }
 
-                panel.add(button, tradeGBC);
+            for (int i = 0; i < al.size(); i++) {
+                if (!(i == GameState.turn)) {
+                    Icon icon = new ImageIcon(GameState.pawnLoc.get(al.get(i)).getIcon());
+                    JButton button = new JButton(icon);
+                    button.setOpaque(true);
+                    button.setContentAreaFilled(false);
+                    button.setBorderPainted(false);
+                    int ii = i;
+                    ArrayList<Integer> temp2 = al;
+                    button.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            p = GameState.pawnLoc.get(temp2.get(ii));
+                            System.out.println(p.getRole());
+                            if (p.getHand().size() >= 5) {
+                                discardCard dc = new discardCard(gs, obj, p);
+                            }
+                            GameState.trade(p, c);
+                            gs.iterateAction();
+                            dispose();
+                        }
+                    });
+                    tradeGBC.gridx = i;
+
+                    panel.add(button, tradeGBC);
+                }
+
             }
 
         }
         panel.repaint();
         panel.revalidate();
-
     }
 }
