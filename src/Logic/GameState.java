@@ -154,6 +154,11 @@ public class GameState {
 //                                }
 //                            }
                             gb.updateAll();
+                            ArrayList<Integer> temp2 = p.getLocation();
+                            while(temp2.equals(p.getLocation())){
+                                try{
+                                    wait(5);
+                                } catch (InterruptedException bb){}}
                         }
                         else if(p.getLocation().equals(t.getLocation()) && t.isSunk() && coords(p).isEmpty()){JOptionPane.showMessageDialog(gb,
                                 "You Lost!", "Looser",
