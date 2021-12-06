@@ -14,8 +14,9 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static Logic.GameState.captureTreasure;
+import static Logic.GameState.turn;
 import static Graphics.Components.playerSelectionPanel.otherPawn;
-import static Logic.GameState.*;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 1800;
@@ -95,6 +96,11 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             public void actionPerformed(ActionEvent e){
                 gameState.iterateTurn(); updateAll();
             }});
+//        JButton helpButton = new JButton("Help"); helpButton.setPreferredSize(new Dimension(110, 35)); helpButton.add(endTurn);
+//        helpButton.addActionListener(new ActionListener(){
+//            public void actionPerformed(ActionEvent e){
+//                new HelpMenu();
+//            }});
         ability = new JButton("Ability");
         ability.setPreferredSize(new Dimension(110, 35));
         sideComps.add(ability);
@@ -135,7 +141,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                 tf = true;
             }
         }
-        if(tf) {
+        if(tf||GameState.pawnLoc.get(GameState.turn).getRole().equals("Messenger")) {
             new tradePanel(this, gameState);
         }
         else
@@ -169,7 +175,6 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     public void helicopter(){
         heliPanel = new Helicopter(this);
-        gameState.checkWinHelicopter();
     }
 
     public void winGraphics(){}

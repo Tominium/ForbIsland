@@ -55,6 +55,7 @@ public class playerSelectionPanel extends JFrame {
                         obj.getGameTiles().moveOther(otherPawn);
                         obj.updateAll();
                         gs.iterateAction();
+                        dispose();
                     }
                 });
                 tradeGBC.gridx = i;
