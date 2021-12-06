@@ -91,11 +91,6 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
             public void actionPerformed(ActionEvent e){
                 useCard();
             }});
-        JButton endTurn = new JButton("End Turn"); endTurn.setPreferredSize(new Dimension(110, 35)); sideComps.add(endTurn);
-        endTurn.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                gameState.iterateTurn(); updateAll();
-            }});
 //        JButton helpButton = new JButton("Help"); helpButton.setPreferredSize(new Dimension(110, 35)); helpButton.add(endTurn);
 //        helpButton.addActionListener(new ActionListener(){
 //            public void actionPerformed(ActionEvent e){

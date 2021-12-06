@@ -167,10 +167,6 @@ public class GameState {
                 }
             }
         }
-
-        if(checkLose()){JOptionPane.showMessageDialog(gb,
-                "You Lost!", "Looser",
-                JOptionPane.ERROR_MESSAGE); gb.dispose();}
         gb.getGameTiles().paintTile();
         gb.updateAll();
         turn++;
@@ -310,9 +306,9 @@ public class GameState {
     }
 
     public static void trade(Pawn b, Card c) {
-            GameState.pawnLoc.get(turn).removeCard(c);
-            b.addCard(c);
-            gb.getPlayerDeckView().updatePanel();
+        GameState.pawnLoc.get(turn).removeCard(c);
+        b.addCard(c);
+        gb.getPlayerDeckView().updatePanel();
 
     }
     public static void updatePawnLoc(Pawn b){
