@@ -385,25 +385,23 @@ public class GameState {
     public TreasureDeck getTreasureDeck(){return treasureDeck;}
 
     public boolean checkLose(){
-//        HashMap<Point, ArrayList<Integer>> locs = GameState.pawnLocHash();
-//        dupl = GameBoardGraphic.localTileLoc;
-//
-//        if(GameBoardGraphic.localTileLoc.get("Fool's Landing").isSunk()){
-//            return true;
-//        }
-//        if(GameBoardGraphic.localTileLoc.get("Howling Garden").isSunk() && dupl.get("Whispering Garden").isSunk()){
-//            return true;
-//        }
-//        else if(GameBoardGraphic.localTileLoc.get("Cave of Shadow").isSunk() && dupl.get("Cave of Embers").isSunk()){
-//            return true;
-//        }
-//        else if(GameBoardGraphic.localTileLoc.get("Tidal Palace").isSunk() && dupl.get("Coral Palace").isSunk()){
-//            return true;
-//        }
-//        else if(GameBoardGraphic.localTileLoc.get("Temple of the Sun").isSunk() && dupl.get("Temple of the Moon").isSunk()){
-//            return true;
-//        }
-//        if(waterMeter.hasLostGame()){return true;}
+        HashMap<Point, ArrayList<Integer>> locs = GameState.pawnLocHash();
+
+        if(tileLoc.get(returnIndex("Fool's Landing")).isSunk()){
+            return true;
+        }
+        if(tileLoc.get(returnIndex("Howling Garden")).isSunk() && tileLoc.get(returnIndex("Whispering Garden")).isSunk()){
+            return true;
+        }
+        else if(tileLoc.get(returnIndex("Cave of Shadows")).isSunk() && tileLoc.get(returnIndex("Cave of Embers")).isSunk()){
+            return false;
+        }
+        else if(tileLoc.get(returnIndex("Tidal Palace")).isSunk() && tileLoc.get(returnIndex("Coral Palace")).isSunk()){
+            return false;
+        }
+        else if(tileLoc.get(returnIndex("Temple of the Sun")).isSunk() && tileLoc.get(returnIndex("Temple of the Moon")).isSunk()){
+            return false;
+        }
         return false;
     }
 
@@ -420,6 +418,10 @@ public class GameState {
             }
         }
         return false;
+    }
+
+    public int returnIndex(String name){
+        return tileLoc.indexOf(name);
     }
 
 }
