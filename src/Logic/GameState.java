@@ -101,7 +101,7 @@ public class GameState {
               if (c.getCardName().contains("Water")) {
                   treasureDeck.discardCard(c);
                   waterMeter.watersRise();
-                  if(waterMeter.getWaterLevel() == 4.25){JOptionPane.showMessageDialog(gb,
+                  if(waterMeter.getWaterLevel() == 6){JOptionPane.showMessageDialog(gb,
                           "You Have Lost! Water Level Reached Deadly", "Looser!",
                           JOptionPane.ERROR_MESSAGE); System.exit(1); gb.dispose();}
                   else{

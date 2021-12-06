@@ -34,8 +34,12 @@ public class WaterMeter {
         return waterLevel;
     }
 
-    public double getWaterLevel(){
-        return waterLevel;
+    public int getWaterLevel(){
+        if(waterLevel <= 2.25){return 2;}
+        if(waterLevel <= 3){return 3;}
+        if(waterLevel <= 3.25){return 4;}
+        if(waterLevel <= 4.0){return 5;}
+        return 6;
     }
 
     private void updateMeter(){

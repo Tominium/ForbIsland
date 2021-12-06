@@ -44,7 +44,8 @@ public class useCard extends JFrame {
         add(panel);
 
 
-        setSize(WIDTH, HEIGHT);
+        setSize(
+                WIDTH, HEIGHT);
         setDefaultCloseOperation((JFrame.HIDE_ON_CLOSE));
         setResizable(false);
         setVisible(true);
@@ -65,6 +66,9 @@ public class useCard extends JFrame {
                     GameState.treasureDeck.discardCard(c);
                     if(c.getCardName().contains("Sandbag")){
                         gb.sandBag();
+                    }
+                    else if(c.getCardName().contains("Helicopter")){
+                        gb.helicopter();
                     }
                     for(int i=0; i<GameState.pawnLoc.size(); i++){
                         if(bb.equals(GameState.pawnLoc.get(i))){

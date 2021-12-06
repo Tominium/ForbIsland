@@ -26,7 +26,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private GameBoard gameTiles;
     private playerDeckPanel playerDeckView;
     private waterMeterPanel waterMeter;
-    private JPanel heliPanel;
+    private Helicopter heliPanel;
     private JPanel specialAbility;
     public static HashMap<Point, Tile> localTileLoc;
     private JPanel mainComps;
@@ -173,7 +173,9 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         mainComps.revalidate();
     }
 
-    public void helicopter(){}
+    public void helicopter(){
+        heliPanel = new Helicopter(this);
+    }
 
     public void winGraphics(){}
 
@@ -182,6 +184,28 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(gameTiles.getAction().equals("chooseMove")){
+            Component a = findComponentAt(e.getPoint());
+            int griX = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridx;
+            int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
+            System.out.println("Choose Move");
+            if(griX != -1){
+                ArrayList<Pawn> pawnsList = heliPanel.getPawnsNew();
+                for(int i=0; i<GameState.pawnLoc.size(); i++){
+                    for(Pawn temp: pawnsList){
+                        if(GameState.pawnLoc.get(i).equals(temp)){
+                            Pawn temp1 = GameState.pawnLoc.get(i);
+                            temp1.setLocation(griX, griY);
+                            GameState.pawnLoc.set(i, temp1);
+                        }
+                    }
+                }
+                        gameTiles.resetAction();
+                        gameTiles.paintTile();
+                        mainComps.repaint();
+                        gameTiles.revalidate();
+                    }
+        }
         if(gameTiles.getAction().contains("engineer")){
             Component a = findComponentAt(e.getPoint());
             int griX = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridx;
@@ -217,7 +241,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                             t.shoreUp();
                             GameState.tileLoc.set(i, t);
                             gameTiles.paintTile();
-                            if(!gameTiles.getAction().contains("sandbag") && !gameTiles.getAction().contains("engineer")){gameState.iterateAction();}
+                            if(!gameTiles.getAction().equals("sandbag") && !gameTiles.getAction().equals("engineer")){gameState.iterateAction();}
                             gameTiles.resetAction();
                         }
                     }
@@ -250,12 +274,6 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                     }
                 }
                 gameTiles.paintTile();
-//                if(gameTiles.getAction().equals("moveSink")){
-//                    synchronized(gameState.syncObject) {
-//                        gameState.syncObject = true;
-//                        gameState.syncObject.notify();
-//                    }
-//                }
                 gameTiles.resetAction();
             }
         }
