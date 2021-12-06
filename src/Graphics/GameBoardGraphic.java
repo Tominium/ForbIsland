@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 import static Logic.GameState.captureTreasure;
 import static Logic.GameState.turn;
+import static Graphics.Components.playerSelectionPanel.otherPawn;
 
 public class GameBoardGraphic extends JFrame implements MouseListener {
     private static final int WIDTH = 1800;
@@ -31,8 +32,11 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
     private JPanel mainComps;
     private JPanel sideComps;
     private JPanel specialComps;
+    private JButton ability;
+    public static int count;
 
     public GameBoardGraphic(GameState gs){
+        count = 0;
         gameState = gs;
 
         addMouseListener(this);
@@ -90,8 +94,18 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         JButton endTurn = new JButton("End Turn"); endTurn.setPreferredSize(new Dimension(110, 35)); sideComps.add(endTurn);
         endTurn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                gameState.iterateTurn();
+                gameState.iterateTurn(); updateAll();
             }});
+
+        ability = new JButton("Ability");
+        ability.setPreferredSize(new Dimension(110, 35));
+        sideComps.add(ability);
+        ability.setVisible(false);
+        ability.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigatorAbility();
+            }
+        });
 
         frameGBC.gridx = 0;
         frameGBC.gridy = 1;
@@ -102,6 +116,7 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
         setResizable(false);
         setVisible(true);
+        updateAll();
     }
 
     public void movePawn(){
@@ -110,6 +125,9 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         mainComps.revalidate();
     }
 
+    public void navigatorAbility() {
+        new playerSelectionPanel(this, gameState);
+    }
     public void tradeable(){
         HashMap<Point, ArrayList<Integer>> temp = GameState.pawnLocHash();
         boolean tf = false;
@@ -237,6 +255,27 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
                 gameTiles.resetAction();
             }
         }
+
+        if(gameTiles.getAction().contains("moveOther")){
+            Component a = findComponentAt(e.getPoint());
+            int griX = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridx;
+            int griY = gameTiles.getGridBagLayoutgrid().getConstraints(a).gridy;
+            System.out.println("(" + griX + ", " + griY + ")");
+            Tile t = GameBoardGraphic.localTileLoc.get(new Point(griX, griY));
+            if(GameState.checkMove(t, otherPawn)){
+                Pawn b = otherPawn;
+                System.out.println(b.setLocation(griX, griY));
+                for(int i = 0; i < GameState.pawnLoc.size();i++)
+                    if(GameState.pawnLoc.get(i).equals(b))
+                        GameState.pawnLoc.get(i).setLocation(griX, griY);
+                gameTiles.resetAction();
+                gameTiles.paintTile();
+            }
+            if(count<1) {
+                gameTiles.moveOther(otherPawn);
+                count++;
+            }
+        }
     }
 
     @Override
@@ -276,5 +315,10 @@ public class GameBoardGraphic extends JFrame implements MouseListener {
         sideComps.revalidate();
         this.repaint();
         this.revalidate();
+        if(GameState.pawnLoc.get(GameState.turn).getRole().contains("Navigator"))
+            ability.setVisible(true);
+        else
+            ability.setVisible(false);
+
     }
 }
