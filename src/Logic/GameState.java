@@ -167,6 +167,10 @@ public class GameState {
                 }
             }
         }
+
+        if(checkLose()){JOptionPane.showMessageDialog(gb,
+                "You Lost!", "Looser",
+                JOptionPane.ERROR_MESSAGE); gb.dispose();}
         gb.getGameTiles().paintTile();
         gb.updateAll();
         turn++;

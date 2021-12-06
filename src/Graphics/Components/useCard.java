@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class useCard extends JFrame {
     private JPanel panel;
-    private static int WIDTH = 650;
+    private static int WIDTH = 700;
     private static int HEIGHT = 500;
     private GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
