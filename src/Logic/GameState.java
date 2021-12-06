@@ -365,7 +365,6 @@ public class GameState {
     public TreasureDeck getTreasureDeck(){return treasureDeck;}
 
     public boolean checkLose(){
-        HashMap<Point, ArrayList<Integer>> locs = GameState.pawnLocHash();
 
         if(tileLoc.get(returnIndex("Fools' Landing")).isSunk()){
             return true;
@@ -382,24 +381,60 @@ public class GameState {
         else if(tileLoc.get(returnIndex("Temple of the Sun")).isSunk() && tileLoc.get(returnIndex("Temple of the Moon")).isSunk()){
             return false;
         }
+
+
+        int counter = 0;
+        for(int j = 0; j < pawnLoc.size(); j++){
+            Pawn p = pawnLoc.get(j);
+            if(p.getRole().equals("Pilot") || p.getRole().equals("Diver")){
+                return false;
+            }
+            else{
+                ArrayList<Set<Integer>> locs = GameState.coords(p);
+                System.out.println(locs);
+                for(int i = 0; i < locs.size(); i++){
+                    int index = tileLoc.indexOf(locs.get(i));
+                    if(tileLoc.get(index).isSunk()){
+                        counter++;
+                    }
+                }
+            }
+        }
+        if(counter == pawnLoc.size() - 1){
+            return true;
+        }
         return false;
     }
 
     public static boolean checkWin(){
-        if(collectedTreasures.indexOf(null) != -1){
+        if(collectedTreasures.size() != 4){
             int counter = 0;
             for(int i = 0; i < pawnLoc.size(); i++){
-                if(pawnLoc.get(i).getLocation() == dupl.get("Temple Of the Sun").getLocation()){
+                if(pawnLoc.get(i).getLocation() == dupl.get("Fool's Landing").getLocation()){
                     counter++;
                 }
             }
-            if(counter == 4){
+            if(counter == pawnLoc.size()){
 
             }
         }
         return false;
     }
 
+    public boolean checkWinHelicopter(){
+        if(collectedTreasures.size() == 4){
+            int counter = 0;
+            for(int i = 0; i < pawnLoc.size(); i++){
+                if(pawnLoc.get(i).getLocation() == dupl.get("Fool's Landing").getLocation()){
+                    counter++;
+                }
+            }
+            if(counter == pawnLoc.size()){
+
+            }
+        }
+        return false;
+    }
     public int returnIndex(String name){
         return tileLoc.indexOf(new Tile(name));
     }
