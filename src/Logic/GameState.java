@@ -348,7 +348,7 @@ public class GameState {
 
         int count = 0;
         String firstCard = "";
-        for(int i = 0; i < p.getHand().size(); i++){
+        for(int i = 0; i < p.getHand().size()-1; i++){
             if(p.getHand().get(i).getCardName().contains(cardName)){
                 firstCard = p.getHand().get(i).getCardName();
                 count++;
