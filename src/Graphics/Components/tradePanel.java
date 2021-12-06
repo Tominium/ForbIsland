@@ -108,8 +108,9 @@ public class tradePanel extends JFrame {
             }
 
             for (int i = 0; i < al.size(); i++) {
-                if (!(i == GameState.turn)) {
+                if (!(al.get(i) == GameState.turn)) {
                     Icon icon = new ImageIcon(GameState.pawnLoc.get(al.get(i)).getIcon());
+                    System.out.println(GameState.pawnLoc.get(al.get(i)).getRole());
                     JButton button = new JButton(icon);
                     button.setOpaque(true);
                     button.setContentAreaFilled(false);
@@ -120,9 +121,8 @@ public class tradePanel extends JFrame {
                         public void actionPerformed(ActionEvent e) {
                             p = GameState.pawnLoc.get(temp2.get(ii));
                             System.out.println(p.getRole());
-                            if (p.getHand().size() >= 5) {
-                                discardCard dc = new discardCard(gs, obj, p);
-                            }
+                            if(p.getHand().size()>=5)
+                                new discardCard2(obj,gs,p);
                             GameState.trade(p, c);
                             gs.iterateAction();
                             dispose();
