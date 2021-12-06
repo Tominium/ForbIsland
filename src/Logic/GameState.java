@@ -370,13 +370,13 @@ public class GameState {
             return true;
         }
         else if(tileLoc.get(returnIndex("Cave of Shadows")).isSunk() && tileLoc.get(returnIndex("Cave of Embers")).isSunk()){
-            return false;
+            return true;
         }
         else if(tileLoc.get(returnIndex("Tidal Palace")).isSunk() && tileLoc.get(returnIndex("Coral Palace")).isSunk()){
-            return false;
+            return true;
         }
         else if(tileLoc.get(returnIndex("Temple of the Sun")).isSunk() && tileLoc.get(returnIndex("Temple of the Moon")).isSunk()){
-            return false;
+            return true;
         }
 
 
