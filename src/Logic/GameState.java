@@ -407,10 +407,11 @@ public class GameState {
     }
 
     public static boolean checkWin(){
+        int index = returnIndex("Fool's Landing");
         if(collectedTreasures.size() != 4){
             int counter = 0;
             for(int i = 0; i < pawnLoc.size(); i++){
-                if(pawnLoc.get(i).getLocation() == dupl.get("Fool's Landing").getLocation()){
+                if(pawnLoc.get(i).getLocation() == tileLoc.get(returnIndex("Fool's Landing")).getLocation()){
                     counter++;
                 }
             }
@@ -435,7 +436,7 @@ public class GameState {
         }
         return false;
     }
-    public int returnIndex(String name){
+    public static int returnIndex(String name){
         return tileLoc.indexOf(new Tile(name));
     }
 
