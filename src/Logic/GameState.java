@@ -388,10 +388,22 @@ public class GameState {
             }
             else{
                 ArrayList<Set<Integer>> locs = GameState.coords(p);
-                System.out.println(locs);
                 for(int i = 0; i < locs.size(); i++){
-                    int index = tileLoc.indexOf(locs.get(i));
-                    if(tileLoc.get(index).isSunk()){
+                    Iterator iter = locs.get(0).iterator();
+                    int one = 0;
+                    int two = 0;
+                    int a = 0;
+                    while(iter.hasNext()){
+                        if(a == 0){
+                            one = (int)iter.next();
+                        }
+                        else{
+                            two = (int)iter.next();
+                        }
+                        a++;
+                    }
+                    Point pLoc = new Point(one, two);
+                    if(dupl.get(pLoc).isSunk()){
                         counter++;
                     }
                 }
