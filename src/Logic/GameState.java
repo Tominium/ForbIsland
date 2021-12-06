@@ -425,12 +425,15 @@ public class GameState {
         if(collectedTreasures.size() == 4){
             int counter = 0;
             for(int i = 0; i < pawnLoc.size(); i++){
-                if(pawnLoc.get(i).getLocation() == dupl.get("Fool's Landing").getLocation()){
+                if(pawnLoc.get(i).getLocation().equals(dupl.get("Fool's Landing").getLocation())){
                     counter++;
                 }
             }
             if(counter == pawnLoc.size()){
-
+                JOptionPane.showMessageDialog(gb,
+                        "Congratulations You Have Won The Game", "Congratulations!",
+                        JOptionPane.ERROR_MESSAGE);
+                return true;
             }
         }
         return false;
