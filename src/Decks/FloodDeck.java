@@ -39,7 +39,12 @@ public class FloodDeck {
 
     public FloodCard getCard(){
         if(!deck.isEmpty()){used.add(deck.peek());return deck.pop();}
-        else{resetDeck(); used.add(deck.peek()); return deck.pop();}
+        else{     deck = new ArrayDeque<FloodCard>();
+            used = new ArrayDeque<FloodCard>();
+
+            for(int i = 0; i < 24; i++)
+                deck.push(new FloodCard(GameState.TILENAMES[i], "FloodCard"));
+            shuffle(); used.add(deck.peek()); return deck.pop();}
     }
 
     public void resetDeck(){

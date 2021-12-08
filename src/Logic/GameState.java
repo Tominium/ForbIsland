@@ -42,7 +42,7 @@ public class GameState {
         floodDeck = new FloodDeck();
         turn = 0;
         actionCount = 0;
-        dupl = GameBoardGraphic.localTileLoc;
+        dupl = new HashMap<>();
         syncObject = false;
         //loc = new int[0];
 
@@ -101,11 +101,10 @@ public class GameState {
             if (c.getCardName().contains("Water")) {
                 treasureDeck.discardCard(c);
                 waterMeter.watersRise();
-                if(waterMeter.getWaterLevel() == 6){JOptionPane.showMessageDialog(gb,
+                if(waterMeter.getWaterLevel() == 6){gb.updateAll();JOptionPane.showMessageDialog(gb,
                         "You Have Lost! Water Level Reached Deadly", "Looser!",
                         JOptionPane.ERROR_MESSAGE); System.exit(1); gb.dispose();}
                 else{
-                    checkLose();
                     floodDeck.resetDeck();
                     JOptionPane.showMessageDialog(gb,
                             "You have drawn a Waters Rise Card!", "Waters Rise!",
@@ -129,7 +128,7 @@ public class GameState {
                 } pawnLoc.get(turn).addCard(c);gb.getPlayerDeckView().updatePanel();
                 gb.updateAll();}
         }
-        for(int a=0; a<(int)waterMeter.getWaterLevel(); a++){
+        for(int a=0; a<waterMeter.getWaterLevel(); a++){
             FloodCard fc = floodDeck.getCard();
             for(int b=0; b<tileLoc.size(); b++){
                 if(tileLoc.get(b).getName().equals(fc.getCardName())){
@@ -137,6 +136,15 @@ public class GameState {
                     Tile t = tileLoc.get(b);
                     t.floodTile();
                     tileLoc.set(b, t);
+                    if(checkLose()){gb.updateAll();JOptionPane.showMessageDialog(gb,
+                            "You Have Lost! Fools Landing Has Sunk!", "Looser",
+                            JOptionPane.ERROR_MESSAGE); gb.dispose();}
+                    if(checkLoseOther()){gb.updateAll();JOptionPane.showMessageDialog(gb,
+                            "You Have Lost! A Treasure Has Become Unattainable!", "Looser",
+                            JOptionPane.ERROR_MESSAGE); gb.dispose();}
+//                    if(checkLoseSink()){gb.updateAll();JOptionPane.showMessageDialog(gb,
+//                            "You Have Lost! A Player Cannot Get Off A Sinking Tile!", "Looser",
+//                            JOptionPane.ERROR_MESSAGE); gb.dispose();}
                     for(Pawn p: GameState.pawnLoc){
                         if(p.getLocation().equals(t.getLocation()) && t.isSunk() && (!coords(p).isEmpty()||p.getRole().equals("Pilot"))){
                             JOptionPane.showMessageDialog(gb,
@@ -158,19 +166,23 @@ public class GameState {
                             while(temp2.equals(p.getLocation())){
                                 try{
                                     wait(5);
-                                } catch (InterruptedException bb){}}
+                                } catch (InterruptedException bb){try{
+                                    wait(5);
+                                } catch (InterruptedException bb1){try{
+                                    wait(5);
+                                } catch (InterruptedException bb2){}}}}
                         }
                         else if(p.getLocation().equals(t.getLocation()) && t.isSunk() && coords(p).isEmpty()){JOptionPane.showMessageDialog(gb,
-                                "You Lost!", "Looser",
+                                "You Have Lost! A Player Cannot Get Off A Sinking Tile!!", "Looser",
                                 JOptionPane.ERROR_MESSAGE); gb.dispose();}
                     }
                 }
             }
         }
-        gb.getGameTiles().paintTile();
-        gb.updateAll();
         turn++;
         if(turn>=pawnLoc.size()){turn =0;}
+        gb.getGameTiles().paintTile();
+        gb.updateAll();
     }
 
     public static void setOriginalPlayerLocation() {
@@ -363,23 +375,14 @@ public class GameState {
 
     public boolean checkLose(){
 
-        if(tileLoc.get(returnIndex("Fools' Landing")).isSunk()){
+        if(tileLoc.get(returnIndex("Fools' Landing")).isSunk()) {
             return true;
         }
-        if(tileLoc.get(returnIndex("Howling Garden")).isSunk() && tileLoc.get(returnIndex("Whispering Garden")).isSunk()){
-            return true;
-        }
-        else if(tileLoc.get(returnIndex("Cave of Shadows")).isSunk() && tileLoc.get(returnIndex("Cave of Embers")).isSunk()){
-            return true;
-        }
-        else if(tileLoc.get(returnIndex("Tidal Palace")).isSunk() && tileLoc.get(returnIndex("Coral Palace")).isSunk()){
-            return true;
-        }
-        else if(tileLoc.get(returnIndex("Temple of the Sun")).isSunk() && tileLoc.get(returnIndex("Temple of the Moon")).isSunk()){
-            return true;
-        }
+        return false;
+    }
 
-
+    public boolean checkLoseSink(){
+        dupl = GameBoardGraphic.localTileLoc;
         int counter = 0;
         for(int j = 0; j < pawnLoc.size(); j++){
             Pawn p = pawnLoc.get(j);
@@ -403,7 +406,7 @@ public class GameState {
                         a++;
                     }
                     Point pLoc = new Point(one, two);
-                    if(dupl.get(pLoc).isSunk()){
+                    if(dupl.get(pLoc) != null && dupl.get(pLoc).isSunk()){
                         counter++;
                     }
                 }
@@ -414,6 +417,26 @@ public class GameState {
         }
         return false;
     }
+
+    public boolean checkLoseOther(){
+        if(tileLoc.get(returnIndex("Howling Garden")).isSunk() && tileLoc.get(returnIndex("Whispering Garden")).isSunk() && !collectedTreasures.contains("Wind")){
+            return true;
+        }
+        else if(tileLoc.get(returnIndex("Cave of Shadows")).isSunk() && tileLoc.get(returnIndex("Cave of Embers")).isSunk()&& !collectedTreasures.contains("Fire")){
+            return true;
+        }
+        else if(tileLoc.get(returnIndex("Tidal Palace")).isSunk() && tileLoc.get(returnIndex("Coral Palace")).isSunk()&& !collectedTreasures.contains("Ocean")){
+            return true;
+        }
+        else if(tileLoc.get(returnIndex("Temple of the Sun")).isSunk() && tileLoc.get(returnIndex("Temple of the Moon")).isSunk()&& !collectedTreasures.contains("Earth")){
+            return true;
+        }
+        return false;
+    }
+
+
+
+
 
     public static boolean checkWin(){
         int index = returnIndex("Fool's Landing");

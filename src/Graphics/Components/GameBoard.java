@@ -476,7 +476,9 @@ public class GameBoard extends JLayeredPane{
     }
 
     public void shoreUp(){
-        if(!action.equals("engineer")){action = "shore";}
+        if(action.equals("engineer")){action = "engineer";}
+        else if(action.equals("engineer1")){action = "shoree";}
+        else{action = "shore";}
 
 
         this.removeAll();
@@ -791,6 +793,7 @@ public class GameBoard extends JLayeredPane{
     }
 
     public void engineer(){action = "engineer";}
+    public void engineer1(){action = "engineer1";}
     public String getAction(){return action;}
     public void resetAction(){action="";}
 

@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class HelpMenu extends JFrame implements ActionListener {
     private JButton back, pOne, pTwo, pThree, pFour, pFive, pSix, pSeven, pEight, n1;
@@ -81,53 +82,53 @@ public class HelpMenu extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String link = "src/Assets/HelpPages/" ;
+        String link = "/Assets/HelpPages/" ;
         if(e.getSource()==pOne){
-            link+="pOne.png";
-            ImageIcon icon = new ImageIcon(link);
+            link+="pOne.PNG";
+            ImageIcon icon = new ImageIcon(Objects.requireNonNull(HelpMenu.class.getResource(link)));
             page.setIcon(icon);
         }
         else if(e.getSource()==pTwo){
-            link+="pTwo.png";
-            ImageIcon icon = new ImageIcon(link);
+            link+="pTwo.PNG";
+            ImageIcon icon = new ImageIcon(Objects.requireNonNull(HelpMenu.class.getResource(link)));
             page.setIcon(icon);
         }
         else if(e.getSource()==pThree){
-            link+="pThree.png";
-            ImageIcon icon = new ImageIcon(link);
+            link+="pThree.PNG";
+            ImageIcon icon = new ImageIcon(Objects.requireNonNull(HelpMenu.class.getResource(link)));
             page.setIcon(icon);
         }
         else if(e.getSource()==pFour){
-            link+="pFour.png";
-            ImageIcon icon = new ImageIcon(link);
+            link+="pFour.PNG";
+            ImageIcon icon = new ImageIcon(Objects.requireNonNull(HelpMenu.class.getResource(link)));
             page.setIcon(icon);
         }
         else if(e.getSource()==pFive){
-            link+="pFive.png";
-            ImageIcon icon = new ImageIcon(link);
+            link+="pFive.PNG";
+            ImageIcon icon = new ImageIcon(Objects.requireNonNull(HelpMenu.class.getResource(link)));
             page.setIcon(icon);
         }
         else if(e.getSource()==pSix){
-            link+="pSix.png";
-            ImageIcon icon = new ImageIcon(link);
+            link+="pSix.PNG";
+            ImageIcon icon = new ImageIcon(Objects.requireNonNull(HelpMenu.class.getResource(link)));
             page.setIcon(icon);
         }
         else if(e.getSource()==pSeven){
-            link+="pSeven.png";
-            ImageIcon icon = new ImageIcon(link);
+            link+="pSeven.PNG";
+            ImageIcon icon = new ImageIcon(Objects.requireNonNull(HelpMenu.class.getResource(link)));
             page.setIcon(icon);
         }
         else if(e.getSource()==pEight){
-            link+="pEight.png";
-            ImageIcon icon = new ImageIcon(link);
+            link+="pEight.PNG";
+            ImageIcon icon = new ImageIcon(Objects.requireNonNull(HelpMenu.class.getResource(link)));
             page.setIcon(icon);
         }
         else if(e.getSource()==back){
             dispose();
         }
         else if(e.getSource()==n1){
-            link+="new1.png";
-            ImageIcon icon = new ImageIcon(link);
+            link+="new1.PNG";
+            ImageIcon icon = new ImageIcon(Objects.requireNonNull(HelpMenu.class.getResource(link)));
             page.setIcon(icon);
         }
     }

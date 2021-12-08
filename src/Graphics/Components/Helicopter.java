@@ -22,6 +22,7 @@ public class Helicopter extends JFrame {
     private ArrayList<Pawn> pawnsNew;
 
     public Helicopter(GameBoardGraphic gb){
+        gb.getGameState().checkWinHelicopter();
         this.gb = gb;
         panel = new JPanel();
         GridBagLayoutgrid = new GridBagLayout();
@@ -76,6 +77,7 @@ public class Helicopter extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 gb.getGameTiles().chooseMove();
                 gb.updateAll();
+                dispose();
             }
         });
         gbc.gridx =i/2;

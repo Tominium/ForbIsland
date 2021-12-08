@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class useCard extends JFrame {
     private JPanel panel;
-    private static int WIDTH = 700;
+    private static int WIDTH = 800;
     private static int HEIGHT = 500;
     private GridBagLayout GridBagLayoutgrid;
     private GridBagConstraints gbc;
@@ -66,16 +66,24 @@ public class useCard extends JFrame {
                     GameState.treasureDeck.discardCard(c);
                     if(c.getCardName().contains("Sandbag")){
                         gb.sandBag();
+                        for(int i=0; i<GameState.pawnLoc.size(); i++){
+                            if(bb.equals(GameState.pawnLoc.get(i))){
+                                Pawn temp = GameState.pawnLoc.get(i);
+                                temp.removeCard(c);
+                                GameState.pawnLoc.set(i, temp);
+                                gb.updateAll();
+                            }
+                        }
                     }
                     else if(c.getCardName().contains("Helicopter")){
                         gb.helicopter();
-                    }
-                    for(int i=0; i<GameState.pawnLoc.size(); i++){
-                        if(bb.equals(GameState.pawnLoc.get(i))){
-                            Pawn temp = GameState.pawnLoc.get(i);
-                            temp.removeCard(c);
-                            GameState.pawnLoc.set(i, temp);
-                            gb.updateAll();
+                        for(int i=0; i<GameState.pawnLoc.size(); i++){
+                            if(bb.equals(GameState.pawnLoc.get(i))){
+                                Pawn temp = GameState.pawnLoc.get(i);
+                                temp.removeCard(c);
+                                GameState.pawnLoc.set(i, temp);
+                                gb.updateAll();
+                            }
                         }
                     }
                     dispose();
