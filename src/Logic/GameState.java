@@ -136,10 +136,10 @@ public class GameState {
                     Tile t = tileLoc.get(b);
                     t.floodTile();
                     tileLoc.set(b, t);
-                    if(checkLose()){gb.updateAll();JOptionPane.showMessageDialog(gb,
+                    if(checkLose()){gb.getGameTiles().paintTile();gb.updateAll();JOptionPane.showMessageDialog(gb,
                             "You Have Lost! Fools Landing Has Sunk!", "Looser",
                             JOptionPane.ERROR_MESSAGE); gb.dispose();}
-                    if(checkLoseOther()){gb.updateAll();JOptionPane.showMessageDialog(gb,
+                    if(checkLoseOther()){gb.getGameTiles().paintTile();gb.updateAll();JOptionPane.showMessageDialog(gb,
                             "You Have Lost! A Treasure Has Become Unattainable!", "Looser",
                             JOptionPane.ERROR_MESSAGE); gb.dispose();}
 //                    if(checkLoseSink()){gb.updateAll();JOptionPane.showMessageDialog(gb,

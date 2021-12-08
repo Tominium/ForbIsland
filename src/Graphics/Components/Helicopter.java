@@ -22,7 +22,7 @@ public class Helicopter extends JFrame {
     private ArrayList<Pawn> pawnsNew;
 
     public Helicopter(GameBoardGraphic gb){
-        gb.getGameState().checkWinHelicopter();
+        if(gb.getGameState().checkWinHelicopter()){gb.dispose();}
         this.gb = gb;
         panel = new JPanel();
         GridBagLayoutgrid = new GridBagLayout();
