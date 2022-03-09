@@ -2,7 +2,6 @@ package Water;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 public class WaterMeter {
@@ -43,9 +42,9 @@ public class WaterMeter {
     }
 
     private void updateMeter(){
-        String url = "src/Assets/WaterMeterParts/" + waterLevel + ".png";
+        String url = "/Assets/WaterMeterParts/" + waterLevel + ".png";
         try{
-            meter = ImageIO.read(new File(url)).getScaledInstance(221, 669,  Image.SCALE_SMOOTH);
+            meter = ImageIO.read(WaterMeter.class.getResource(url)).getScaledInstance(221, 669,  Image.SCALE_SMOOTH);
         }
         catch (IOException e) {
             e.printStackTrace();
